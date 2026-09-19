@@ -1,0 +1,62 @@
+{
+  "run_id": "DEMO_RUN_01",
+  "paper_title": "Graph Convolutional Networks for Citation Analysis",
+  "abstract": "This paper evaluates citation integrity using GNNs.\n1. Introduction",
+  "summary_metrics": {
+    "total_citations": 2,
+    "matched_citations": 0,
+    "valid_citations": 1,
+    "manual_review_citations": 1,
+    "suspicious_citations": 0
+  },
+  "fusion_weights": {
+    "alpha": 0.5,
+    "beta": 0.5
+  },
+  "citations": [
+    {
+      "citation_id": "C001",
+      "raw_text": "[1] Kipf, T. N., & Welling, M. (2017). Semi-supervised classification with graph convolutional networks. ICLR.",
+      "citation_context": "Graph convolutional networks were introduced by Kipf and Welling [1].",
+      "matched_openalex_id": null,
+      "matched_title": null,
+      "publication_year": null,
+      "cited_by_count": 0,
+      "match_method": "manual_review",
+      "match_score": 0.0,
+      "match_status": "unmatched",
+      "graph_score": 0.15,
+      "semantic_score": 0.2,
+      "semantic_similarity": 0.8,
+      "integrity_risk_score": 0.175,
+      "classification": "valid",
+      "explanation": "Strong semantic alignment between citation sentence and cited paper.",
+      "evidence": [
+        "Standard structural citation graph position",
+        "High semantic relevance"
+      ]
+    },
+    {
+      "citation_id": "C002",
+      "raw_text": "[2] Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., & Polosukhin, I. (2017). Attention is all you need. NeurIPS.",
+      "citation_context": "Attention mechanisms were introduced by Vaswani et al [2].",
+      "matched_openalex_id": null,
+      "matched_title": null,
+      "publication_year": null,
+      "cited_by_count": 0,
+      "match_method": "manual_review",
+      "match_score": 0.0,
+      "match_status": "unmatched",
+      "graph_score": 0.38,
+      "semantic_score": 0.51,
+      "semantic_similarity": 0.49,
+      "integrity_risk_score": 0.445,
+      "classification": "manual_review",
+      "explanation": "Moderate semantic distance; citation claim is only weakly supported.",
+      "evidence": [
+        "Standard structural citation graph position",
+        "Weak contextual alignment"
+      ]
+    }
+  ]
+}
