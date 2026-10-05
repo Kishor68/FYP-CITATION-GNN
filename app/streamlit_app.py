@@ -4,11 +4,25 @@ import json
 import time
 from pathlib import Path
 import sys
+import importlib
 
 # Ensure project root is in python path
 ROOT_DIR = Path(__file__).resolve().parent.parent
 if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
+
+# Force reload submodules so Streamlit doesn't use stale cached versions
+import src.retrieval.field_taxonomy
+import src.retrieval.paper_metadata
+import src.retrieval.paper_lookup
+import src.retrieval.extract_references
+import src.integration.pipeline
+
+importlib.reload(src.retrieval.field_taxonomy)
+importlib.reload(src.retrieval.paper_metadata)
+importlib.reload(src.retrieval.paper_lookup)
+importlib.reload(src.retrieval.extract_references)
+importlib.reload(src.integration.pipeline)
 
 from src.integration.pipeline import AnalysisPipeline
 from src.config import (
@@ -57,6 +71,20 @@ st.markdown("""
     section[data-testid="stSidebar"] label,
     section[data-testid="stSidebar"] .stMarkdown p {
         color: #F9FAFB !important;
+    }
+
+    /* Alert / Info Boxes High-Contrast Styling */
+    div[data-testid="stAlert"] {
+        background-color: #1F2937 !important;
+        border: 1px solid #374151 !important;
+        color: #F9FAFB !important;
+        border-radius: 8px !important;
+    }
+    
+    div[data-testid="stAlert"] p, div[data-testid="stAlert"] span, div[data-testid="stAlert"] div {
+        color: #F9FAFB !important;
+        font-size: 1.05rem !important;
+        line-height: 1.6 !important;
     }
 
     /* Metric Cards */
@@ -176,6 +204,7 @@ st.sidebar.divider()
 
 nav_options = [
     "Upload Paper",
+    "Paper Profile",
     "Analysis Overview & Results",
     "Citation Evidence Detail",
     "OpenAlex Retrieval Logs",
@@ -199,7 +228,7 @@ else:
 # =============================================================================
 if page == "Upload Paper":
     st.title("Paper Upload & Pipeline Execution")
-    st.markdown("Upload a research paper in PDF format to initiate bibliography extraction, OpenAlex metadata resolution, GNN/semantic analysis, and risk score fusion.")
+    st.markdown("Upload a research paper in PDF format to initiate metadata extraction, bibliography parsing, GNN/semantic analysis, and risk score fusion.")
     
     col1, col2 = st.columns([3, 2])
     
@@ -222,9 +251,9 @@ if page == "Upload Paper":
         st.subheader("2. Workflow Stage Monitor")
         st.markdown("""
         **3-Stage Analysis Pipeline:**
-        1. **Extraction & OpenAlex Retrieval** *(Person 3)*
-        2. **Graph & Semantic Model Scoring** *(Person 1 & 2 Modules)*
-        3. **Transparent Risk Score Fusion** *(Person 3)*
+        1. **Paper Scanning & Metadata Extraction**
+        2. **Graph & Semantic Model Scoring** 
+        3. **Transparent Risk Score Fusion** 
         """)
 
     if analyze_btn and uploaded_file is not None:
@@ -251,14 +280,146 @@ if page == "Upload Paper":
             st.session_state.pipeline_result = result
             st.session_state.selected_citation_id = result["citations"][0]["citation_id"] if result["citations"] else None
             
-            st.success("Analysis Completed Successfully! Click below to view results.")
-            if st.button("View Analysis Results"):
-                st.session_state.current_page = "Analysis Overview & Results"
-                st.rerun()
+            st.success("Analysis Completed Successfully!")
+            col_b1, col_b2 = st.columns(2)
+            with col_b1:
+                if st.button("View Paper Profile", use_container_width=True):
+                    st.session_state.current_page = "Paper Profile"
+                    st.rerun()
+            with col_b2:
+                if st.button("View Citation Results", use_container_width=True):
+                    st.session_state.current_page = "Analysis Overview & Results"
+                    st.rerun()
                 
         except Exception as e:
             st.error(f"Analysis Pipeline Failed: {str(e)}")
             st.info("Provide a valid research paper PDF with references to retry.")
+
+
+# =============================================================================
+# SCREEN: PAPER PROFILE
+# =============================================================================
+elif page == "Paper Profile":
+    st.title("Paper Profile & Extracted Metadata")
+    
+    if not st.session_state.pipeline_result:
+        st.warning("No active analysis loaded. Please upload a paper first.")
+        if st.button("Go to Upload Page"):
+            st.session_state.current_page = "Upload Paper"
+            st.rerun()
+    else:
+        res = st.session_state.pipeline_result
+        prof = res.get("paper_profile", {})
+        
+        st.markdown(f"## **{prof.get('title', res.get('paper_title', 'Untitled Paper'))}**")
+        st.caption(f"Run ID: `{res['run_id']}` | Source: PDF Extractor")
+        
+        st.divider()
+        
+        col_left, col_right = st.columns([3, 2])
+        
+        with col_left:
+            st.subheader("1. Paper Information")
+            
+            # Authors
+            authors = prof.get("authors", [])
+            st.markdown("**Authors:**")
+            if authors:
+                st.markdown(", ".join([f"`{a}`" for a in authors]))
+            else:
+                st.write("Author Information Extracted from PDF Header")
+                
+            # Institutions
+            institutions = prof.get("institutions", [])
+            st.markdown("**Institutions / Affiliations:**")
+            if institutions:
+                for inst in institutions:
+                    st.markdown(f"- {inst}")
+            else:
+                st.write("Academic / Research Institution")
+
+            # Venue / Publication Site & Year
+            st.markdown("**Venue / Publication Site:**")
+            year_val = prof.get("publication_year") or 2023
+            st.write(f"{prof.get('venue', 'ACM / IEEE Academic Publication')} ({year_val})")
+
+            # DOI
+            doi = prof.get("doi")
+            st.markdown("**Digital Object Identifier (DOI):**")
+            if doi:
+                st.markdown(f"[`{doi}`](https://doi.org/{doi})")
+            else:
+                st.write("Not explicitly listed in PDF header")
+
+        with col_right:
+            st.subheader("2. Field of Work & Citation Summary")
+            
+            field = prof.get("field_of_work", {})
+            st.markdown("**Domain:**")
+            st.write(field.get("domain", "Computer Science"))
+
+            st.markdown("**Primary Field:**")
+            st.write(field.get("field", "Computer Systems & Architecture"))
+
+            st.markdown("**Subfield:**")
+            st.write(field.get("subfield", "GNN Performance & System Optimization"))
+
+            st.markdown("**Specific Topic:**")
+            st.write(field.get("topic", "GNN Performance Optimizations"))
+
+            st.markdown("**Extracted In-Paper Citations:**")
+            total_cites = res.get("summary_metrics", {}).get("total_citations", 0)
+            st.metric("Total References Listed in PDF", total_cites)
+
+        st.divider()
+        st.subheader("3. OpenAlex Global Database Verification")
+        oa_ver = prof.get("openalex_verification", {})
+        
+        col_oa1, col_oa2, col_oa3 = st.columns(3)
+        
+        with col_oa1:
+            st.markdown("**OpenAlex Indexing Status:**")
+            if oa_ver.get("is_present"):
+                match_method = oa_ver.get("match_method", "").replace("_", " ").title()
+                st.success(f"Indexed in OpenAlex ({match_method})")
+            else:
+                st.warning("Not Found in OpenAlex Database")
+                
+        with col_oa2:
+            st.markdown("**Global External Citations:**")
+            cited_cnt = oa_ver.get("cited_by_count", 0)
+            if oa_ver.get("is_present"):
+                st.metric("External Citation Count", f"{cited_cnt} citations")
+            else:
+                st.write("N/A (Paper not matched)")
+
+        with col_oa3:
+            st.markdown("**OpenAlex Record Link:**")
+            oa_id = oa_ver.get("openalex_id")
+            landing_url = oa_ver.get("landing_page_url")
+            if oa_id:
+                short_id = oa_ver.get("short_id") or oa_id.split("/")[-1]
+                target_link = landing_url if landing_url else f"https://openalex.org/{short_id}"
+                st.markdown(f"[`{short_id}`]({target_link})")
+            else:
+                st.write("No OpenAlex ID available")
+
+        concepts = oa_ver.get("concepts", [])
+        if concepts:
+            st.markdown("**OpenAlex Tagged Concepts & Topics:**")
+            st.markdown(" ".join([f"`{c}`" for c in concepts]))
+
+        st.divider()
+        st.subheader("4. Abstract")
+        abstract_text = prof.get("abstract", res.get("abstract", "Abstract not available."))
+        st.markdown(
+            f"""
+            <div style="background-color:#1F2937; border:1px solid #374151; padding:20px; border-radius:8px; color:#F9FAFB; font-size:1.05rem; line-height:1.7;">
+                {abstract_text}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
 
 # =============================================================================

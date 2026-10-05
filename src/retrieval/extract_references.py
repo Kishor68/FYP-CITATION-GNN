@@ -4,6 +4,8 @@ from pathlib import Path
 from typing import Dict, List, Any, Tuple, Optional
 import pypdf
 
+from src.retrieval.paper_metadata import extract_full_paper_profile
+
 def extract_text_from_pdf(pdf_source: Any) -> Tuple[str, List[str]]:
     """
     Extracts text from PDF file path or file-like stream.
@@ -22,24 +24,6 @@ def extract_text_from_pdf(pdf_source: Any) -> Tuple[str, List[str]]:
         full_text += txt + "\n"
         
     return full_text, pages_text
-
-def extract_metadata_from_text(full_text: str) -> Dict[str, str]:
-    """Attempts to extract title and abstract from paper text."""
-    lines = [line.strip() for line in full_text.splitlines() if line.strip()]
-    title = lines[0] if lines else "Untitled Paper"
-    
-    # Try to find abstract
-    abstract = ""
-    abstract_match = re.search(r'(?i)abstract[:\s]+(.*?)(?=\n\n|\n[A-Z][a-z]+|\Z)', full_text, re.DOTALL)
-    if abstract_match:
-        abstract = abstract_match.group(1).strip()
-        if len(abstract) > 1000:
-            abstract = abstract[:1000] + "..."
-            
-    return {
-        "title": title,
-        "abstract": abstract,
-    }
 
 def isolate_bibliography(full_text: str) -> str:
     """Finds and extracts the bibliography / references section text."""
@@ -69,16 +53,18 @@ def isolate_bibliography(full_text: str) -> str:
     return ""
 
 def split_references(bib_text: str) -> List[str]:
-    """Splits raw bibliography text into individual reference entries."""
+    """
+    Splits raw bibliography text into individual reference entries.
+    Supports bracketed [1], numbered 1., and unnumbered Author-Year formats.
+    """
     if not bib_text:
         return []
-        
-    # Standard bracketed pattern like [1] ... [2] ...
-    bracket_pattern = r'(\[\d+\])'
+
+    # 1. Standard bracketed pattern like [1] ... [2] ... or (1) ... (2) ...
+    bracket_pattern = r'(\[\d+\]|\(\d+\))'
     parts = re.split(bracket_pattern, bib_text)
-    
-    entries = []
     if len(parts) > 2:
+        entries = []
         for i in range(1, len(parts), 2):
             label = parts[i]
             content = parts[i+1] if i+1 < len(parts) else ""
@@ -86,12 +72,14 @@ def split_references(bib_text: str) -> List[str]:
             clean_entry = re.sub(r'\s+', ' ', clean_entry)
             if len(clean_entry) > 10:
                 entries.append(clean_entry)
-        return entries
-        
-    # Numbered pattern like 1. ... 2. ...
-    num_pattern = r'(\n\s*\d+\.\s+)'
+        if len(entries) >= 2:
+            return entries
+
+    # 2. Numbered pattern like 1. ... 2. ... or 1) ... 2) ...
+    num_pattern = r'(\n\s*\d+[\.\)]\s+)'
     parts = re.split(num_pattern, bib_text)
     if len(parts) > 2:
+        entries = []
         for i in range(1, len(parts), 2):
             label = parts[i].strip()
             content = parts[i+1] if i+1 < len(parts) else ""
@@ -99,22 +87,49 @@ def split_references(bib_text: str) -> List[str]:
             clean_entry = re.sub(r'\s+', ' ', clean_entry)
             if len(clean_entry) > 10:
                 entries.append(clean_entry)
-        return entries
-        
-    # Fallback to paragraph splitting
-    paragraphs = bib_text.split("\n\n")
-    for p in paragraphs:
-        p_clean = re.sub(r'\s+', ' ', p).strip()
-        if len(p_clean) > 20 and not re.match(r'(?i)^(references|bibliography)', p_clean):
-            entries.append(p_clean)
-            
-    return entries
+        if len(entries) >= 2:
+            return entries
+
+    # 3. Unnumbered format (Author-Year or plain lines)
+    lines = [l.strip() for l in bib_text.splitlines() if l.strip()]
+    entries = []
+    curr = ""
+
+    def is_author_start(line: str) -> bool:
+        if re.match(r'^[A-Z][a-zA-Z\-\']+(?:,\s*[A-Z]\.|\s+[A-Z][a-zA-Z\-\']+)', line):
+            return True
+        return False
+
+    for l in lines:
+        if re.match(r'(?i)^(references|bibliography|literature cited)$', l):
+            continue
+        if not curr:
+            curr = l
+        else:
+            has_year = bool(re.search(r'\b(19\d\d|20[0-2]\d)\b', curr))
+            if has_year and is_author_start(l):
+                entries.append(curr)
+                curr = l
+            else:
+                curr += " " + l
+
+    if curr and not re.match(r'(?i)^(references|bibliography)$', curr.strip()):
+        entries.append(curr)
+
+    cleaned = [re.sub(r'\s+', ' ', e).strip() for e in entries if len(e.strip()) > 15]
+    return cleaned if cleaned else [re.sub(r'\s+', ' ', bib_text).strip()]
 
 def find_citation_context(full_text: str, citation_num: int, raw_ref: str) -> str:
-    """Finds the in-text citation context for a given reference."""
+    """Finds the in-text citation context for a given reference (searched in body text)."""
+    # Isolate body text before bibliography to avoid searching within bibliography
+    bib_pos = full_text.find("REFERENCES")
+    if bib_pos == -1:
+        bib_pos = full_text.find("References")
+    body_text = full_text[:bib_pos] if bib_pos != -1 else full_text
+
     # Try searching for [N]
     pattern = rf'([^.\n]*?\[{citation_num}\][^.\n]*?\.)'
-    match = re.search(pattern, full_text)
+    match = re.search(pattern, body_text)
     if match:
         return match.group(1).strip()
         
@@ -124,7 +139,7 @@ def find_citation_context(full_text: str, citation_num: int, raw_ref: str) -> st
         surname = author_match.group(1)
         if len(surname) > 3:
             surname_pattern = rf'([^.\n]*?\b{surname}\b[^.\n]*?\.)'
-            s_match = re.search(surname_pattern, full_text)
+            s_match = re.search(surname_pattern, body_text)
             if s_match:
                 return s_match.group(1).strip()
                 
@@ -133,10 +148,11 @@ def find_citation_context(full_text: str, citation_num: int, raw_ref: str) -> st
 def process_pdf_document(pdf_source: Any, run_id: str = "RUN_001") -> Dict[str, Any]:
     """
     Main function to ingest PDF, extract references, assign citation IDs,
-    and return structured paper representation.
+    and return structured paper profile & citation representation.
     """
     full_text, pages_text = extract_text_from_pdf(pdf_source)
-    metadata = extract_metadata_from_text(full_text)
+    paper_profile = extract_full_paper_profile(pdf_source, full_text, pages_text)
+    
     bib_text = isolate_bibliography(full_text)
     raw_references = split_references(bib_text)
     
@@ -153,8 +169,9 @@ def process_pdf_document(pdf_source: Any, run_id: str = "RUN_001") -> Dict[str, 
         
     return {
         "run_id": run_id,
-        "paper_title": metadata["title"],
-        "abstract": metadata["abstract"],
+        "paper_title": paper_profile["title"],
+        "abstract": paper_profile["abstract"],
+        "paper_profile": paper_profile,
         "total_pages": len(pages_text),
         "total_references_found": len(extracted_citations),
         "citations": extracted_citations,

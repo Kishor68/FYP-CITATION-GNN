@@ -94,6 +94,7 @@ class AnalysisPipeline:
             "run_id": run_id,
             "paper_title": paper_data["paper_title"],
             "abstract": paper_data["abstract"],
+            "paper_profile": paper_data.get("paper_profile", {}),
             "summary_metrics": {
                 "total_citations": total_count,
                 "matched_citations": matched_count,

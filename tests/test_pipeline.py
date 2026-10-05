@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 from src.retrieval.paper_lookup import normalize_title, parse_reference_fields
 from src.retrieval.extract_references import split_references, isolate_bibliography
+from src.retrieval.field_taxonomy import classify_field_of_work
 from src.integration.fusion import calculate_fused_risk, fuse_citation_evidence
 from src.config import get_classification_label
 from src.models.graph_module import analyze_graph_suspicion
@@ -21,15 +22,21 @@ class TestPipelineComponents(unittest.TestCase):
         parsed = parse_reference_fields(ref)
         self.assertEqual(parsed["year"], 2017)
         self.assertEqual(parsed["lead_author"], "Kipf")
+        self.assertEqual(parsed["title"], "Semi-supervised classification with graph convolutional networks")
+        self.assertEqual(parsed["venue"], "ICLR")
+
+    def test_field_taxonomy(self):
+        text = "Deep Graph Convolutional Networks for Node Classification in Citation Graphs"
+        classified = classify_field_of_work(text)
+        self.assertEqual(classified["domain"], "Computer Science")
+        self.assertIn("Graph Neural Networks", classified["subfield"])
 
     def test_fusion_calculation(self):
-        # alpha=0.5, beta=0.5
         score = calculate_fused_risk(0.80, 0.60, alpha=0.5, beta=0.5)
         self.assertEqual(score, 0.70)
         label = get_classification_label(score)
         self.assertEqual(label, "suspicious")
 
-        # Valid score test
         v_score = calculate_fused_risk(0.20, 0.30, alpha=0.5, beta=0.5)
         self.assertEqual(v_score, 0.25)
         self.assertEqual(get_classification_label(v_score), "valid")
