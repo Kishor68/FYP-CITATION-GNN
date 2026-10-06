@@ -10,6 +10,7 @@ from src.config import (
     OPENALEX_API_KEY,
     RAW_OPENALEX_DIR,
 )
+from src.utils.text_utils import clean_reference_text
 
 class OpenAlexAPI:
     """Handles paper search and work metadata retrieval from OpenAlex API."""
@@ -36,7 +37,8 @@ class OpenAlexAPI:
         if not title or len(title.strip()) < 4 or title.startswith("http"):
             return []
 
-        clean_title = re.sub(r'^[,\.:\s"“\']+|[,\.:\s"”\']+$', '', title).strip()
+        clean_title = clean_reference_text(title)
+        clean_title = re.sub(r'^[,\.:\s"“\']+|[,\.:\s"”\']+$', '', clean_title).strip()
         cache_key = f"title_search_{clean_title}"
         cache_file = self._get_cache_path(cache_key)
 

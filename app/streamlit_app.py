@@ -12,16 +12,26 @@ if str(ROOT_DIR) not in sys.path:
     sys.path.insert(0, str(ROOT_DIR))
 
 # Force reload submodules so Streamlit doesn't use stale cached versions
+import src.utils.text_utils
+import src.acquisition.openalex
 import src.retrieval.field_taxonomy
 import src.retrieval.paper_metadata
 import src.retrieval.paper_lookup
 import src.retrieval.extract_references
+import src.models.graph_module
+import src.models.semantic_module
+import src.integration.fusion
 import src.integration.pipeline
 
+importlib.reload(src.utils.text_utils)
+importlib.reload(src.acquisition.openalex)
 importlib.reload(src.retrieval.field_taxonomy)
 importlib.reload(src.retrieval.paper_metadata)
 importlib.reload(src.retrieval.paper_lookup)
 importlib.reload(src.retrieval.extract_references)
+importlib.reload(src.models.graph_module)
+importlib.reload(src.models.semantic_module)
+importlib.reload(src.integration.fusion)
 importlib.reload(src.integration.pipeline)
 
 from src.integration.pipeline import AnalysisPipeline

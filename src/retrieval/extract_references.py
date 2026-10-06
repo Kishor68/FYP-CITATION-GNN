@@ -5,6 +5,7 @@ from typing import Dict, List, Any, Tuple, Optional
 import pypdf
 
 from src.retrieval.paper_metadata import extract_full_paper_profile
+from src.utils.text_utils import clean_reference_text
 
 def extract_text_from_pdf(pdf_source: Any) -> Tuple[str, List[str]]:
     """
@@ -60,6 +61,9 @@ def split_references(bib_text: str) -> List[str]:
     if not bib_text:
         return []
 
+    # Pre-clean bib_text to repair broken hyphens across line breaks
+    bib_text = clean_reference_text(bib_text)
+
     # 1. Square bracketed pattern like [1] ... [2] ...
     bracket_pattern = r'(\[\d+\])'
     parts = re.split(bracket_pattern, bib_text)
@@ -68,8 +72,7 @@ def split_references(bib_text: str) -> List[str]:
         for i in range(1, len(parts), 2):
             label = parts[i]
             content = parts[i+1] if i+1 < len(parts) else ""
-            clean_entry = f"{label} {content.strip()}"
-            clean_entry = re.sub(r'\s+', ' ', clean_entry)
+            clean_entry = clean_reference_text(f"{label} {content.strip()}")
             if len(clean_entry) > 10:
                 entries.append(clean_entry)
         if len(entries) >= 2:
@@ -83,8 +86,7 @@ def split_references(bib_text: str) -> List[str]:
         for i in range(1, len(parts), 2):
             label = parts[i]
             content = parts[i+1] if i+1 < len(parts) else ""
-            clean_entry = f"{label} {content.strip()}"
-            clean_entry = re.sub(r'\s+', ' ', clean_entry)
+            clean_entry = clean_reference_text(f"{label} {content.strip()}")
             if len(clean_entry) > 10:
                 entries.append(clean_entry)
         if len(entries) >= 2:
@@ -98,8 +100,7 @@ def split_references(bib_text: str) -> List[str]:
         for i in range(1, len(parts), 2):
             label = parts[i].strip()
             content = parts[i+1] if i+1 < len(parts) else ""
-            clean_entry = f"{label} {content.strip()}"
-            clean_entry = re.sub(r'\s+', ' ', clean_entry)
+            clean_entry = clean_reference_text(f"{label} {content.strip()}")
             if len(clean_entry) > 10:
                 entries.append(clean_entry)
         if len(entries) >= 2:
@@ -131,8 +132,8 @@ def split_references(bib_text: str) -> List[str]:
     if curr and not re.match(r'(?i)^(references|bibliography)$', curr.strip()):
         entries.append(curr)
 
-    cleaned = [re.sub(r'\s+', ' ', e).strip() for e in entries if len(e.strip()) > 15]
-    return cleaned if cleaned else [re.sub(r'\s+', ' ', bib_text).strip()]
+    cleaned = [clean_reference_text(e) for e in entries if len(e.strip()) > 15]
+    return cleaned if cleaned else [clean_reference_text(bib_text)]
 
 def find_citation_context(full_text: str, citation_num: int, raw_ref: str) -> str:
     """Finds the in-text citation context for a given reference (searched in body text)."""

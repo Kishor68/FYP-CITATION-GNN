@@ -32,26 +32,30 @@ class ReferenceMatcher:
         match_status = "unmatched"
         
         if candidates:
-            # Stage 1: Exact normalized title match
+            # Stage 1: Exact / Token-Identical normalized title match
             for candidate in candidates:
                 cand_title = candidate.get("display_name", "")
                 norm_cand_title = normalize_title(cand_title)
                 
-                if norm_query_title and norm_query_title == norm_cand_title:
-                    best_match = candidate
-                    match_method = "exact_normalized_title"
-                    match_score = 1.0
-                    match_status = "matched"
-                    break
+                if norm_query_title and norm_cand_title:
+                    token_sim = fuzz.token_set_ratio(norm_query_title, norm_cand_title)
+                    ratio_sim = fuzz.ratio(norm_query_title, norm_cand_title)
+                    if norm_query_title == norm_cand_title or (token_sim >= 98 and ratio_sim >= 85):
+                        best_match = candidate
+                        match_method = "exact_normalized_title"
+                        match_score = 1.0
+                        match_status = "matched"
+                        break
                     
             # Stage 2: Title + Lead Author + Year
             if not best_match and parsed["lead_author"] and parsed["year"]:
                 for candidate in candidates:
                     cand_title = candidate.get("display_name", "")
                     cand_year = candidate.get("publication_year")
-                    sim = fuzz.ratio(norm_query_title, normalize_title(cand_title))
+                    norm_cand_title = normalize_title(cand_title)
+                    sim = max(fuzz.ratio(norm_query_title, norm_cand_title), fuzz.token_set_ratio(norm_query_title, norm_cand_title))
                     
-                    if sim > 75 and cand_year == parsed["year"]:
+                    if sim > 75 and cand_year and abs(cand_year - parsed["year"]) <= 1:
                         best_match = candidate
                         match_method = "title_author_year"
                         match_score = float(sim / 100.0)
@@ -64,7 +68,12 @@ class ReferenceMatcher:
                 top_cand = None
                 for candidate in candidates:
                     cand_title = candidate.get("display_name", "")
-                    sim = fuzz.ratio(norm_query_title, normalize_title(cand_title))
+                    norm_cand_title = normalize_title(cand_title)
+                    sim = max(
+                        fuzz.ratio(norm_query_title, norm_cand_title),
+                        fuzz.token_sort_ratio(norm_query_title, norm_cand_title),
+                        fuzz.token_set_ratio(norm_query_title, norm_cand_title)
+                    )
                     if sim > best_sim:
                         best_sim = sim
                         top_cand = candidate
@@ -79,6 +88,27 @@ class ReferenceMatcher:
                     match_method = "openalex_fallback"
                     match_score = float(best_sim / 100.0)
                     match_status = "uncertain"
+
+        # Stage 4: OpenAlex fallback query using lead author + title if no match found yet
+        if not best_match and parsed.get("lead_author") and query_title:
+            author_query = f"{parsed['lead_author']} {query_title}"
+            fallback_cands = self.api.search_works_by_title(author_query, max_results=5)
+            if fallback_cands:
+                for candidate in fallback_cands:
+                    cand_title = candidate.get("display_name", "")
+                    cand_year = candidate.get("publication_year")
+                    norm_cand_title = normalize_title(cand_title)
+                    sim = max(
+                        fuzz.ratio(norm_query_title, norm_cand_title),
+                        fuzz.token_sort_ratio(norm_query_title, norm_cand_title),
+                        fuzz.token_set_ratio(norm_query_title, norm_cand_title)
+                    )
+                    if sim >= FUZZY_MATCH_THRESHOLD or (sim >= 65.0 and parsed.get("year") and cand_year and abs(cand_year - parsed["year"]) <= 1):
+                        best_match = candidate
+                        match_method = "author_title_fallback"
+                        match_score = float(sim / 100.0)
+                        match_status = "matched"
+                        break
 
         # Stage 5: Manual review flag if low confidence / unmatched
         if not best_match:

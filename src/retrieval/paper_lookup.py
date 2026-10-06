@@ -1,6 +1,6 @@
 import re
 from typing import Dict, Any, Optional, List
-from src.utils.text_utils import clean_block, normalize_ws
+from src.utils.text_utils import clean_block, normalize_ws, clean_reference_text
 
 def normalize_title(title: str) -> str:
     """Normalizes title string for exact comparison (lowercase, alphanumeric only)."""
@@ -46,7 +46,7 @@ def parse_reference_fields(raw_text: str) -> Dict[str, Any]:
     - year
     - venue
     """
-    cleaned = clean_block(raw_text)
+    cleaned = clean_reference_text(raw_text)
     
     # Strip leading label like [1], (1), 1., C001, etc.
     cleaned_no_label = re.sub(r'^\s*(\[\d+\]|\(\d+\)|\d+\.|C\d+)\s*', '', cleaned)
@@ -58,27 +58,35 @@ def parse_reference_fields(raw_text: str) -> Dict[str, Any]:
     # Title extraction strategies:
     title = None
     
-    # Strategy 1: Title inside quotes "..." or “...”
-    quote_match = re.search(r'["“](.*?)["”]', cleaned_no_label)
+    # Strategy 1: Title inside quotes "..." or “...” or ‘...’
+    quote_match = re.search(r'["“‘](.*?)["”’]', cleaned_no_label)
     if quote_match and len(quote_match.group(1).strip()) > 5:
         title = quote_match.group(1).strip()
 
-    # Strategy 2: Check for journal tag [J]., [C]., [M]. or et al. boundary
+    # Strategy 2: Year-boundary extraction [Authors]. [Year]. [Title]. [Venue]
     if not title:
-        # Check for [J]., [C]., [M]., [D]. tag which separates Title from Venue
+        year_boundary = re.search(r'\b\(?(19\d\d|20[0-2]\d)\)?\b\.?\s*(.*)', cleaned_no_label)
+        if year_boundary:
+            after_year = year_boundary.group(2).strip()
+            if len(after_year) > 5:
+                # Isolate title before venue/period/arXiv/DOI/URL
+                cand = re.split(r'\.\s+|[\s,]+(in\s+|Proc|IEEE|ACM|Trans|Journal|Conference|International|arXiv|vol\.|pp\.|http|doi|\()', after_year, maxsplit=1, flags=re.IGNORECASE)[0].strip()
+                cand = re.sub(r'^[,\.:\s"“\'‘]+|[,\.:\s"”\'’]+$', '', cand).strip()
+                if len(cand) > 5 and not re.match(r'^(arXiv|doi|http|vol\.|pp\.)', cand, re.IGNORECASE):
+                    title = cand
+
+    # Strategy 3: Check for journal tag [J]., [C]., [M]. or et al. boundary
+    if not title:
         tag_match = re.search(r'(.*?)\s*\[[A-Z](/OL)?\]\.?\s*(.*)', cleaned_no_label)
         if tag_match:
             before_tag = tag_match.group(1).strip()
-            # If before_tag contains et al. or author list
             et_match = re.search(r'\bet\s+al\b\.?\s*,?\s*(.*)', before_tag, re.IGNORECASE)
             if et_match:
                 title = et_match.group(1).strip()
             else:
-                # Split before_tag by period to separate author from title
                 b_parts = _split_into_sentences(before_tag)
                 title = b_parts[-1] if b_parts else before_tag
         else:
-            # Check for et al. boundary
             et_match = re.search(r'\bet\s+al\b\.?\s*,?\s*(.*)', cleaned_no_label, re.IGNORECASE)
             if et_match:
                 after_et = et_match.group(1).strip()
@@ -97,16 +105,13 @@ def parse_reference_fields(raw_text: str) -> Dict[str, Any]:
 
     # Clean extracted title
     if title:
-        # Repair broken PDF line-break hyphens like "Convolu- tional" -> "Convolutional"
-        title = re.sub(r'(\b[a-zA-Z]+)-\s+([a-zA-Z]+\b)', r'\1\2', title)
-        # Strip journal category tags like [J], [C], [M]
+        title = clean_reference_text(title)
         title = re.sub(r'\[[A-Z](/OL)?\]', '', title)
-        # Strip trailing/leading quotes, commas, colons, and punctuation
-        title = re.sub(r'^[,\.:\s"“\']+|[,\.:\s"”\']+$', '', title)
+        title = re.sub(r'^[,\.:\s"“\'‘]+|[,\.:\s"”\'’]+$', '', title)
         title = re.sub(r'\s*\(?\b(19\d\d|20[0-2]\d)\b\)?\s*$', '', title)
-        # Strip venue prefix/suffix if present
+        title = re.sub(r'[\s,]+in\s+(Proc|Proceedings|IEEE|ACM|Trans|Journal|Conference|International|arXiv).*$', '', title, flags=re.IGNORECASE)
         title = re.sub(r'\s+In\s+[A-Z].*$', '', title)
-        title = re.sub(r'^[,\.:\s"“\']+|[,\.:\s"”\']+$', '', title)
+        title = re.sub(r'^[,\.:\s"“\'‘]+|[,\.:\s"”\'’]+$', '', title)
         title = title.strip()
 
     # Fallback to cleaned text if title was not isolated cleanly
