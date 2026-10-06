@@ -11,7 +11,6 @@ def calculate_fused_risk(
     Calculates transparent weighted risk score:
     final_risk = alpha * graph_suspicion + beta * semantic_suspicion
     """
-    # Normalize weights if sum != 1
     total_w = alpha + beta
     if total_w <= 0:
         a_norm, b_norm = 0.5, 0.5
@@ -29,12 +28,22 @@ def fuse_citation_evidence(
     beta: float = DEFAULT_BETA
 ) -> Dict[str, Any]:
     """
-    Joins retrieval, graph, and semantic records by citation_id and computes final fused record.
+    Joins retrieval, graph, and semantic records by citation_id and computes final fused record
+    including partitioned sub-scores for graph and semantic models.
     """
     cid = retrieval_record["citation_id"]
-    g_score = graph_record.get("graph_score", 0.0)
-    s_score = semantic_record.get("semantic_score", 0.0)
     
+    # Graph Sub-scores
+    author_group_score = graph_record.get("author_group_score", 0.0)
+    citation_circle_score = graph_record.get("citation_circle_score", 0.0)
+    amplification_score = graph_record.get("amplification_score", 0.0)
+    g_score = graph_record.get("graph_score", round((author_group_score + citation_circle_score + amplification_score) / 3.0, 2))
+
+    # Semantic Sub-scores
+    weak_citation_score = semantic_record.get("weak_citation_score", 0.0)
+    semantic_alignment_score = semantic_record.get("semantic_alignment_score", 0.0)
+    s_score = semantic_record.get("semantic_score", round((weak_citation_score + semantic_alignment_score) / 2.0, 2))
+
     risk_score = calculate_fused_risk(g_score, s_score, alpha, beta)
     classification = get_classification_label(risk_score)
     
@@ -57,7 +66,12 @@ def fuse_citation_evidence(
         "match_score": retrieval_record.get("match_score", 0.0),
         "match_status": retrieval_record.get("match_status", "unmatched"),
         "graph_score": g_score,
+        "author_group_score": author_group_score,
+        "citation_circle_score": citation_circle_score,
+        "amplification_score": amplification_score,
         "semantic_score": s_score,
+        "weak_citation_score": weak_citation_score,
+        "semantic_alignment_score": semantic_alignment_score,
         "semantic_similarity": semantic_record.get("semantic_similarity", 0.0),
         "integrity_risk_score": risk_score,
         "classification": classification,

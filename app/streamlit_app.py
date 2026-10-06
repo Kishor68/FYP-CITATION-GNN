@@ -498,10 +498,15 @@ elif page == "Analysis Overview & Results":
                 
             table_rows.append({
                 "Citation ID": c["citation_id"],
-                "Status": status_badge,
+                "Classification": status_badge,
                 "Fused Risk": c["integrity_risk_score"],
-                "Graph Score (S_graph)": c["graph_score"],
-                "Semantic Score (S_sem)": c["semantic_score"],
+                "Graph Score": c["graph_score"],
+                "Author Group (Graph)": c.get("author_group_score", 0.0),
+                "Citation Circle (Graph)": c.get("citation_circle_score", 0.0),
+                "Amplification (Graph)": c.get("amplification_score", 0.0),
+                "Semantic Score": c["semantic_score"],
+                "Weak Citation (Semantic)": c.get("weak_citation_score", 0.0),
+                "Semantic Alignment (Semantic)": c.get("semantic_alignment_score", 0.0),
                 "Match Method": c["match_method"],
                 "Match Confidence": c["match_score"],
                 "Matched OpenAlex Work": c["matched_title"] or "Unmatched",
@@ -560,12 +565,46 @@ elif page == "Citation Evidence Detail":
             badge_color = "red" if label == "SUSPICIOUS" else ("orange" if label == "MANUAL_REVIEW" else "green")
             st.markdown(f"## Citation ID: **{record['citation_id']}**  | Classification: :{badge_color}[**{label}**]")
             
-            # Score Overview Cards
+            # Composite Score Overview Cards
             m1, m2, m3, m4 = st.columns(4)
             m1.metric("Fused Risk Score", f"{risk:.2f}")
-            m2.metric("Graph Suspicion (S_graph)", f"{record['graph_score']:.2f}")
-            m3.metric("Semantic Suspicion (S_semantic)", f"{record['semantic_score']:.2f}")
+            m2.metric("Composite Graph Score", f"{record['graph_score']:.2f}")
+            m3.metric("Composite Semantic Score", f"{record['semantic_score']:.2f}")
             m4.metric("OpenAlex Match Confidence", f"{record['match_score']:.2f}")
+            
+            # Partitioned Sub-Scores Breakdown
+            st.divider()
+            st.subheader("Partitioned Model Sub-Score Breakdown")
+            
+            sub_col_g, sub_col_s = st.columns(2)
+            with sub_col_g:
+                st.markdown("### **Graph Neural Network Sub-Scores**")
+                ag_val = record.get("author_group_score", 0.0)
+                cc_val = record.get("citation_circle_score", 0.0)
+                amp_val = record.get("amplification_score", 0.0)
+                
+                st.markdown(f"**Author Group Score**: `{ag_val:.2f}` (Co-authorship & institutional cluster suspicion)")
+                st.progress(min(1.0, float(ag_val)))
+                
+                st.markdown(f"**Citation Circle Score**: `{cc_val:.2f}` (Reciprocal citation ring / loop suspicion)")
+                st.progress(min(1.0, float(cc_val)))
+                
+                st.markdown(f"**Amplification Score**: `{amp_val:.2f}` (Disproportionate citation volume inflation)")
+                st.progress(min(1.0, float(amp_val)))
+
+            with sub_col_s:
+                st.markdown("### **Semantic Alignment Sub-Scores**")
+                wc_val = record.get("weak_citation_score", 0.0)
+                sa_val = record.get("semantic_alignment_score", 0.0)
+                
+                st.markdown(f"**Weak Citation Score**: `{wc_val:.2f}` (Superficial claim / padding citation suspicion)")
+                st.progress(min(1.0, float(wc_val)))
+                
+                st.markdown(f"**Semantic Alignment Score**: `{sa_val:.2f}` (Topic drift & contextual misalignment suspicion)")
+                st.progress(min(1.0, float(sa_val)))
+                
+                sim_val = record.get("semantic_similarity", 1.0 - sa_val)
+                st.caption(f"Context Embedding Similarity: {sim_val:.2f}")
             
             st.divider()
             

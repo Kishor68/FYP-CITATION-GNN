@@ -48,10 +48,17 @@ class TestPipelineComponents(unittest.TestCase):
         g_out = analyze_graph_suspicion(paper_data, matched)
         self.assertEqual(len(g_out), 1)
         self.assertIn("graph_score", g_out[0])
+        self.assertIn("author_group_score", g_out[0])
+        self.assertIn("citation_circle_score", g_out[0])
+        self.assertIn("amplification_score", g_out[0])
+        self.assertNotIn("status", g_out[0])
         
         s_out = analyze_semantic_suspicion(paper_data, matched)
         self.assertEqual(len(s_out), 1)
         self.assertIn("semantic_score", s_out[0])
+        self.assertIn("weak_citation_score", s_out[0])
+        self.assertIn("semantic_alignment_score", s_out[0])
+        self.assertNotIn("status", s_out[0])
 
     def test_fused_record_contract(self):
         retrieval_rec = {
@@ -64,13 +71,29 @@ class TestPipelineComponents(unittest.TestCase):
             "match_method": "exact_normalized_title",
             "match_score": 1.0,
         }
-        graph_rec = {"citation_id": "C001", "graph_score": 0.8, "graph_evidence": ["anomaly"]}
-        semantic_rec = {"citation_id": "C001", "semantic_score": 0.7, "semantic_evidence": ["drift"], "reason": "Topic drift."}
+        graph_rec = {
+            "citation_id": "C001",
+            "graph_score": 0.8,
+            "author_group_score": 0.75,
+            "citation_circle_score": 0.85,
+            "amplification_score": 0.80,
+            "graph_evidence": ["anomaly"]
+        }
+        semantic_rec = {
+            "citation_id": "C001",
+            "semantic_score": 0.7,
+            "weak_citation_score": 0.70,
+            "semantic_alignment_score": 0.70,
+            "semantic_evidence": ["drift"],
+            "reason": "Topic drift."
+        }
         
         fused = fuse_citation_evidence(retrieval_rec, graph_rec, semantic_rec)
         self.assertTrue(validate_final_record(fused))
         self.assertEqual(fused["integrity_risk_score"], 0.75)
         self.assertEqual(fused["classification"], "suspicious")
+        self.assertIn("author_group_score", fused)
+        self.assertIn("weak_citation_score", fused)
 
 if __name__ == "__main__":
     unittest.main()
