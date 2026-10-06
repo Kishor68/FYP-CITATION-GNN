@@ -60,9 +60,24 @@ def split_references(bib_text: str) -> List[str]:
     if not bib_text:
         return []
 
-    # 1. Standard bracketed pattern like [1] ... [2] ... or (1) ... (2) ...
-    bracket_pattern = r'(\[\d+\]|\(\d+\))'
+    # 1. Square bracketed pattern like [1] ... [2] ...
+    bracket_pattern = r'(\[\d+\])'
     parts = re.split(bracket_pattern, bib_text)
+    if len(parts) > 2:
+        entries = []
+        for i in range(1, len(parts), 2):
+            label = parts[i]
+            content = parts[i+1] if i+1 < len(parts) else ""
+            clean_entry = f"{label} {content.strip()}"
+            clean_entry = re.sub(r'\s+', ' ', clean_entry)
+            if len(clean_entry) > 10:
+                entries.append(clean_entry)
+        if len(entries) >= 2:
+            return entries
+
+    # 1b. Parenthesized pattern like (1) ... (2) ... if square brackets not present
+    paren_pattern = r'(\(\d+\))'
+    parts = re.split(paren_pattern, bib_text)
     if len(parts) > 2:
         entries = []
         for i in range(1, len(parts), 2):

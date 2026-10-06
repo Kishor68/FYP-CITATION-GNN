@@ -1,6 +1,7 @@
 import requests
 import json
 import time
+import re
 from pathlib import Path
 from typing import Dict, Any, Optional, List
 from src.config import (
@@ -21,6 +22,8 @@ class OpenAlexAPI:
         }
         if OPENALEX_API_KEY:
             self.headers["api_key"] = OPENALEX_API_KEY
+        self.session = requests.Session()
+        self.session.headers.update(self.headers)
 
     def _get_cache_path(self, query_key: str) -> Path:
         safe_key = "".join(c if c.isalnum() else "_" for c in query_key)[:100]
@@ -30,7 +33,11 @@ class OpenAlexAPI:
         """
         Searches OpenAlex works by title string with caching and retries.
         """
-        cache_key = f"title_search_{title}"
+        if not title or len(title.strip()) < 4 or title.startswith("http"):
+            return []
+
+        clean_title = re.sub(r'^[,\.:\s"“\']+|[,\.:\s"”\']+$', '', title).strip()
+        cache_key = f"title_search_{clean_title}"
         cache_file = self._get_cache_path(cache_key)
 
         if cache_file.exists():
@@ -41,13 +48,14 @@ class OpenAlexAPI:
                 pass
 
         params = {
-            "search": title,
+            "search": clean_title,
             "per_page": max_results,
         }
 
-        for attempt in range(3):
+        time.sleep(0.2)
+        for attempt in range(4):
             try:
-                response = requests.get(OPENALEX_BASE_URL, headers=self.headers, params=params, timeout=10)
+                response = self.session.get(OPENALEX_BASE_URL, params=params, timeout=10)
                 if response.status_code == 200:
                     data = response.json()
                     results = data.get("results", [])
@@ -56,12 +64,18 @@ class OpenAlexAPI:
                         json.dump(results, f, indent=2, ensure_ascii=False)
                         
                     return results
-                elif response.status_code == 429:
-                    time.sleep(1.5)
+                elif response.status_code in (429, 503):
+                    time.sleep(1.5 * (attempt + 1))
             except Exception as e:
-                if attempt == 2:
-                    print(f"[OpenAlexAPI Warning] Failed to search title '{title}': {e}")
-                time.sleep(1.0)
+                if attempt == 3:
+                    print(f"[OpenAlexAPI Warning] Failed to search title '{clean_title}': {e}")
+                time.sleep(0.5 * (attempt + 1))
+                # Reset session on connection error
+                try:
+                    self.session = requests.Session()
+                    self.session.headers.update(self.headers)
+                except Exception:
+                    pass
                 
         return []
 

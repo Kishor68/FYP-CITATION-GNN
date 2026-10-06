@@ -18,6 +18,8 @@ def _split_into_sentences(text: str) -> List[str]:
     masked = text
     # Mask single capital letter initials like " T. " or " T. N. "
     masked = re.sub(r'\b([A-Z])\.', r'\1___DOT___', masked)
+    # Mask journal category tags like [J]., [C]., [M]., [D]., [R]., [P].
+    masked = re.sub(r'\[([A-Z])\]\.', r'[\1]___DOT___', masked)
     # Mask common reference abbreviations
     abbrevs = ["et al", "ed", "eds", "vol", "no", "pp", "p", "fig", "dr", "prof", "vs", "ie", "eg", "dept"]
     for abb in abbrevs:
@@ -46,8 +48,8 @@ def parse_reference_fields(raw_text: str) -> Dict[str, Any]:
     """
     cleaned = clean_block(raw_text)
     
-    # Strip leading label like [1], (1), 1., etc.
-    cleaned_no_label = re.sub(r'^\s*(\[\d+\]|\(\d+\)|\d+\.)\s*', '', cleaned)
+    # Strip leading label like [1], (1), 1., C001, etc.
+    cleaned_no_label = re.sub(r'^\s*(\[\d+\]|\(\d+\)|\d+\.|C\d+)\s*', '', cleaned)
     
     # Extract year (4 digit number 1900-2029)
     year_match = re.search(r'\b(19\d\d|20[0-2]\d)\b', cleaned_no_label)
@@ -61,49 +63,67 @@ def parse_reference_fields(raw_text: str) -> Dict[str, Any]:
     if quote_match and len(quote_match.group(1).strip()) > 5:
         title = quote_match.group(1).strip()
 
-    # Strategy 2: Split by sentence/period while respecting initials
-    parts = _split_into_sentences(cleaned_no_label)
-    
-    if not title and parts:
-        # Check parts for title candidate
-        # If year is in parentheses like (2017), parts often look like:
-        # Part 0: "Kipf, T. N., & Welling, M. (2017)"
-        # Part 1: "Semi-supervised classification with graph convolutional networks"
-        # Part 2: "ICLR"
-        candidate_idx = 1 if len(parts) > 1 else 0
-        
-        # If part 0 doesn't contain year or authors, or if part 0 is author list
-        if len(parts) > 1:
-            # Check if part 0 is predominantly author names / year
-            part0 = parts[0]
-            # Strip year from part0 if present
-            part0_clean = re.sub(r'\(?\b(19\d\d|20[0-2]\d)\b\)?', '', part0).strip()
-            
-            # If part0 looks like authors (contains commas, &, et al., or initials)
-            if re.search(r'(,|&|\bet al\b|[A-Z]\.)', part0_clean) or len(part0_clean) < 40:
-                title = parts[1]
+    # Strategy 2: Check for journal tag [J]., [C]., [M]. or et al. boundary
+    if not title:
+        # Check for [J]., [C]., [M]., [D]. tag which separates Title from Venue
+        tag_match = re.search(r'(.*?)\s*\[[A-Z](/OL)?\]\.?\s*(.*)', cleaned_no_label)
+        if tag_match:
+            before_tag = tag_match.group(1).strip()
+            # If before_tag contains et al. or author list
+            et_match = re.search(r'\bet\s+al\b\.?\s*,?\s*(.*)', before_tag, re.IGNORECASE)
+            if et_match:
+                title = et_match.group(1).strip()
             else:
-                title = parts[0]
+                # Split before_tag by period to separate author from title
+                b_parts = _split_into_sentences(before_tag)
+                title = b_parts[-1] if b_parts else before_tag
         else:
-            title = parts[0]
+            # Check for et al. boundary
+            et_match = re.search(r'\bet\s+al\b\.?\s*,?\s*(.*)', cleaned_no_label, re.IGNORECASE)
+            if et_match:
+                after_et = et_match.group(1).strip()
+                a_parts = _split_into_sentences(after_et)
+                title = a_parts[0] if a_parts else after_et
+            else:
+                parts = _split_into_sentences(cleaned_no_label)
+                valid_parts = [p.strip() for p in parts if not re.match(r'^\(?\s*(19\d\d|20[0-2]\d)\s*\)?$', p.strip())]
+                if len(valid_parts) >= 2:
+                    p0 = valid_parts[0]
+                    p0_clean = re.sub(r'\(?\b(19\d\d|20[0-2]\d)\b\)?', '', p0).strip()
+                    is_author = bool(re.search(r'(,|&|\bet al\b|\b[A-Z]\.|\band\b)', p0_clean)) or len(p0_clean) < 45
+                    title = valid_parts[1] if is_author else valid_parts[0]
+                elif valid_parts:
+                    title = valid_parts[0]
 
     # Clean extracted title
     if title:
-        # Remove trailing/leading punctuation and year patterns
-        title = re.sub(r'^\s*[\"\“\']|[\"\”\']\s*$', '', title)
-        title = re.sub(r'\s*\(?\b(19\d\d|20[0-2]\d)\b\)?\s*$', '', title).strip()
+        # Repair broken PDF line-break hyphens like "Convolu- tional" -> "Convolutional"
+        title = re.sub(r'(\b[a-zA-Z]+)-\s+([a-zA-Z]+\b)', r'\1\2', title)
+        # Strip journal category tags like [J], [C], [M]
+        title = re.sub(r'\[[A-Z](/OL)?\]', '', title)
+        # Strip trailing/leading quotes, commas, colons, and punctuation
+        title = re.sub(r'^[,\.:\s"“\']+|[,\.:\s"”\']+$', '', title)
+        title = re.sub(r'\s*\(?\b(19\d\d|20[0-2]\d)\b\)?\s*$', '', title)
+        # Strip venue prefix/suffix if present
+        title = re.sub(r'\s+In\s+[A-Z].*$', '', title)
+        title = re.sub(r'^[,\.:\s"“\']+|[,\.:\s"”\']+$', '', title)
+        title = title.strip()
+
+    # Fallback to cleaned text if title was not isolated cleanly
+    if not title or len(title) < 5:
+        title = cleaned_no_label
 
     # Lead author extraction
     author_match = re.search(r'^([A-Z][a-zA-Z\-]+)', cleaned_no_label)
     lead_author = author_match.group(1) if author_match else None
     
-    # Venue candidate (last part if available)
-    venue = parts[-1] if len(parts) > 2 else None
+    parts_all = _split_into_sentences(cleaned_no_label)
+    venue = parts_all[-1] if len(parts_all) > 2 else None
     
     return {
         "raw_text": raw_text,
         "clean_text": cleaned_no_label,
-        "title": title or cleaned_no_label,
+        "title": title,
         "lead_author": lead_author,
         "year": year,
         "venue": venue,

@@ -199,91 +199,96 @@ def _format_institution_name(raw_name: str) -> str:
 
 def extract_authors_and_institutions(lines_info: List[Dict[str, Any]], page1_text: str, title: str = "") -> Tuple[List[str], List[str]]:
     """
-    Extracts author names and institutions/affiliations from page 1 layout.
+    Extracts author names and institutions/affiliations from page 1 layout and text.
     Target text strictly between Title and Abstract/Introduction to avoid header artifacts.
     """
     authors = []
     institutions = []
 
-    # Isolate header lines below title and before Abstract / Introduction
-    header_lines = []
-    in_author_zone = False
-    
-    if lines_info:
-        max_size = max(l["avg_size"] for l in lines_info[:15]) if lines_info else 12.0
-        for l in lines_info:
-            txt = l["text"].strip()
-            size = l["avg_size"]
-            
-            if re.search(r'(?i)^\s*(abstract|index terms|1\s+introduction|i\.\s+introduction)\b', txt):
-                break
-                
-            if abs(size - max_size) <= 2.5:
-                in_author_zone = True
-                continue
-                
-            if in_author_zone and len(txt) > 1:
-                header_lines.append(txt)
+    title_pos = -1
+    if title:
+        title_pos = page1_text.find(title)
+        if title_pos == -1:
+            first_words = " ".join(title.split()[:4])
+            if len(first_words) > 5:
+                title_pos = page1_text.find(first_words)
 
-    if not header_lines:
-        title_pos = page1_text.find(title) if title else -1
-        text_after_title = page1_text[title_pos + len(title):] if title_pos != -1 else page1_text
-        abs_pos = re.search(r'(?i)\b(abstract|index terms|1\s+introduction|i\.\s+introduction)\b', text_after_title)
-        sub_text = text_after_title[:abs_pos.start()] if abs_pos else text_after_title[:1200]
-        header_lines = [l.strip() for l in sub_text.splitlines() if l.strip()]
+    sub_text = page1_text[title_pos + len(title):] if title_pos != -1 else page1_text
+    
+    abs_match = re.search(r'(?i)\b(abstract|index terms|1\s+introduction|i\.\s+introduction)\b', sub_text)
+    header_zone = sub_text[:abs_match.start()] if abs_match else sub_text[:1500]
+
+    # Clean IEEE badges, emails, ORCIDs, and page numbers
+    cleaned_zone = re.sub(r'(?i)\b(Senior\s+Member|Member|Fellow|Student\s+Member)\s*,\s*IEEE\b', '', header_zone)
+    cleaned_zone = re.sub(r'\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\b', '', cleaned_zone)
+    cleaned_zone = re.sub(r'\{[^\}]*\}', '', cleaned_zone)
+
+    lines = [l.strip() for l in cleaned_zone.splitlines() if l.strip()]
 
     affil_keywords = [
         "university", "institute", "department", "college", "school", "laboratory",
-        "lab", "center", "centre", "inc", "ltd", "corp", "faculty"
+        "lab", "center", "centre", "inc", "ltd", "corp", "faculty", "group"
     ]
-    location_keywords = [
+    location_words = [
         "china", "usa", "uk", "japan", "germany", "france", "canada", "australia", "india",
-        "sichuan", "california", "texas", "beijing", "shanghai", "london", "p.r.", "prc"
+        "sichuan", "california", "texas", "beijing", "shanghai", "london", "p.r.", "prc", "p.r. china"
     ]
 
-    target_block = "\n".join(header_lines)
-    # Clean IEEE badges (Member, IEEE / Fellow, IEEE), emails, and ORCIDs
-    cleaned_block = re.sub(r'(?i)\b(Senior\s+Member|Member|Fellow|Student\s+Member)\s*,\s*IEEE\b', '', target_block)
-    cleaned_block = re.sub(r'\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\b', '', cleaned_block)
-    cleaned_block = re.sub(r'\{[^\}]*\}', '', cleaned_block)
+    title_lower = title.lower() if title else ""
 
-    for line in cleaned_block.splitlines():
-        line_clean = line.strip()
-        if not line_clean or len(line_clean) < 2:
+    for line in lines:
+        if not line or len(line) < 2:
             continue
-            
-        line_lower = line_clean.lower()
+        line_lower = line.lower()
 
-        # Filter out address/location/metadata lines
-        if any(lk in line_lower for lk in location_keywords) or re.search(r'\b\d{5,6}\b', line_clean):
+        # Skip metadata header lines like "Research Track Paper KDD '20" or "Virtual Event, USA"
+        if any(kw in line_lower for kw in ["paper", "track", "event", "virtual", "volume", "issue", "ieee transactions", "acm reference"]):
             continue
 
         if any(ak in line_lower for ak in affil_keywords):
-            txt_spaced = re.sub(r'([a-z])([A-Z])', r'\1 \2', line_clean)
-            clean_inst = re.sub(r'[\d\*\†\‡\§\¶@\{\}]', '', txt_spaced).strip()
-            parts = re.split(r'\s{2,}', clean_inst)
+            parts = re.split(r',|\t|\s{2,}', line)
             for p in parts:
-                p_fmt = _format_institution_name(p)
-                if len(p_fmt) > 3 and p_fmt not in institutions and not any(ext in p_fmt for ext in [".edu", ".com", ".cn", ".org"]):
-                    institutions.append(p_fmt)
+                p_clean = re.sub(r'[\d\*\†\‡\§\¶@\{\}]', '', p).strip()
+                p_clean = _format_institution_name(p_clean)
+                if p_clean and any(ak in p_clean.lower() for ak in affil_keywords):
+                    if p_clean not in institutions and not any(ext in p_clean.lower() for ext in [".edu", ".com", ".cn", ".org"]):
+                        institutions.append(p_clean)
         else:
-            clean_author_line = re.sub(r'[\d\*\†\‡\§\¶@\{\}]', '', line_clean)
-            tokens = clean_author_line.split()
-            is_camel_joined = any(re.search(r'[a-z][A-Z]', tok) for tok in tokens)
+            clean_line = re.sub(r'[\d\*\†\‡\§\¶@\{\}]', '', line).strip()
+            if clean_line:
+                raw_parts = re.split(r',|\band\b', clean_line)
+                for rp in raw_parts:
+                    rp = rp.strip()
+                    rp_lower = rp.lower()
+                    if not rp or any(kw in rp_lower for kw in ["paper", "track", "event", "virtual", "volume", "issue", "ieee", "acm"]):
+                        continue
+                    if any(loc == rp_lower for loc in location_words):
+                        continue
+                    if title_lower and rp_lower in title_lower:
+                        continue
+                        
+                    words = rp.split()
+                    if len(words) >= 4 and len(words) % 2 == 0 and all(w[0].isupper() for w in words if w):
+                        for i in range(0, len(words), 2):
+                            name_pair = f"{words[i]} {words[i+1]}"
+                            if name_pair not in authors and name_pair.lower() not in title_lower:
+                                authors.append(name_pair)
+                    elif len(words) >= 2 and all(w[0].isupper() for w in words if w) and not any(ak in rp_lower for ak in affil_keywords):
+                        if rp not in authors and len(rp) <= 35 and rp.lower() not in title_lower:
+                            authors.append(rp)
 
-            if is_camel_joined:
-                for tok in tokens:
-                    sub_parts = re.findall(r'[A-Z][a-z]+', tok)
-                    if len(sub_parts) >= 2:
-                        name = " ".join(sub_parts)
-                        if name not in authors and not any(kw in name.lower() for kw in ["paper", "track", "event", "virtual", "volume", "issue", "ieee", "acm"]):
-                            authors.append(name)
-            else:
-                parts = [p.strip() for p in re.split(r',|\band\b|\s{2,}', clean_author_line) if p.strip()]
-                for p in parts:
-                    if re.match(r'^[A-Z][a-zA-Z\-\'\.\s]{2,35}$', p) and p not in authors:
-                        if not any(kw in p.lower() for kw in ["paper", "track", "event", "virtual", "volume", "issue", "ieee", "acm"]):
-                            authors.append(p)
+    # IEEE Footnote Fallback for Institutions if none found in main header block
+    if not institutions:
+        foot_match = re.search(r'(?:are|is)\s+with\s+the\s+([^.\n]+(?:\.[^.\n]+)?)', page1_text, re.IGNORECASE)
+        if foot_match:
+            foot_raw = foot_match.group(1).strip()
+            foot_str = re.sub(r'-\s*[\r\n]+\s*', '', foot_raw)
+            parts = [p.strip() for p in foot_str.split(',') if any(ak in p.lower() for ak in affil_keywords)]
+            for p in parts:
+                clean_p = re.sub(r'[\d\*\†\‡\§\¶@\{\}]', '', p).strip()
+                clean_p = _format_institution_name(clean_p)
+                if clean_p and clean_p not in institutions:
+                    institutions.append(clean_p)
 
     return authors[:8], institutions[:5]
 
@@ -296,6 +301,7 @@ def extract_full_paper_profile(pdf_source: Any, full_text: str, pages_text: List
     """
     embedded_meta = extract_embedded_metadata(pdf_source)
     page1_text, lines_info = extract_page1_layout(pdf_source)
+    pypdf_page1 = pages_text[0] if pages_text else page1_text
 
     # 1. Title Extraction
     title = extract_title_from_layout(lines_info, page1_text)
@@ -318,7 +324,7 @@ def extract_full_paper_profile(pdf_source: Any, full_text: str, pages_text: List
         abstract = "Graph Neural Network (GNN) has recently drawn a rapid increase of interest in many domains for its effectiveness in learning over graphs. Maximizing its performance is essential for many tasks, but remains preliminarily understood."
 
     # 3. Authors & Institutions
-    authors, institutions = extract_authors_and_institutions(lines_info, page1_text, title=title)
+    authors, institutions = extract_authors_and_institutions(lines_info, pypdf_page1, title=title)
 
     # 4. DOI, Year, Venue
     doi = extract_doi(full_text)
