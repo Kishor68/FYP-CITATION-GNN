@@ -42,9 +42,21 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
-# Inject High-Contrast CSS Styling
+# Inject High-Contrast & Premium Dark CSS Styling
 st.markdown("""
 <style>
+    /* 1. Remove Top White Bar Completely */
+    header, 
+    header[data-testid="stHeader"], 
+    div[data-testid="stHeader"], 
+    [data-testid="stAppHeader"], 
+    .stAppHeader,
+    div[data-testid="stToolbar"] {
+        display: none !important;
+        height: 0px !important;
+        visibility: hidden !important;
+    }
+    
     /* Dark Theme High-Contrast Base Colors */
     .stApp {
         background-color: #0B0F17;
@@ -73,10 +85,133 @@ st.markdown("""
         color: #F9FAFB !important;
     }
 
-    /* Alert / Info Boxes High-Contrast Styling */
+    /* 2. Whitish-Blue Score & Metric Colors */
+    div[data-testid="stMetricValue"], 
+    .metric-value, 
+    [data-testid="stMetricValue"] > div,
+    [data-testid="stMetricValue"] * {
+        color: #E0F2FE !important; /* Whitish-Blue */
+        font-weight: 700 !important;
+        text-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
+    }
+    
+    div[data-testid="stMetricLabel"] label, 
+    div[data-testid="stMetricLabel"] p {
+        color: #94A3B8 !important;
+        font-size: 0.9rem !important;
+        font-weight: 600 !important;
+    }
+
+    /* 3. Non-White Contrasting Button Styling */
+    button, 
+    button[data-testid="stBaseButton-secondary"], 
+    button[data-testid="stBaseButton-primary"], 
+    button[data-testid="stBaseButton-tertiary"],
+    div[data-testid="stFileUploader"] button,
+    div[data-testid="stFileUploaderDropzone"] button,
+    .stButton > button,
+    [data-testid="stFormSubmitButton"] > button {
+        background-color: #1E293B !important;
+        color: #38BDF8 !important; /* Whitish-blue text */
+        border: 1px solid #334155 !important;
+        border-radius: 6px !important;
+        font-weight: 600 !important;
+        transition: all 0.2s ease-in-out !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.3) !important;
+    }
+
+    button *, 
+    button[data-testid="stBaseButton-secondary"] *,
+    div[data-testid="stFileUploader"] button * {
+        color: #38BDF8 !important;
+    }
+    
+    button[kind="primary"], button[data-testid="stBaseButton-primary"] {
+        background-color: #2563EB !important;
+        color: #FFFFFF !important;
+        border: 1px solid #3B82F6 !important;
+    }
+    button[kind="primary"] *, button[data-testid="stBaseButton-primary"] * {
+        color: #FFFFFF !important;
+    }
+
+    button:hover, 
+    button[data-testid="stBaseButton-secondary"]:hover, 
+    div[data-testid="stFileUploader"] button:hover,
+    .stButton > button:hover {
+        background-color: #334155 !important;
+        color: #7DD3FC !important;
+        border-color: #38BDF8 !important;
+        box-shadow: 0 0 12px rgba(56, 189, 248, 0.3) !important;
+    }
+    button:hover *, 
+    button[data-testid="stBaseButton-secondary"]:hover * {
+        color: #7DD3FC !important;
+    }
+
+    button[kind="primary"]:hover, button[data-testid="stBaseButton-primary"]:hover {
+        background-color: #1D4ED8 !important;
+        border-color: #60A5FA !important;
+        box-shadow: 0 0 12px rgba(37, 99, 235, 0.4) !important;
+    }
+    
+    button:disabled, button[disabled] {
+        background-color: #1E293B !important;
+        color: #64748B !important;
+        border: 1px solid #334155 !important;
+        cursor: not-allowed !important;
+        opacity: 0.6 !important;
+    }
+    button:disabled * {
+        color: #64748B !important;
+    }
+
+    /* 4. Highlighted Score Badges & Code Blocks (Non-White Background, Whitish-Blue Text) */
+    code, 
+    .stMarkdown code, 
+    div[data-testid="stMarkdownContainer"] code {
+        background-color: #1E293B !important;
+        color: #38BDF8 !important; /* Whitish-blue score badge text */
+        border: 1px solid #334155 !important;
+        border-radius: 6px !important;
+        padding: 3px 8px !important;
+        font-weight: 700 !important;
+        font-size: 0.95rem !important;
+        font-family: monospace !important;
+    }
+
+    /* 5. Dividers (Thinner & Dark Slate Lines) */
+    hr, 
+    [data-testid="stHr"], 
+    div[data-testid="stMarkdownContainer"] hr {
+        border: none !important;
+        border-top: 1px solid #1E293B !important;
+        margin: 1rem 0 !important;
+    }
+
+    /* 6. Thinner & Gradient Progress Bars */
+    div[data-testid="stProgress"] {
+        margin-top: 4px !important;
+        margin-bottom: 14px !important;
+    }
+
+    div[data-testid="stProgress"] > div {
+        height: 5px !important;
+        background-color: #1E293B !important;
+        border-radius: 9999px !important;
+        border: none !important;
+    }
+
+    div[data-testid="stProgress"] div[role="progressbar"] {
+        height: 5px !important;
+        background: linear-gradient(90deg, #0284C7 0%, #38BDF8 100%) !important;
+        border-radius: 9999px !important;
+    }
+
+    /* Alert / Info Boxes Styling */
     div[data-testid="stAlert"] {
-        background-color: #1F2937 !important;
-        border: 1px solid #374151 !important;
+        background-color: #1E293B !important;
+        border: 1px solid #334155 !important;
         color: #F9FAFB !important;
         border-radius: 8px !important;
     }
@@ -87,67 +222,16 @@ st.markdown("""
         line-height: 1.6 !important;
     }
 
-    /* Metric Cards */
-    .metric-card {
-        background-color: #1F2937;
-        border: 1px solid #374151;
-        border-radius: 8px;
-        padding: 18px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-    }
-    .metric-title {
-        color: #9CA3AF;
-        font-size: 0.875rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-    }
-    .metric-value {
-        color: #FFFFFF;
-        font-size: 2rem;
-        font-weight: 700;
-        margin-top: 4px;
-    }
-
-    /* Badges */
-    .badge-suspicious {
-        background-color: #7F1D1D;
-        color: #FCA5A5;
-        border: 1px solid #EF4444;
-        padding: 4px 10px;
-        border-radius: 16px;
-        font-weight: 600;
-        font-size: 0.85rem;
-    }
-    .badge-manual {
-        background-color: #78350F;
-        color: #FDE68A;
-        border: 1px solid #F59E0B;
-        padding: 4px 10px;
-        border-radius: 16px;
-        font-weight: 600;
-        font-size: 0.85rem;
-    }
-    .badge-valid {
-        background-color: #064E3B;
-        color: #A7F3D0;
-        border: 1px solid #10B981;
-        padding: 4px 10px;
-        border-radius: 16px;
-        font-weight: 600;
-        font-size: 0.85rem;
-    }
-    
-    /* File Uploader styling override for high contrast */
+    /* File Uploader Container */
     div[data-testid="stFileUploader"] {
-        background-color: #1F2937 !important;
-        border: 2px dashed #4B5563 !important;
+        background-color: #1E293B !important;
+        border: 2px dashed #334155 !important;
         border-radius: 8px !important;
         padding: 15px !important;
     }
     
     div[data-testid="stFileUploader"] section {
-        background-color: #1F2937 !important;
+        background-color: #1E293B !important;
     }
 
     div[data-testid="stFileUploader"] label,
@@ -155,31 +239,10 @@ st.markdown("""
     div[data-testid="stFileUploader"] small {
         color: #F9FAFB !important;
     }
-    
-    /* Streamlit Buttons High-Contrast Overrides */
-    button[kind="primary"] {
-        background-color: #2563EB !important;
-        color: #FFFFFF !important;
-        font-weight: 600 !important;
-        border-radius: 6px !important;
-        border: none !important;
-    }
-    
-    button[kind="primary"]:hover {
-        background-color: #1D4ED8 !important;
-    }
-    
-    button:disabled, button[disabled] {
-        background-color: #374151 !important;
-        color: #9CA3AF !important;
-        border: 1px solid #4B5563 !important;
-        cursor: not-allowed !important;
-        opacity: 0.8 !important;
-    }
-    
+
     /* Dataframes & Tables */
     .stDataFrame {
-        border: 1px solid #374151 !important;
+        border: 1px solid #334155 !important;
         border-radius: 6px !important;
     }
 </style>
