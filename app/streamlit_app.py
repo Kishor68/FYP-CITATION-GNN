@@ -248,9 +248,14 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
+# Helper for Smooth Single-Click Navigation
+def navigate_to(target_page: str):
+    st.session_state["nav_selection"] = target_page
+    st.rerun()
+
 # Initialize Session State
-if "current_page" not in st.session_state:
-    st.session_state.current_page = "Upload Paper"
+if "nav_selection" not in st.session_state:
+    st.session_state["nav_selection"] = "Upload Paper"
 if "pipeline_result" not in st.session_state:
     st.session_state.pipeline_result = None
 if "selected_citation_id" not in st.session_state:
@@ -274,8 +279,7 @@ nav_options = [
     "Settings & Parameters",
 ]
 
-page = st.sidebar.radio("Navigation", nav_options, index=nav_options.index(st.session_state.current_page))
-st.session_state.current_page = page
+page = st.sidebar.radio("Navigation", nav_options, key="nav_selection")
 
 st.sidebar.divider()
 if st.session_state.pipeline_result:
@@ -347,12 +351,10 @@ if page == "Upload Paper":
             col_b1, col_b2 = st.columns(2)
             with col_b1:
                 if st.button("View Paper Profile", use_container_width=True):
-                    st.session_state.current_page = "Paper Profile"
-                    st.rerun()
+                    navigate_to("Paper Profile")
             with col_b2:
                 if st.button("View Citation Results", use_container_width=True):
-                    st.session_state.current_page = "Analysis Overview & Results"
-                    st.rerun()
+                    navigate_to("Analysis Overview & Results")
                 
         except Exception as e:
             st.error(f"Analysis Pipeline Failed: {str(e)}")
@@ -368,8 +370,7 @@ elif page == "Paper Profile":
     if not st.session_state.pipeline_result:
         st.warning("No active analysis loaded. Please upload a paper first.")
         if st.button("Go to Upload Page"):
-            st.session_state.current_page = "Upload Paper"
-            st.rerun()
+            navigate_to("Upload Paper")
     else:
         res = st.session_state.pipeline_result
         prof = res.get("paper_profile", {})
@@ -494,8 +495,7 @@ elif page == "Analysis Overview & Results":
     if not st.session_state.pipeline_result:
         st.warning("No analysis results available. Please upload a paper first.")
         if st.button("Go to Upload Page"):
-            st.session_state.current_page = "Upload Paper"
-            st.rerun()
+            navigate_to("Upload Paper")
     else:
         res = st.session_state.pipeline_result
         metrics = res["summary_metrics"]
@@ -588,8 +588,7 @@ elif page == "Analysis Overview & Results":
         
         if st.button("Open Detailed Citation Evidence"):
             st.session_state.selected_citation_id = selected_cid
-            st.session_state.current_page = "Citation Evidence Detail"
-            st.rerun()
+            navigate_to("Citation Evidence Detail")
 
 
 # =============================================================================
@@ -613,8 +612,7 @@ elif page == "Citation Evidence Detail":
             st.session_state.selected_citation_id = selected_cid
         with col_back:
             if st.button("Back to Results"):
-                st.session_state.current_page = "Analysis Overview & Results"
-                st.rerun()
+                navigate_to("Analysis Overview & Results")
                 
         # Find record
         record = next((c for c in citations if c["citation_id"] == selected_cid), None)
