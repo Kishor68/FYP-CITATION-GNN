@@ -51,7 +51,7 @@ def fuse_citation_evidence(
     semantic_alignment_score = float(semantic_record.get("semantic_alignment_score", 0.0))
 
     risk_score = calculate_fused_risk(g_score, s_score, alpha, beta)
-    classification = "N/A"
+    classification = get_classification_label(risk_score)
     
     # Combine evidence list
     g_ev = graph_record.get("graph_evidence", [])

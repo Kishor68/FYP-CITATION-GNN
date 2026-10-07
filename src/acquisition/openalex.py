@@ -45,33 +45,37 @@ class OpenAlexAPI:
         if cache_file.exists():
             try:
                 with open(cache_file, "r", encoding="utf-8") as f:
-                    return json.load(f)
+                    cached_data = json.load(f)
+                    if isinstance(cached_data, list) and len(cached_data) > 0:
+                        return cached_data
             except Exception:
                 pass
 
         params = {
             "search": clean_title,
             "per_page": max_results,
+            "mailto": OPENALEX_CONTACT_EMAIL,
         }
 
-        time.sleep(0.2)
-        for attempt in range(4):
+        time.sleep(0.15)
+        for attempt in range(5):
             try:
                 response = self.session.get(OPENALEX_BASE_URL, params=params, timeout=10)
                 if response.status_code == 200:
                     data = response.json()
                     results = data.get("results", [])
                     
-                    with open(cache_file, "w", encoding="utf-8") as f:
-                        json.dump(results, f, indent=2, ensure_ascii=False)
+                    if results:
+                        with open(cache_file, "w", encoding="utf-8") as f:
+                            json.dump(results, f, indent=2, ensure_ascii=False)
                         
                     return results
                 elif response.status_code in (429, 503):
-                    time.sleep(1.5 * (attempt + 1))
+                    time.sleep(2.0 * (attempt + 1))
             except Exception as e:
-                if attempt == 3:
+                if attempt == 4:
                     print(f"[OpenAlexAPI Warning] Failed to search title '{clean_title}': {e}")
-                time.sleep(0.5 * (attempt + 1))
+                time.sleep(1.0 * (attempt + 1))
                 # Reset session on connection error
                 try:
                     self.session = requests.Session()
