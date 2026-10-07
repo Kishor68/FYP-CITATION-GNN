@@ -1,59 +1,106 @@
 """
 =============================================================================
-MODULE: Semantic Alignment & LLM Reasoning Analysis
+MODULE: Semantic Alignment & SPECTER2 Inference Analysis
 OWNER: Person 2 (Semantic Module Lead)
 =============================================================================
-Instructions for Person 2:
-- Replace or extend the logic in `analyze_semantic_suspicion()` with your trained semantic similarity / LLM explanation model.
-- Input contract: List of matched citation records and paper metadata.
-- Output contract per citation:
-    {
-        "citation_id": "C001",
-        "semantic_score": 0.77,             # Composite semantic suspicion (0.00 to 1.00)
-        "weak_citation_score": 0.80,        # Weak relevance / padding citation suspicion
-        "semantic_alignment_score": 0.74,   # Topic drift & contextual misalignment suspicion
-        "semantic_similarity": 0.26,        # Cosine / Embedding similarity (1.0 - alignment_score)
-        "reason": "Textual context discusses quantum computing but cited work is on agriculture.",
-        "semantic_evidence": ["topic mismatch", "irrelevance_abstract"]
-    }
 """
 
+import torch
+import numpy as np
 from typing import Dict, Any, List
+from scipy.special import expit
+from sklearn.metrics.pairwise import cosine_similarity
+from transformers import AutoTokenizer
+from adapters import AutoAdapterModel
+
+# Global model cache to avoid reloading weights on every upload
+_TOKENIZER = None
+_MODEL = None
+_DEVICE = None
+
+# Baseline statistics calibrated from genuine citations
+GENUINE_MEAN = 0.9274
+GENUINE_STD = 0.0251
+
+def get_specter2_model():
+    global _TOKENIZER, _MODEL, _DEVICE
+    if _MODEL is None:
+        MODEL_NAME = "allenai/specter2_base"
+        ADAPTER_NAME = "allenai/specter2"
+        _TOKENIZER = AutoTokenizer.from_pretrained(MODEL_NAME)
+        _MODEL = AutoAdapterModel.from_pretrained(MODEL_NAME)
+        _MODEL.load_adapter(ADAPTER_NAME, source="hf", load_as="proximity")
+        _MODEL.set_active_adapters("proximity")
+        _DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        _MODEL = _MODEL.to(_DEVICE)
+        _MODEL.eval()
+    return _TOKENIZER, _MODEL, _DEVICE
+
+def compute_weak_citation_score(similarity: float) -> float:
+    sig = max(GENUINE_STD, 1e-6)
+    z = (GENUINE_MEAN - float(similarity)) / sig
+    return float(expit(z))
 
 def analyze_semantic_suspicion(paper_data: Dict[str, Any], citation_records: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
     """
-    Computes semantic suspicion score partitioned into:
-    - weak_citation_score (superficial or padding citation suspicion)
-    - semantic_alignment_score (topic drift / contextual misalignment suspicion)
+    Person 2's SPECTER2 Semantic Inference:
+    Computes real semantic suspicion scores based on title + abstract similarity.
     """
+    citing_title = paper_data.get("paper_title", "")
+    citing_abstract = paper_data.get("abstract", "")
+    
+    citing_text = (citing_title.strip() + " [SEP] " + citing_abstract.strip()).strip()
+    
+    tokenizer, model, device = get_specter2_model()
+    
     results = []
+    
+    # Collect cited texts
+    cited_texts = []
+    for cite in citation_records:
+        matched_title = cite.get("matched_title") or cite.get("raw_text") or ""
+        matched_abstract = cite.get("abstract") or cite.get("citation_context") or ""
+        text = (matched_title.strip() + " [SEP] " + matched_abstract.strip()).strip()
+        cited_texts.append(text)
+        
+    if not cited_texts:
+        return results
+        
+    # Generate embeddings
+    all_texts = [citing_text] + cited_texts
+    inputs = tokenizer(all_texts, padding=True, truncation=True, max_length=512, return_tensors="pt")
+    inputs = {k: v.to(device) for k, v in inputs.items()}
+    
+    with torch.no_grad():
+        outputs = model(**inputs)
+        embeddings = outputs.last_hidden_state[:, 0, :].cpu().numpy()
+        
+    citing_emb = embeddings[0:1]
+    cited_embs = embeddings[1:]
+    
+    sims = cosine_similarity(citing_emb, cited_embs)[0]
+    
     for idx, cite in enumerate(citation_records):
         citation_id = cite["citation_id"]
+        sim = float(sims[idx])
         
-        # MOCK SCORE GENERATION FOR DEMO (Person 2 will replace this block)
-        weak_citation_score = round(min(0.95, max(0.05, 0.12 + (idx * 0.27) % 0.80)), 2)
-        semantic_alignment_score = round(min(0.95, max(0.05, 0.18 + (idx * 0.23) % 0.75)), 2)
+        wcs = compute_weak_citation_score(sim)
+        weak_citation_score = round(max(0.0, min(1.0, wcs)), 4)
+        semantic_score = weak_citation_score
         
-        # Composite Semantic Score
-        semantic_score = round((weak_citation_score + semantic_alignment_score) / 2.0, 2)
-        semantic_similarity = round(max(0.0, 1.0 - semantic_alignment_score), 2)
-        
-        if semantic_score >= 0.65:
-            reason = "Significant topic mismatch and weak citation relevance between in-text paragraph and target abstract."
-            evidence = ["Topic drift", "Superficial claim citation", "Weak contextual relevance"]
-        elif semantic_score >= 0.40:
-            reason = "Moderate semantic distance; citation claim is only weakly supported by the cited paper."
-            evidence = ["Weak contextual alignment"]
+        if weak_citation_score >= 0.50 or sim < 0.80:
+            reason = f"Low SPECTER2 similarity ({sim:.3f}) between citing paper and cited reference. Flagged as weakly related."
+            evidence = ["SPECTER2 Topic Disparity", "Weak Contextual Alignment", f"Similarity: {sim:.3f}"]
         else:
-            reason = "Strong semantic alignment between in-text citation sentence and cited paper."
-            evidence = ["High semantic relevance", "Strong claim grounding"]
+            reason = f"High SPECTER2 similarity ({sim:.3f}) confirming strong topic relevance."
+            evidence = ["High Semantic Alignment", f"Similarity: {sim:.3f}"]
             
         results.append({
             "citation_id": citation_id,
             "semantic_score": semantic_score,
             "weak_citation_score": weak_citation_score,
-            "semantic_alignment_score": semantic_alignment_score,
-            "semantic_similarity": semantic_similarity,
+            "semantic_alignment_score": 0.0,
+            "semantic_similarity": round(sim, 4),
             "reason": reason,
             "semantic_evidence": evidence,
         })

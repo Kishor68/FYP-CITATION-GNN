@@ -1,0 +1,174 @@
+{
+  "run_id": "RUN_1791357519",
+  "paper_title": "A new quantum ripple-carry addition circuit",
+  "abstract": "We present a new linear-depth ripple-carry quantum additio n circuit. Previous addition circuits required linearly many ancillary qubits ; our new adder uses only a single ancillary qubit. Also, our circuit has lower depth an d fewer gates than previous ripple-carry adders.",
+  "paper_profile": {
+    "title": "A new quantum ripple-carry addition circuit",
+    "abstract": "We present a new linear-depth ripple-carry quantum additio n circuit. Previous addition circuits required linearly many ancillary qubits ; our new adder uses only a single ancillary qubit. Also, our circuit has lower depth an d fewer gates than previous ripple-carry adders.",
+    "authors": [
+      "David Petrie Moulton"
+    ],
+    "institutions": [],
+    "venue": "ACM / IEEE Academic Publication",
+    "publication_year": 2024,
+    "doi": null,
+    "field_of_work": {
+      "domain": "Computer Science",
+      "field": "Computer Systems & Architecture",
+      "subfield": "GNN Performance & System Optimization",
+      "topic": "GNN Performance Optimizations",
+      "matched_keywords": [],
+      "confidence": 0.75,
+      "source": "pdf_text_taxonomy"
+    },
+    "openalex_verification": {
+      "is_present": true,
+      "openalex_id": "https://openalex.org/W1629802966",
+      "short_id": "W1629802966",
+      "cited_by_count": 326,
+      "landing_page_url": "https://doi.org/10.48550/arxiv.quant-ph/0410184",
+      "publication_date": "2004-10-22",
+      "concepts": [
+        "Adder",
+        "Carry (investment)",
+        "Ripple",
+        "Qubit",
+        "Electronic circuit"
+      ],
+      "match_method": "title_search"
+    },
+    "source": "pdf_extractor"
+  },
+  "summary_metrics": {
+    "total_citations": 4,
+    "matched_citations": 0,
+    "valid_citations": 3,
+    "manual_review_citations": 1,
+    "suspicious_citations": 0
+  },
+  "fusion_weights": {
+    "alpha": 0.5,
+    "beta": 0.5
+  },
+  "citations": [
+    {
+      "citation_id": "C001",
+      "raw_text": "[1] Richard J. Dore and Samuel A. Kutin, A logarithmic-depth quantum comparison circuit with one ancilla , in preparation. 7 b0 r r r r ❡ r s0 a0 r ❡ r ❡ r r a0 0 ♥i ♥i ❡ ♥− i r r r r r ♥i ♥i ❡ ♥− i 0 b1 ❡ r ❡ r ❡ ❡ r ❡ r ❡ ❡ s1 a1 r r ♥i ♥i ❡ ♥− i r r r r r ♥− i ❡ ♥i ♥i r r a1 b2 ❡ r ❡ r ❡ ❡ r ❡ r ❡ ❡ s2 a2 r r ♥i ♥i ❡ ♥− i r r r r r ♥− i ❡ ♥i ♥i r r a2 b3 ❡ r ❡ r ❡ ❡ r ❡ r ❡ ❡ s3 a3 r r ♥i ♥i ❡ ♥− i r r ♥− i ❡ ♥i ♥i r r a3 b4 ❡ r ❡ r ❡ s4 a4 r r r r r a4 z ❡ ♥i ♥i ♥− i z ⊕ s5 Figure 7: 5-bit ripple carry adder written in terms of contro lled rotations. The depth is 28. Here a circled i denotes a “square root of NOT”; i.e., a rotation by π/2. A circled − i denotes the inverse operation. 8",
+      "citation_context": "A version of our ripple-carry adder has been proposed that us es no ancillae [1].",
+      "matched_openalex_id": "W50439157",
+      "matched_title": "Square Root SAM",
+      "publication_year": 2005,
+      "cited_by_count": 114,
+      "match_method": "openalex_fallback",
+      "match_score": 0.727,
+      "match_status": "uncertain",
+      "graph_score": 0.15,
+      "author_group_score": 0.1,
+      "citation_circle_score": 0.15,
+      "amplification_score": 0.2,
+      "semantic_score": 0.298,
+      "weak_citation_score": 0.5213,
+      "semantic_alignment_score": 0.0747,
+      "semantic_similarity": 0.9253,
+      "integrity_risk_score": 0.224,
+      "classification": "valid",
+      "explanation": "Low SPECTER2 similarity (0.925) between citing paper and cited reference. Flagged as weakly related.",
+      "evidence": [
+        "Standard structural citation graph position",
+        "SPECTER2 Topic Disparity",
+        "Weak Contextual Alignment",
+        "Similarity: 0.925"
+      ]
+    },
+    {
+      "citation_id": "C002",
+      "raw_text": "[2] Thomas G. Draper, Addition on a quantum computer , quant-ph/0008033.",
+      "citation_context": "adder [2].",
+      "matched_openalex_id": null,
+      "matched_title": null,
+      "publication_year": null,
+      "cited_by_count": 0,
+      "match_method": "manual_review",
+      "match_score": 0.0,
+      "match_status": "unmatched",
+      "graph_score": 0.41,
+      "author_group_score": 0.39,
+      "citation_circle_score": 0.34,
+      "amplification_score": 0.51,
+      "semantic_score": 0.3328,
+      "weak_citation_score": 0.5845,
+      "semantic_alignment_score": 0.0812,
+      "semantic_similarity": 0.9188,
+      "integrity_risk_score": 0.371,
+      "classification": "valid",
+      "explanation": "Low SPECTER2 similarity (0.919) between citing paper and cited reference. Flagged as weakly related.",
+      "evidence": [
+        "Moderate co-author overlap",
+        "Sparse citation network position",
+        "SPECTER2 Topic Disparity",
+        "Weak Contextual Alignment",
+        "Similarity: 0.919"
+      ]
+    },
+    {
+      "citation_id": "C003",
+      "raw_text": "[3] Thomas G. Draper, Samuel A. Kutin, Eric M. Rains, and Krys ta M. Svore, A logarithmic- depth quantum carry-lookahead adder , EQIS, 2004, quant-ph/0406142.",
+      "citation_context": "Cuccaro ∗ Thomas G.",
+      "matched_openalex_id": null,
+      "matched_title": null,
+      "publication_year": null,
+      "cited_by_count": 0,
+      "match_method": "manual_review",
+      "match_score": 0.0,
+      "match_status": "unmatched",
+      "graph_score": 0.68,
+      "author_group_score": 0.68,
+      "citation_circle_score": 0.53,
+      "amplification_score": 0.82,
+      "semantic_score": 0.4114,
+      "weak_citation_score": 0.7258,
+      "semantic_alignment_score": 0.097,
+      "semantic_similarity": 0.903,
+      "integrity_risk_score": 0.546,
+      "classification": "manual_review",
+      "explanation": "Low SPECTER2 similarity (0.903) between citing paper and cited reference. Flagged as weakly related.",
+      "evidence": [
+        "Unusual author group cluster",
+        "Reciprocal citation circle detected",
+        "High citation amplification rate",
+        "SPECTER2 Topic Disparity",
+        "Weak Contextual Alignment",
+        "Similarity: 0.903"
+      ]
+    },
+    {
+      "citation_id": "C004",
+      "raw_text": "[4] Vlatko Vedral, Adriano Barenco, and Artur Ekert, Quantum networks for elementary arithmetic operations, quant-ph/9511018. 9",
+      "citation_context": "A ripple-carry adder has previously been proposed by Vedral , Barenco, and Ekert [4].",
+      "matched_openalex_id": null,
+      "matched_title": null,
+      "publication_year": null,
+      "cited_by_count": 0,
+      "match_method": "manual_review",
+      "match_score": 0.0,
+      "match_status": "unmatched",
+      "graph_score": 0.44,
+      "author_group_score": 0.17,
+      "citation_circle_score": 0.72,
+      "amplification_score": 0.43,
+      "semantic_score": 0.268,
+      "weak_citation_score": 0.4667,
+      "semantic_alignment_score": 0.0693,
+      "semantic_similarity": 0.9307,
+      "integrity_risk_score": 0.354,
+      "classification": "valid",
+      "explanation": "High SPECTER2 similarity (0.931) confirming strong topic relevance.",
+      "evidence": [
+        "Moderate co-author overlap",
+        "Sparse citation network position",
+        "High Semantic Alignment",
+        "Similarity: 0.931"
+      ]
+    }
+  ]
+}

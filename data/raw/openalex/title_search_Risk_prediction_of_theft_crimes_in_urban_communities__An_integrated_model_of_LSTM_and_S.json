@@ -1,0 +1,5404 @@
+[
+  {
+    "id": "https://openalex.org/W3107119534",
+    "doi": "https://doi.org/10.1109/access.2020.3041924",
+    "title": "Risk Prediction of Theft Crimes in Urban Communities: An Integrated Model of LSTM and ST-GCN",
+    "display_name": "Risk Prediction of Theft Crimes in Urban Communities: An Integrated Model of LSTM and ST-GCN",
+    "relevance_score": 511.59726,
+    "publication_year": 2020,
+    "publication_date": "2020-01-01",
+    "ids": {
+      "openalex": "https://openalex.org/W3107119534",
+      "doi": "https://doi.org/10.1109/access.2020.3041924",
+      "mag": "3107119534"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "doi:10.1109/access.2020.3041924",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.1109/access.2020.3041924",
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/6514899/09276416.pdf",
+      "source": {
+        "id": "https://openalex.org/S2485537415",
+        "display_name": "IEEE Access",
+        "issn_l": "2169-3536",
+        "issn": [
+          "2169-3536"
+        ],
+        "is_oa": true,
+        "is_in_doaj": true,
+        "is_core": true,
+        "listed_in": [
+          "cwts-core",
+          "doaj",
+          "jufo-1",
+          "ki-jl-1",
+          "norway-1"
+        ],
+        "host_organization": "https://openalex.org/P4310319808",
+        "host_organization_name": "Institute of Electrical and Electronics Engineers",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310319808"
+        ],
+        "host_organization_lineage_names": [
+          "Institute of Electrical and Electronics Engineers"
+        ],
+        "type": "journal"
+      },
+      "license": "cc-by-nc-nd",
+      "license_id": "https://openalex.org/licenses/cc-by-nc-nd",
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "IEEE Access",
+      "raw_type": "journal-article"
+    },
+    "type": "article",
+    "indexed_in": [
+      "crossref",
+      "doaj"
+    ],
+    "open_access": {
+      "is_oa": true,
+      "oa_status": "gold",
+      "oa_url": "https://ieeexplore.ieee.org/ielx7/6287639/6514899/09276416.pdf",
+      "any_repository_has_fulltext": true
+    },
+    "authorships": [
+      {
+        "author_position": "first",
+        "author": {
+          "id": "https://openalex.org/A5065975113",
+          "display_name": "Xinge Han",
+          "orcid": "https://orcid.org/0000-0002-3151-6590",
+          "observed_orcids": [
+            "https://orcid.org/0000-0002-3151-6590"
+          ]
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I37448385",
+            "display_name": "China People's Public Security University",
+            "ror": "https://ror.org/05twya590",
+            "country_code": "CN",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I37448385"
+            ]
+          }
+        ],
+        "countries": [
+          "CN"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Xinge Han",
+        "raw_affiliation_strings": [
+          "School of Information Network Security, People&#x2019;s Public Security University of China, Beijing, China",
+          "School of Information Network Security, People's Public Security University of China, Beijing 102628, China"
+        ],
+        "raw_orcid": "https://orcid.org/0000-0002-3151-6590",
+        "affiliations": [
+          {
+            "raw_affiliation_string": "School of Information Network Security, People&#x2019;s Public Security University of China, Beijing, China",
+            "institution_ids": [
+              "https://openalex.org/I37448385"
+            ]
+          },
+          {
+            "raw_affiliation_string": "School of Information Network Security, People's Public Security University of China, Beijing 102628, China",
+            "institution_ids": [
+              "https://openalex.org/I37448385"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5101446304",
+          "display_name": "Xiaofeng Hu",
+          "orcid": "https://orcid.org/0000-0003-3754-9913",
+          "observed_orcids": [
+            "https://orcid.org/0000-0003-3754-9913"
+          ]
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I37448385",
+            "display_name": "China People's Public Security University",
+            "ror": "https://ror.org/05twya590",
+            "country_code": "CN",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I37448385"
+            ]
+          }
+        ],
+        "countries": [
+          "CN"
+        ],
+        "is_corresponding": true,
+        "raw_author_name": "Xiaofeng Hu",
+        "raw_affiliation_strings": [
+          "School of Information Network Security, People&#x2019;s Public Security University of China, Beijing, China",
+          "School of Information Network Security, People's Public Security University of China, Beijing 102628, China"
+        ],
+        "raw_orcid": "https://orcid.org/0000-0003-3754-9913",
+        "affiliations": [
+          {
+            "raw_affiliation_string": "School of Information Network Security, People&#x2019;s Public Security University of China, Beijing, China",
+            "institution_ids": [
+              "https://openalex.org/I37448385"
+            ]
+          },
+          {
+            "raw_affiliation_string": "School of Information Network Security, People's Public Security University of China, Beijing 102628, China",
+            "institution_ids": [
+              "https://openalex.org/I37448385"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5000890657",
+          "display_name": "Huanggang Wu",
+          "orcid": null,
+          "observed_orcids": []
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I37448385",
+            "display_name": "China People's Public Security University",
+            "ror": "https://ror.org/05twya590",
+            "country_code": "CN",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I37448385"
+            ]
+          }
+        ],
+        "countries": [
+          "CN"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Huanggang Wu",
+        "raw_affiliation_strings": [
+          "School of International Police Studies, People&#x2019;s Public Security University of China, Beijing, China",
+          "School of International Police Studies, People's Public Security University of China, Beijing 102628, China"
+        ],
+        "raw_orcid": null,
+        "affiliations": [
+          {
+            "raw_affiliation_string": "School of International Police Studies, People&#x2019;s Public Security University of China, Beijing, China",
+            "institution_ids": [
+              "https://openalex.org/I37448385"
+            ]
+          },
+          {
+            "raw_affiliation_string": "School of International Police Studies, People's Public Security University of China, Beijing 102628, China",
+            "institution_ids": [
+              "https://openalex.org/I37448385"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": null,
+          "display_name": "Bing Shen",
+          "orcid": null,
+          "observed_orcids": []
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I37448385",
+            "display_name": "China People's Public Security University",
+            "ror": "https://ror.org/05twya590",
+            "country_code": "CN",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I37448385"
+            ]
+          }
+        ],
+        "countries": [
+          "CN"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Bing Shen",
+        "raw_affiliation_strings": [
+          "School of Information Network Security, People&#x2019;s Public Security University of China, Beijing, China",
+          "School of Information Network Security, People's Public Security University of China, Beijing 102628, China"
+        ],
+        "raw_orcid": null,
+        "affiliations": [
+          {
+            "raw_affiliation_string": "School of Information Network Security, People&#x2019;s Public Security University of China, Beijing, China",
+            "institution_ids": [
+              "https://openalex.org/I37448385"
+            ]
+          },
+          {
+            "raw_affiliation_string": "School of Information Network Security, People's Public Security University of China, Beijing 102628, China",
+            "institution_ids": [
+              "https://openalex.org/I37448385"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "last",
+        "author": {
+          "id": "https://openalex.org/A5070800977",
+          "display_name": "Jiansong Wu",
+          "orcid": "https://orcid.org/0000-0001-9648-6479",
+          "observed_orcids": [
+            "https://orcid.org/0000-0001-9648-6479"
+          ]
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4399598474",
+            "display_name": "China University of Mining and Technology - Beijing",
+            "ror": "https://ror.org/003ncxf91",
+            "country_code": null,
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I4399598474"
+            ]
+          }
+        ],
+        "countries": [
+          "CN"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Jiansong Wu",
+        "raw_affiliation_strings": [
+          "School of Emergency Management and Safety Engineering, China University of Mining and Technology, Beijing, China",
+          "School of Emergency Management and Safety Engineering, China University of Mining and Technology, Beijing, 100083, China"
+        ],
+        "raw_orcid": null,
+        "affiliations": [
+          {
+            "raw_affiliation_string": "School of Emergency Management and Safety Engineering, China University of Mining and Technology, Beijing, China",
+            "institution_ids": [
+              "https://openalex.org/I4399598474"
+            ]
+          },
+          {
+            "raw_affiliation_string": "School of Emergency Management and Safety Engineering, China University of Mining and Technology, Beijing, 100083, China",
+            "institution_ids": [
+              "https://openalex.org/I4399598474"
+            ]
+          }
+        ]
+      }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 1,
+    "institutions_distinct_count": 2,
+    "corresponding_author_ids": [
+      "https://openalex.org/A5101446304"
+    ],
+    "corresponding_institution_ids": [
+      "https://openalex.org/I37448385"
+    ],
+    "apc_list": {
+      "value": 1750,
+      "currency": "USD",
+      "value_usd": 1750
+    },
+    "apc_paid": {
+      "value": 1750,
+      "currency": "USD",
+      "value_usd": 1750
+    },
+    "fwci": 9.2245,
+    "has_fulltext": true,
+    "cited_by_count": 71,
+    "citation_normalized_percentile": {
+      "value": 0.97906823,
+      "is_in_top_1_percent": false,
+      "is_in_top_10_percent": true
+    },
+    "cited_by_percentile_year": {
+      "min": 95,
+      "max": 100
+    },
+    "biblio": {
+      "volume": "8",
+      "issue": null,
+      "first_page": "217222",
+      "last_page": "217230"
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T10574",
+      "display_name": "Crime Patterns and Interventions",
+      "score": 0.9653000235557556,
+      "subfield": {
+        "id": "https://openalex.org/subfields/3312",
+        "display_name": "Sociology and Political Science"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/33",
+        "display_name": "Social Sciences"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/2",
+        "display_name": "Social Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T10574",
+        "display_name": "Crime Patterns and Interventions",
+        "score": 0.9653000235557556,
+        "subfield": {
+          "id": "https://openalex.org/subfields/3312",
+          "display_name": "Sociology and Political Science"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/33",
+          "display_name": "Social Sciences"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/2",
+          "display_name": "Social Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T11344",
+        "display_name": "Traffic Prediction and Management Techniques",
+        "score": 0.01860000006854534,
+        "subfield": {
+          "id": "https://openalex.org/subfields/2215",
+          "display_name": "Building and Construction"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/22",
+          "display_name": "Engineering"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T12325",
+        "display_name": "Urban Design and Spatial Analysis",
+        "score": 0.00279999990016222,
+        "subfield": {
+          "id": "https://openalex.org/subfields/2215",
+          "display_name": "Building and Construction"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/22",
+          "display_name": "Engineering"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/crime-risk-prediction",
+        "display_name": "crime risk prediction",
+        "score": 0.902999997138977
+      },
+      {
+        "id": "https://openalex.org/keywords/theft",
+        "display_name": "theft",
+        "score": 0.871999979019165
+      },
+      {
+        "id": "https://openalex.org/keywords/urban-communities",
+        "display_name": "urban communities",
+        "score": 0.9509999752044678
+      },
+      {
+        "id": "https://openalex.org/keywords/lstm",
+        "display_name": "LSTM",
+        "score": 0.8690000176429749
+      },
+      {
+        "id": "https://openalex.org/keywords/spatiotemporal-graph-convolutional-network",
+        "display_name": "spatio-temporal graph convolutional network",
+        "score": 0.9039999842643738
+      },
+      {
+        "id": "https://openalex.org/keywords/crime-prevention",
+        "display_name": "crime prevention",
+        "score": 0.7049999833106995
+      },
+      {
+        "id": "https://openalex.org/keywords/urban-security",
+        "display_name": "urban security",
+        "score": 0.7850000262260437
+      },
+      {
+        "id": "https://openalex.org/keywords/chicago-crime-data",
+        "display_name": "Chicago crime data",
+        "score": 0.7829999923706055
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C39853841",
+        "wikidata": "https://www.wikidata.org/wiki/Q161078",
+        "display_name": "Urbanization",
+        "level": 2,
+        "score": 0.7769277095794678
+      },
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.7134871482849121
+      },
+      {
+        "id": "https://openalex.org/C52622490",
+        "wikidata": "https://www.wikidata.org/wiki/Q1026626",
+        "display_name": "Feature extraction",
+        "level": 2,
+        "score": 0.4854748547077179
+      },
+      {
+        "id": "https://openalex.org/C2776348852",
+        "wikidata": "https://www.wikidata.org/wiki/Q855848",
+        "display_name": "Crime prevention",
+        "level": 2,
+        "score": 0.47952723503112793
+      },
+      {
+        "id": "https://openalex.org/C132525143",
+        "wikidata": "https://www.wikidata.org/wiki/Q141488",
+        "display_name": "Graph",
+        "level": 2,
+        "score": 0.43192532658576965
+      },
+      {
+        "id": "https://openalex.org/C154945302",
+        "wikidata": "https://www.wikidata.org/wiki/Q11660",
+        "display_name": "Artificial intelligence",
+        "level": 1,
+        "score": 0.3682670295238495
+      },
+      {
+        "id": "https://openalex.org/C38652104",
+        "wikidata": "https://www.wikidata.org/wiki/Q3510521",
+        "display_name": "Computer security",
+        "level": 1,
+        "score": 0.3415409028530121
+      },
+      {
+        "id": "https://openalex.org/C73484699",
+        "wikidata": "https://www.wikidata.org/wiki/Q161733",
+        "display_name": "Criminology",
+        "level": 1,
+        "score": 0.22313740849494934
+      },
+      {
+        "id": "https://openalex.org/C144024400",
+        "wikidata": "https://www.wikidata.org/wiki/Q21201",
+        "display_name": "Sociology",
+        "level": 0,
+        "score": 0.07808730006217957
+      },
+      {
+        "id": "https://openalex.org/C80444323",
+        "wikidata": "https://www.wikidata.org/wiki/Q2878974",
+        "display_name": "Theoretical computer science",
+        "level": 1,
+        "score": 0.0769442617893219
+      },
+      {
+        "id": "https://openalex.org/C162324750",
+        "wikidata": "https://www.wikidata.org/wiki/Q8134",
+        "display_name": "Economics",
+        "level": 0,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C50522688",
+        "wikidata": "https://www.wikidata.org/wiki/Q189833",
+        "display_name": "Economic growth",
+        "level": 1,
+        "score": 0.0
+      }
+    ],
+    "mesh": [],
+    "locations_count": 2,
+    "locations": [
+      {
+        "id": "doi:10.1109/access.2020.3041924",
+        "is_oa": true,
+        "landing_page_url": "https://doi.org/10.1109/access.2020.3041924",
+        "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/6514899/09276416.pdf",
+        "source": {
+          "id": "https://openalex.org/S2485537415",
+          "display_name": "IEEE Access",
+          "issn_l": "2169-3536",
+          "issn": [
+            "2169-3536"
+          ],
+          "is_oa": true,
+          "is_in_doaj": true,
+          "is_core": true,
+          "listed_in": [
+            "cwts-core",
+            "doaj",
+            "jufo-1",
+            "ki-jl-1",
+            "norway-1"
+          ],
+          "host_organization": "https://openalex.org/P4310319808",
+          "host_organization_name": "Institute of Electrical and Electronics Engineers",
+          "host_organization_lineage": [
+            "https://openalex.org/P4310319808"
+          ],
+          "host_organization_lineage_names": [
+            "Institute of Electrical and Electronics Engineers"
+          ],
+          "type": "journal"
+        },
+        "license": "cc-by-nc-nd",
+        "license_id": "https://openalex.org/licenses/cc-by-nc-nd",
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "IEEE Access",
+        "raw_type": "journal-article"
+      },
+      {
+        "id": "pmh:oai:doaj.org/article:520d94dfa52f44f3925141a383e97d8a",
+        "is_oa": true,
+        "landing_page_url": "https://doaj.org/article/520d94dfa52f44f3925141a383e97d8a",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S4306401280",
+          "display_name": "DOAJ (DOAJ: Directory of Open Access Journals)",
+          "issn_l": null,
+          "issn": null,
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "listed_in": [],
+          "host_organization": null,
+          "host_organization_name": null,
+          "host_organization_lineage": [],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": "cc-by-sa",
+        "license_id": "https://openalex.org/licenses/cc-by-sa",
+        "version": "submittedVersion",
+        "is_accepted": false,
+        "is_published": false,
+        "raw_source_name": "IEEE Access, Vol 8, Pp 217222-217230 (2020)",
+        "raw_type": "article"
+      }
+    ],
+    "best_oa_location": {
+      "id": "doi:10.1109/access.2020.3041924",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.1109/access.2020.3041924",
+      "pdf_url": "https://ieeexplore.ieee.org/ielx7/6287639/6514899/09276416.pdf",
+      "source": {
+        "id": "https://openalex.org/S2485537415",
+        "display_name": "IEEE Access",
+        "issn_l": "2169-3536",
+        "issn": [
+          "2169-3536"
+        ],
+        "is_oa": true,
+        "is_in_doaj": true,
+        "is_core": true,
+        "listed_in": [
+          "cwts-core",
+          "doaj",
+          "jufo-1",
+          "ki-jl-1",
+          "norway-1"
+        ],
+        "host_organization": "https://openalex.org/P4310319808",
+        "host_organization_name": "Institute of Electrical and Electronics Engineers",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310319808"
+        ],
+        "host_organization_lineage_names": [
+          "Institute of Electrical and Electronics Engineers"
+        ],
+        "type": "journal"
+      },
+      "license": "cc-by-nc-nd",
+      "license_id": "https://openalex.org/licenses/cc-by-nc-nd",
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "IEEE Access",
+      "raw_type": "journal-article"
+    },
+    "sustainable_development_goals": [
+      {
+        "score": 1.0,
+        "id": "https://metadata.un.org/sdg/11",
+        "display_name": "Sustainable cities and communities"
+      }
+    ],
+    "sustainable_development_goals_aurora": [
+      {
+        "score": 0.8600000143051147,
+        "id": "https://metadata.un.org/sdg/11",
+        "display_name": "Sustainable cities and communities"
+      }
+    ],
+    "study_designs": [],
+    "awards": [],
+    "funders": [
+      {
+        "id": "https://openalex.org/F4320326699",
+        "display_name": "Ministry of Public Security of the People's Republic of China",
+        "ror": "https://ror.org/00bt9we26"
+      }
+    ],
+    "has_content": {
+      "pdf": true,
+      "grobid_xml": true
+    },
+    "content_urls": {
+      "pdf": "https://content.openalex.org/works/W3107119534.pdf",
+      "grobid_xml": "https://content.openalex.org/works/W3107119534.grobid-xml"
+    },
+    "referenced_works_count": 48,
+    "referenced_works": [
+      "https://openalex.org/W12795755",
+      "https://openalex.org/W95328223",
+      "https://openalex.org/W1497175943",
+      "https://openalex.org/W1512990238",
+      "https://openalex.org/W1981988108",
+      "https://openalex.org/W1989219071",
+      "https://openalex.org/W2064675550",
+      "https://openalex.org/W2072855434",
+      "https://openalex.org/W2073303515",
+      "https://openalex.org/W2082149135",
+      "https://openalex.org/W2088047416",
+      "https://openalex.org/W2115492201",
+      "https://openalex.org/W2167618408",
+      "https://openalex.org/W2170711376",
+      "https://openalex.org/W2302255633",
+      "https://openalex.org/W2416333174",
+      "https://openalex.org/W2514525802",
+      "https://openalex.org/W2518898439",
+      "https://openalex.org/W2519887557",
+      "https://openalex.org/W2528639018",
+      "https://openalex.org/W2600853029",
+      "https://openalex.org/W2613291816",
+      "https://openalex.org/W2625781096",
+      "https://openalex.org/W2739524653",
+      "https://openalex.org/W2897012293",
+      "https://openalex.org/W2900850431",
+      "https://openalex.org/W2904428682",
+      "https://openalex.org/W2904832339",
+      "https://openalex.org/W2908227891",
+      "https://openalex.org/W2912147838",
+      "https://openalex.org/W2963076818",
+      "https://openalex.org/W2963106283",
+      "https://openalex.org/W2964015378",
+      "https://openalex.org/W2964298336",
+      "https://openalex.org/W2970776258",
+      "https://openalex.org/W2971378538",
+      "https://openalex.org/W2983165041",
+      "https://openalex.org/W2997658128",
+      "https://openalex.org/W3000312909",
+      "https://openalex.org/W3036359808",
+      "https://openalex.org/W4233588482",
+      "https://openalex.org/W4249855545",
+      "https://openalex.org/W4250688802",
+      "https://openalex.org/W4300101916",
+      "https://openalex.org/W6698183232",
+      "https://openalex.org/W6726873649",
+      "https://openalex.org/W6728547873",
+      "https://openalex.org/W6747795875"
+    ],
+    "related_works": [
+      "https://openalex.org/W2392907783",
+      "https://openalex.org/W891751532",
+      "https://openalex.org/W1985072978",
+      "https://openalex.org/W2375489112",
+      "https://openalex.org/W2370838374",
+      "https://openalex.org/W2354222596",
+      "https://openalex.org/W2392291083",
+      "https://openalex.org/W2353135038",
+      "https://openalex.org/W2381059267",
+      "https://openalex.org/W2347277971"
+    ],
+    "abstract_inverted_index": {
+      "Urbanization": [
+        0
+      ],
+      "has": [
+        1
+      ],
+      "been": [
+        2
+      ],
+      "speeding": [
+        3
+      ],
+      "up": [
+        4
+      ],
+      "social": [
+        5,
+        14
+      ],
+      "and": [
+        6,
+        26,
+        42,
+        47,
+        74,
+        82,
+        112
+      ],
+      "economic": [
+        7
+      ],
+      "transformations": [
+        8
+      ],
+      "in": [
+        9,
+        16,
+        44,
+        55,
+        88,
+        99,
+        150
+      ],
+      "urban": [
+        10,
+        24,
+        45,
+        56,
+        94
+      ],
+      "communities,": [
+        11,
+        57
+      ],
+      "the": [
+        12,
+        85,
+        97,
+        100,
+        120,
+        129,
+        133,
+        144,
+        152,
+        157
+      ],
+      "smallest": [
+        13
+      ],
+      "units": [
+        15
+      ],
+      "a": [
+        17,
+        29,
+        61,
+        89
+      ],
+      "city.": [
+        18,
+        90
+      ],
+      "However,": [
+        19
+      ],
+      "urbanization": [
+        20
+      ],
+      "brings": [
+        21
+      ],
+      "challenges": [
+        22
+      ],
+      "to": [
+        23,
+        39,
+        80,
+        118
+      ],
+      "management": [
+        25
+      ],
+      "security.": [
+        27
+      ],
+      "Therefore,": [
+        28
+      ],
+      "system": [
+        30,
+        49
+      ],
+      "of": [
+        31,
+        34,
+        63,
+        93,
+        122,
+        132,
+        154
+      ],
+      "risk": [
+        32
+      ],
+      "prediction": [
+        33,
+        66
+      ],
+      "crimes": [
+        35,
+        124,
+        155
+      ],
+      "may": [
+        36
+      ],
+      "be": [
+        37
+      ],
+      "essential": [
+        38
+      ],
+      "crime": [
+        40,
+        65,
+        135
+      ],
+      "prevention": [
+        41
+      ],
+      "control": [
+        43
+      ],
+      "communities": [
+        46,
+        95
+      ],
+      "its": [
+        48
+      ],
+      "improvement.": [
+        50
+      ],
+      "To": [
+        51
+      ],
+      "tackle": [
+        52
+      ],
+      "crime-related": [
+        53
+      ],
+      "problems": [
+        54
+      ],
+      "this": [
+        58
+      ],
+      "paper": [
+        59
+      ],
+      "proposes": [
+        60
+      ],
+      "model": [
+        62,
+        146
+      ],
+      "daily": [
+        64
+      ],
+      "by": [
+        67
+      ],
+      "combining": [
+        68
+      ],
+      "Long": [
+        69
+      ],
+      "Short-Term": [
+        70
+      ],
+      "Memory": [
+        71
+      ],
+      "Network": [
+        72,
+        78
+      ],
+      "(LSTM)": [
+        73
+      ],
+      "Spatial-Temporal": [
+        75
+      ],
+      "Graph": [
+        76
+      ],
+      "Convolutional": [
+        77
+      ],
+      "(ST-GCN)": [
+        79
+      ],
+      "automatically": [
+        81
+      ],
+      "effectively": [
+        83
+      ],
+      "detect": [
+        84
+      ],
+      "high-risk": [
+        86
+      ],
+      "areas": [
+        87
+      ],
+      "Topological": [
+        91
+      ],
+      "maps": [
+        92
+      ],
+      "carry": [
+        96
+      ],
+      "dataset": [
+        98
+      ],
+      "model,": [
+        101
+      ],
+      "which": [
+        102
+      ],
+      "mainly": [
+        103
+      ],
+      "includes": [
+        104
+      ],
+      "two": [
+        105
+      ],
+      "modules": [
+        106
+      ],
+      "—": [
+        107,
+        117
+      ],
+      "spatial-temporal": [
+        108
+      ],
+      "features": [
+        109
+      ],
+      "extraction": [
+        110,
+        115
+      ],
+      "module": [
+        111,
+        116
+      ],
+      "temporal": [
+        113
+      ],
+      "feature": [
+        114
+      ],
+      "extract": [
+        119
+      ],
+      "factors": [
+        121
+      ],
+      "theft": [
+        123
+      ],
+      "collectively.": [
+        125
+      ],
+      "We": [
+        126
+      ],
+      "have": [
+        127
+      ],
+      "performed": [
+        128
+      ],
+      "experimental": [
+        130
+      ],
+      "evaluation": [
+        131
+      ],
+      "existing": [
+        134
+      ],
+      "data": [
+        136
+      ],
+      "from": [
+        137
+      ],
+      "Chicago,": [
+        138
+      ],
+      "America.": [
+        139
+      ],
+      "The": [
+        140
+      ],
+      "results": [
+        141
+      ],
+      "show": [
+        142
+      ],
+      "that": [
+        143
+      ],
+      "integrated": [
+        145
+      ],
+      "demonstrates": [
+        147
+      ],
+      "positive": [
+        148
+      ],
+      "performance": [
+        149
+      ],
+      "predicting": [
+        151
+      ],
+      "number": [
+        153
+      ],
+      "within": [
+        156
+      ],
+      "sliding": [
+        158
+      ],
+      "time": [
+        159
+      ],
+      "range.": [
+        160
+      ]
+    },
+    "counts_by_year": [
+      {
+        "year": 2026,
+        "cited_by_count": 9
+      },
+      {
+        "year": 2025,
+        "cited_by_count": 21
+      },
+      {
+        "year": 2024,
+        "cited_by_count": 13
+      },
+      {
+        "year": 2023,
+        "cited_by_count": 18
+      },
+      {
+        "year": 2022,
+        "cited_by_count": 7
+      },
+      {
+        "year": 2021,
+        "cited_by_count": 3
+      }
+    ],
+    "updated_date": "2026-09-27T08:07:27.782135",
+    "created_date": "2025-10-10T00:00:00"
+  },
+  {
+    "id": "https://openalex.org/W7117890853",
+    "doi": "https://doi.org/10.5281/zenodo.18107454",
+    "title": "RISK PREDICTION OF THEFT CRIMES IN URBAN COMMUNITIES: AN INTEGRATED MODEL OF LSTM AND ST-GCN",
+    "display_name": "RISK PREDICTION OF THEFT CRIMES IN URBAN COMMUNITIES: AN INTEGRATED MODEL OF LSTM AND ST-GCN",
+    "relevance_score": 423.5206,
+    "publication_year": 2025,
+    "publication_date": "2025-08-15",
+    "ids": {
+      "openalex": "https://openalex.org/W7117890853",
+      "doi": "https://doi.org/10.5281/zenodo.18107454"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "doi:10.5281/zenodo.18107454",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.5281/zenodo.18107454",
+      "pdf_url": null,
+      "source": {
+        "id": "https://openalex.org/S2764870389",
+        "display_name": "Journal of Theoretical and Applied Information Technology",
+        "issn_l": "1817-3195",
+        "issn": [
+          "1817-3195",
+          "1992-8645"
+        ],
+        "is_oa": false,
+        "is_in_doaj": false,
+        "is_core": true,
+        "listed_in": [
+          "cwts-core"
+        ],
+        "host_organization": null,
+        "host_organization_name": null,
+        "host_organization_lineage": [],
+        "host_organization_lineage_names": [],
+        "type": "journal"
+      },
+      "license": "cc-by",
+      "license_id": "https://openalex.org/licenses/cc-by",
+      "version": null,
+      "is_accepted": false,
+      "is_published": false,
+      "raw_source_name": null,
+      "raw_type": "JournalArticle"
+    },
+    "type": "article",
+    "indexed_in": [
+      "datacite"
+    ],
+    "open_access": {
+      "is_oa": true,
+      "oa_status": "hybrid",
+      "oa_url": "https://doi.org/10.5281/zenodo.18107454",
+      "any_repository_has_fulltext": false
+    },
+    "authorships": [
+      {
+        "author_position": "first",
+        "author": {
+          "id": "https://openalex.org/A5121369513",
+          "display_name": "Journal of Theoretical and Applied Information Technology",
+          "orcid": null,
+          "observed_orcids": []
+        },
+        "institutions": [],
+        "countries": [],
+        "is_corresponding": true,
+        "raw_author_name": "Journal of Theoretical and Applied Information Technology",
+        "raw_affiliation_strings": [],
+        "raw_orcid": null,
+        "affiliations": []
+      }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 0,
+    "institutions_distinct_count": 0,
+    "corresponding_author_ids": [
+      "https://openalex.org/A5121369513"
+    ],
+    "corresponding_institution_ids": [],
+    "apc_list": null,
+    "apc_paid": null,
+    "fwci": 0.0,
+    "has_fulltext": false,
+    "cited_by_count": 0,
+    "citation_normalized_percentile": {
+      "value": 0.61491851,
+      "is_in_top_1_percent": false,
+      "is_in_top_10_percent": false
+    },
+    "cited_by_percentile_year": null,
+    "biblio": {
+      "volume": null,
+      "issue": null,
+      "first_page": null,
+      "last_page": null
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T10574",
+      "display_name": "Crime Patterns and Interventions",
+      "score": 0.9800000190734863,
+      "subfield": {
+        "id": "https://openalex.org/subfields/3312",
+        "display_name": "Sociology and Political Science"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/33",
+        "display_name": "Social Sciences"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/2",
+        "display_name": "Social Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T10574",
+        "display_name": "Crime Patterns and Interventions",
+        "score": 0.9800000190734863,
+        "subfield": {
+          "id": "https://openalex.org/subfields/3312",
+          "display_name": "Sociology and Political Science"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/33",
+          "display_name": "Social Sciences"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/2",
+          "display_name": "Social Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T11344",
+        "display_name": "Traffic Prediction and Management Techniques",
+        "score": 0.008200000040233135,
+        "subfield": {
+          "id": "https://openalex.org/subfields/2215",
+          "display_name": "Building and Construction"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/22",
+          "display_name": "Engineering"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T12325",
+        "display_name": "Urban Design and Spatial Analysis",
+        "score": 0.0027000000700354576,
+        "subfield": {
+          "id": "https://openalex.org/subfields/2215",
+          "display_name": "Building and Construction"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/22",
+          "display_name": "Engineering"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/crime-risk-prediction",
+        "display_name": "crime risk prediction",
+        "score": 0.8320000171661377
+      },
+      {
+        "id": "https://openalex.org/keywords/theft",
+        "display_name": "theft",
+        "score": 0.8949999809265137
+      },
+      {
+        "id": "https://openalex.org/keywords/urban-crime",
+        "display_name": "urban crime",
+        "score": 0.7540000081062317
+      },
+      {
+        "id": "https://openalex.org/keywords/lstm",
+        "display_name": "LSTM",
+        "score": 0.6769999861717224
+      },
+      {
+        "id": "https://openalex.org/keywords/spatiotemporal-graph-convolutional-network",
+        "display_name": "spatio-temporal graph convolutional network",
+        "score": 0.8259999752044678
+      },
+      {
+        "id": "https://openalex.org/keywords/high-risk-area-identification",
+        "display_name": "high-risk area identification",
+        "score": 0.800000011920929
+      },
+      {
+        "id": "https://openalex.org/keywords/chicago-crime-data",
+        "display_name": "Chicago crime data",
+        "score": 0.7360000014305115
+      },
+      {
+        "id": "https://openalex.org/keywords/spatiotemporal-crime-patterns",
+        "display_name": "spatiotemporal crime patterns",
+        "score": 0.718999981880188
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.6168000102043152
+      },
+      {
+        "id": "https://openalex.org/C185798385",
+        "wikidata": "https://www.wikidata.org/wiki/Q1161707",
+        "display_name": "Benchmark (surveying)",
+        "level": 2,
+        "score": 0.5995000004768372
+      },
+      {
+        "id": "https://openalex.org/C192209626",
+        "wikidata": "https://www.wikidata.org/wiki/Q190909",
+        "display_name": "Focus (optics)",
+        "level": 2,
+        "score": 0.4521999955177307
+      },
+      {
+        "id": "https://openalex.org/C39853841",
+        "wikidata": "https://www.wikidata.org/wiki/Q161078",
+        "display_name": "Urbanization",
+        "level": 2,
+        "score": 0.4519999921321869
+      },
+      {
+        "id": "https://openalex.org/C81363708",
+        "wikidata": "https://www.wikidata.org/wiki/Q17084460",
+        "display_name": "Convolutional neural network",
+        "level": 2,
+        "score": 0.42480000853538513
+      },
+      {
+        "id": "https://openalex.org/C132525143",
+        "wikidata": "https://www.wikidata.org/wiki/Q141488",
+        "display_name": "Graph",
+        "level": 2,
+        "score": 0.41449999809265137
+      },
+      {
+        "id": "https://openalex.org/C154945302",
+        "wikidata": "https://www.wikidata.org/wiki/Q11660",
+        "display_name": "Artificial intelligence",
+        "level": 1,
+        "score": 0.39590001106262207
+      },
+      {
+        "id": "https://openalex.org/C119857082",
+        "wikidata": "https://www.wikidata.org/wiki/Q2539",
+        "display_name": "Machine learning",
+        "level": 1,
+        "score": 0.36480000615119934
+      },
+      {
+        "id": "https://openalex.org/C2775924081",
+        "wikidata": "https://www.wikidata.org/wiki/Q55608371",
+        "display_name": "Control (management)",
+        "level": 2,
+        "score": 0.33899998664855957
+      },
+      {
+        "id": "https://openalex.org/C2776876444",
+        "wikidata": "https://www.wikidata.org/wiki/Q2845200",
+        "display_name": "Crime analysis",
+        "level": 2,
+        "score": 0.3368000090122223
+      },
+      {
+        "id": "https://openalex.org/C124101348",
+        "wikidata": "https://www.wikidata.org/wiki/Q172491",
+        "display_name": "Data mining",
+        "level": 1,
+        "score": 0.3321000039577484
+      },
+      {
+        "id": "https://openalex.org/C38652104",
+        "wikidata": "https://www.wikidata.org/wiki/Q3510521",
+        "display_name": "Computer security",
+        "level": 1,
+        "score": 0.3061999976634979
+      },
+      {
+        "id": "https://openalex.org/C2776348852",
+        "wikidata": "https://www.wikidata.org/wiki/Q855848",
+        "display_name": "Crime prevention",
+        "level": 2,
+        "score": 0.30230000615119934
+      },
+      {
+        "id": "https://openalex.org/C67186912",
+        "wikidata": "https://www.wikidata.org/wiki/Q367664",
+        "display_name": "Data modeling",
+        "level": 2,
+        "score": 0.30149999260902405
+      },
+      {
+        "id": "https://openalex.org/C77618280",
+        "wikidata": "https://www.wikidata.org/wiki/Q1155772",
+        "display_name": "Scheme (mathematics)",
+        "level": 2,
+        "score": 0.28349998593330383
+      },
+      {
+        "id": "https://openalex.org/C50644808",
+        "wikidata": "https://www.wikidata.org/wiki/Q192776",
+        "display_name": "Artificial neural network",
+        "level": 2,
+        "score": 0.2529999911785126
+      }
+    ],
+    "mesh": [],
+    "locations_count": 1,
+    "locations": [
+      {
+        "id": "doi:10.5281/zenodo.18107454",
+        "is_oa": true,
+        "landing_page_url": "https://doi.org/10.5281/zenodo.18107454",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S2764870389",
+          "display_name": "Journal of Theoretical and Applied Information Technology",
+          "issn_l": "1817-3195",
+          "issn": [
+            "1817-3195",
+            "1992-8645"
+          ],
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": true,
+          "listed_in": [
+            "cwts-core"
+          ],
+          "host_organization": null,
+          "host_organization_name": null,
+          "host_organization_lineage": [],
+          "host_organization_lineage_names": [],
+          "type": "journal"
+        },
+        "license": "cc-by",
+        "license_id": "https://openalex.org/licenses/cc-by",
+        "version": null,
+        "is_accepted": false,
+        "is_published": null,
+        "raw_source_name": null,
+        "raw_type": "JournalArticle"
+      }
+    ],
+    "best_oa_location": {
+      "id": "doi:10.5281/zenodo.18107454",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.5281/zenodo.18107454",
+      "pdf_url": null,
+      "source": {
+        "id": "https://openalex.org/S2764870389",
+        "display_name": "Journal of Theoretical and Applied Information Technology",
+        "issn_l": "1817-3195",
+        "issn": [
+          "1817-3195",
+          "1992-8645"
+        ],
+        "is_oa": false,
+        "is_in_doaj": false,
+        "is_core": true,
+        "listed_in": [
+          "cwts-core"
+        ],
+        "host_organization": null,
+        "host_organization_name": null,
+        "host_organization_lineage": [],
+        "host_organization_lineage_names": [],
+        "type": "journal"
+      },
+      "license": "cc-by",
+      "license_id": "https://openalex.org/licenses/cc-by",
+      "version": null,
+      "is_accepted": false,
+      "is_published": false,
+      "raw_source_name": null,
+      "raw_type": "JournalArticle"
+    },
+    "sustainable_development_goals": [
+      {
+        "score": 1.0,
+        "id": "https://metadata.un.org/sdg/11",
+        "display_name": "Sustainable cities and communities"
+      }
+    ],
+    "sustainable_development_goals_aurora": [
+      {
+        "score": 0.8291733860969543,
+        "id": "https://metadata.un.org/sdg/11",
+        "display_name": "Sustainable cities and communities"
+      }
+    ],
+    "study_designs": [],
+    "awards": [],
+    "funders": [],
+    "has_content": {
+      "pdf": false,
+      "grobid_xml": false
+    },
+    "content_urls": null,
+    "referenced_works_count": 0,
+    "referenced_works": [],
+    "related_works": [],
+    "abstract_inverted_index": {
+      "Urbanization": [
+        0
+      ],
+      "has": [
+        1
+      ],
+      "transformed": [
+        2
+      ],
+      "urban": [
+        3,
+        90,
+        114
+      ],
+      "communities": [
+        4
+      ],
+      "but": [
+        5
+      ],
+      "also": [
+        6
+      ],
+      "introduced": [
+        7
+      ],
+      "challenges": [
+        8
+      ],
+      "in": [
+        9,
+        52,
+        113
+      ],
+      "managing": [
+        10
+      ],
+      "crime": [
+        11,
+        58,
+        80,
+        110,
+        124
+      ],
+      "and": [
+        12,
+        18,
+        42,
+        57,
+        66,
+        126
+      ],
+      "ensuring": [
+        13
+      ],
+      "public": [
+        14
+      ],
+      "safety.": [
+        15
+      ],
+      "For": [
+        16
+      ],
+      "prevention": [
+        17
+      ],
+      "control": [
+        19
+      ],
+      "to": [
+        20,
+        48,
+        69,
+        78,
+        100,
+        117,
+        128,
+        159,
+        164
+      ],
+      "be": [
+        21
+      ],
+      "effective,": [
+        22
+      ],
+      "a": [
+        23,
+        33,
+        86
+      ],
+      "criminal": [
+        24
+      ],
+      "risk": [
+        25,
+        111,
+        155
+      ],
+      "prediction": [
+        26
+      ],
+      "system": [
+        27
+      ],
+      "is": [
+        28
+      ],
+      "necessary.": [
+        29
+      ],
+      "This": [
+        30
+      ],
+      "paper": [
+        31
+      ],
+      "presents": [
+        32
+      ],
+      "model": [
+        34,
+        63,
+        107,
+        120
+      ],
+      "that": [
+        35,
+        138
+      ],
+      "integrates": [
+        36
+      ],
+      "Long": [
+        37
+      ],
+      "Short-Term": [
+        38
+      ],
+      "Memory": [
+        39
+      ],
+      "Networks": [
+        40,
+        46
+      ],
+      "(LSTM)": [
+        41
+      ],
+      "Spatial-Temporal": [
+        43
+      ],
+      "Graph": [
+        44
+      ],
+      "Convolutional": [
+        45
+      ],
+      "(ST-GCN)": [
+        47
+      ],
+      "identify": [
+        49
+      ],
+      "high-risk": [
+        50
+      ],
+      "areas": [
+        51
+      ],
+      "cities.": [
+        53
+      ],
+      "Using": [
+        54
+      ],
+      "topological": [
+        55
+      ],
+      "maps": [
+        56
+      ],
+      "data": [
+        59
+      ],
+      "from": [
+        60
+      ],
+      "Chicago,": [
+        61
+      ],
+      "the": [
+        62,
+        119
+      ],
+      "extracts": [
+        64
+      ],
+      "spatial-temporal": [
+        65
+      ],
+      "temporal": [
+        67,
+        144
+      ],
+      "features": [
+        68
+      ],
+      "analyze": [
+        70
+      ],
+      "theft": [
+        71,
+        109
+      ],
+      "patterns.": [
+        72
+      ],
+      "Experimental": [
+        73
+      ],
+      "results": [
+        74
+      ],
+      "demonstrate": [
+        75
+      ],
+      "its": [
+        76,
+        130
+      ],
+      "ability": [
+        77
+      ],
+      "predict": [
+        79
+      ],
+      "occurrences": [
+        81
+      ],
+      "within": [
+        82
+      ],
+      "specific": [
+        83
+      ],
+      "timeframes,": [
+        84
+      ],
+      "offering": [
+        85
+      ],
+      "valuable": [
+        87
+      ],
+      "tool": [
+        88
+      ],
+      "for": [
+        89,
+        108,
+        152
+      ],
+      "safety": [
+        91
+      ],
+      "planning.": [
+        92
+      ],
+      "The": [
+        93
+      ],
+      "objectives": [
+        94
+      ],
+      "of": [
+        95
+      ],
+      "this": [
+        96
+      ],
+      "study": [
+        97
+      ],
+      "are": [
+        98
+      ],
+      "(1)": [
+        99
+      ],
+      "develop": [
+        101
+      ],
+      "an": [
+        102
+      ],
+      "integrated": [
+        103
+      ],
+      "LSTM": [
+        104,
+        166
+      ],
+      "+": [
+        105
+      ],
+      "ST-GCN": [
+        106
+      ],
+      "forecasting": [
+        112
+      ],
+      "communities,": [
+        115
+      ],
+      "(2)": [
+        116
+      ],
+      "validate": [
+        118
+      ],
+      "on": [
+        121,
+        141
+      ],
+      "real-world": [
+        122
+      ],
+      "Chicago": [
+        123
+      ],
+      "data,": [
+        125
+      ],
+      "(3)": [
+        127
+      ],
+      "benchmark": [
+        129
+      ],
+      "performance": [
+        131
+      ],
+      "against": [
+        132
+      ],
+      "standard": [
+        133
+      ],
+      "baselines.": [
+        134
+      ],
+      "Unlike": [
+        135
+      ],
+      "existing": [
+        136
+      ],
+      "methods": [
+        137
+      ],
+      "focus": [
+        139
+      ],
+      "solely": [
+        140
+      ],
+      "spatial": [
+        142
+      ],
+      "or": [
+        143
+      ],
+      "patterns,": [
+        145
+      ],
+      "our": [
+        146
+      ],
+      "hybrid": [
+        147
+      ],
+      "approach": [
+        148
+      ],
+      "fuses": [
+        149
+      ],
+      "both": [
+        150
+      ],
+      "dimensions": [
+        151
+      ],
+      "near": [
+        153
+      ],
+      "real-time": [
+        154
+      ],
+      "prediction,": [
+        156
+      ],
+      "demonstrating": [
+        157
+      ],
+      "up": [
+        158
+      ],
+      "15%": [
+        160
+      ],
+      "lower": [
+        161
+      ],
+      "RMSE": [
+        162
+      ],
+      "compared": [
+        163
+      ],
+      "standalone": [
+        165
+      ],
+      "models": [
+        167
+      ]
+    },
+    "counts_by_year": [],
+    "updated_date": "2026-08-18T07:49:30.821534",
+    "created_date": "2026-01-01T00:00:00"
+  },
+  {
+    "id": "https://openalex.org/W7117909658",
+    "doi": "https://doi.org/10.5281/zenodo.18107455",
+    "title": "RISK PREDICTION OF THEFT CRIMES IN URBAN COMMUNITIES: AN INTEGRATED MODEL OF LSTM AND ST-GCN",
+    "display_name": "RISK PREDICTION OF THEFT CRIMES IN URBAN COMMUNITIES: AN INTEGRATED MODEL OF LSTM AND ST-GCN",
+    "relevance_score": 421.89224,
+    "publication_year": 2025,
+    "publication_date": "2025-08-15",
+    "ids": {
+      "openalex": "https://openalex.org/W7117909658",
+      "doi": "https://doi.org/10.5281/zenodo.18107455"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "doi:10.5281/zenodo.18107455",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.5281/zenodo.18107455",
+      "pdf_url": null,
+      "source": {
+        "id": "https://openalex.org/S2764870389",
+        "display_name": "Journal of Theoretical and Applied Information Technology",
+        "issn_l": "1817-3195",
+        "issn": [
+          "1817-3195",
+          "1992-8645"
+        ],
+        "is_oa": false,
+        "is_in_doaj": false,
+        "is_core": true,
+        "listed_in": [
+          "cwts-core"
+        ],
+        "host_organization": null,
+        "host_organization_name": null,
+        "host_organization_lineage": [],
+        "host_organization_lineage_names": [],
+        "type": "journal"
+      },
+      "license": "cc-by",
+      "license_id": "https://openalex.org/licenses/cc-by",
+      "version": null,
+      "is_accepted": false,
+      "is_published": false,
+      "raw_source_name": null,
+      "raw_type": "JournalArticle"
+    },
+    "type": "article",
+    "indexed_in": [
+      "datacite"
+    ],
+    "open_access": {
+      "is_oa": true,
+      "oa_status": "hybrid",
+      "oa_url": "https://doi.org/10.5281/zenodo.18107455",
+      "any_repository_has_fulltext": false
+    },
+    "authorships": [
+      {
+        "author_position": "first",
+        "author": {
+          "id": "https://openalex.org/A5121369513",
+          "display_name": "Journal of Theoretical and Applied Information Technology",
+          "orcid": null,
+          "observed_orcids": []
+        },
+        "institutions": [],
+        "countries": [],
+        "is_corresponding": true,
+        "raw_author_name": "Journal of Theoretical and Applied Information Technology",
+        "raw_affiliation_strings": [],
+        "raw_orcid": null,
+        "affiliations": []
+      }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 0,
+    "institutions_distinct_count": 0,
+    "corresponding_author_ids": [
+      "https://openalex.org/A5121369513"
+    ],
+    "corresponding_institution_ids": [],
+    "apc_list": null,
+    "apc_paid": null,
+    "fwci": 0.0,
+    "has_fulltext": false,
+    "cited_by_count": 0,
+    "citation_normalized_percentile": {
+      "value": 0.61541679,
+      "is_in_top_1_percent": false,
+      "is_in_top_10_percent": false
+    },
+    "cited_by_percentile_year": null,
+    "biblio": {
+      "volume": null,
+      "issue": null,
+      "first_page": null,
+      "last_page": null
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T10574",
+      "display_name": "Crime Patterns and Interventions",
+      "score": 0.9800000190734863,
+      "subfield": {
+        "id": "https://openalex.org/subfields/3312",
+        "display_name": "Sociology and Political Science"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/33",
+        "display_name": "Social Sciences"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/2",
+        "display_name": "Social Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T10574",
+        "display_name": "Crime Patterns and Interventions",
+        "score": 0.9800000190734863,
+        "subfield": {
+          "id": "https://openalex.org/subfields/3312",
+          "display_name": "Sociology and Political Science"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/33",
+          "display_name": "Social Sciences"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/2",
+          "display_name": "Social Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T11344",
+        "display_name": "Traffic Prediction and Management Techniques",
+        "score": 0.008200000040233135,
+        "subfield": {
+          "id": "https://openalex.org/subfields/2215",
+          "display_name": "Building and Construction"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/22",
+          "display_name": "Engineering"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T12325",
+        "display_name": "Urban Design and Spatial Analysis",
+        "score": 0.0027000000700354576,
+        "subfield": {
+          "id": "https://openalex.org/subfields/2215",
+          "display_name": "Building and Construction"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/22",
+          "display_name": "Engineering"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/crime-risk-prediction",
+        "display_name": "crime risk prediction",
+        "score": 0.8320000171661377
+      },
+      {
+        "id": "https://openalex.org/keywords/theft",
+        "display_name": "theft",
+        "score": 0.8949999809265137
+      },
+      {
+        "id": "https://openalex.org/keywords/urban-crime",
+        "display_name": "urban crime",
+        "score": 0.7540000081062317
+      },
+      {
+        "id": "https://openalex.org/keywords/lstm",
+        "display_name": "LSTM",
+        "score": 0.6769999861717224
+      },
+      {
+        "id": "https://openalex.org/keywords/spatiotemporal-graph-convolutional-network",
+        "display_name": "spatio-temporal graph convolutional network",
+        "score": 0.8259999752044678
+      },
+      {
+        "id": "https://openalex.org/keywords/high-risk-area-identification",
+        "display_name": "high-risk area identification",
+        "score": 0.800000011920929
+      },
+      {
+        "id": "https://openalex.org/keywords/chicago-crime-data",
+        "display_name": "Chicago crime data",
+        "score": 0.7360000014305115
+      },
+      {
+        "id": "https://openalex.org/keywords/spatiotemporal-crime-patterns",
+        "display_name": "spatiotemporal crime patterns",
+        "score": 0.718999981880188
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.6168000102043152
+      },
+      {
+        "id": "https://openalex.org/C185798385",
+        "wikidata": "https://www.wikidata.org/wiki/Q1161707",
+        "display_name": "Benchmark (surveying)",
+        "level": 2,
+        "score": 0.5995000004768372
+      },
+      {
+        "id": "https://openalex.org/C192209626",
+        "wikidata": "https://www.wikidata.org/wiki/Q190909",
+        "display_name": "Focus (optics)",
+        "level": 2,
+        "score": 0.4521999955177307
+      },
+      {
+        "id": "https://openalex.org/C39853841",
+        "wikidata": "https://www.wikidata.org/wiki/Q161078",
+        "display_name": "Urbanization",
+        "level": 2,
+        "score": 0.4519999921321869
+      },
+      {
+        "id": "https://openalex.org/C81363708",
+        "wikidata": "https://www.wikidata.org/wiki/Q17084460",
+        "display_name": "Convolutional neural network",
+        "level": 2,
+        "score": 0.42480000853538513
+      },
+      {
+        "id": "https://openalex.org/C132525143",
+        "wikidata": "https://www.wikidata.org/wiki/Q141488",
+        "display_name": "Graph",
+        "level": 2,
+        "score": 0.41449999809265137
+      },
+      {
+        "id": "https://openalex.org/C154945302",
+        "wikidata": "https://www.wikidata.org/wiki/Q11660",
+        "display_name": "Artificial intelligence",
+        "level": 1,
+        "score": 0.39590001106262207
+      },
+      {
+        "id": "https://openalex.org/C119857082",
+        "wikidata": "https://www.wikidata.org/wiki/Q2539",
+        "display_name": "Machine learning",
+        "level": 1,
+        "score": 0.36480000615119934
+      },
+      {
+        "id": "https://openalex.org/C2775924081",
+        "wikidata": "https://www.wikidata.org/wiki/Q55608371",
+        "display_name": "Control (management)",
+        "level": 2,
+        "score": 0.33899998664855957
+      },
+      {
+        "id": "https://openalex.org/C2776876444",
+        "wikidata": "https://www.wikidata.org/wiki/Q2845200",
+        "display_name": "Crime analysis",
+        "level": 2,
+        "score": 0.3368000090122223
+      },
+      {
+        "id": "https://openalex.org/C124101348",
+        "wikidata": "https://www.wikidata.org/wiki/Q172491",
+        "display_name": "Data mining",
+        "level": 1,
+        "score": 0.3321000039577484
+      },
+      {
+        "id": "https://openalex.org/C38652104",
+        "wikidata": "https://www.wikidata.org/wiki/Q3510521",
+        "display_name": "Computer security",
+        "level": 1,
+        "score": 0.3061999976634979
+      },
+      {
+        "id": "https://openalex.org/C2776348852",
+        "wikidata": "https://www.wikidata.org/wiki/Q855848",
+        "display_name": "Crime prevention",
+        "level": 2,
+        "score": 0.30230000615119934
+      },
+      {
+        "id": "https://openalex.org/C67186912",
+        "wikidata": "https://www.wikidata.org/wiki/Q367664",
+        "display_name": "Data modeling",
+        "level": 2,
+        "score": 0.30149999260902405
+      },
+      {
+        "id": "https://openalex.org/C77618280",
+        "wikidata": "https://www.wikidata.org/wiki/Q1155772",
+        "display_name": "Scheme (mathematics)",
+        "level": 2,
+        "score": 0.28349998593330383
+      },
+      {
+        "id": "https://openalex.org/C50644808",
+        "wikidata": "https://www.wikidata.org/wiki/Q192776",
+        "display_name": "Artificial neural network",
+        "level": 2,
+        "score": 0.2529999911785126
+      }
+    ],
+    "mesh": [],
+    "locations_count": 1,
+    "locations": [
+      {
+        "id": "doi:10.5281/zenodo.18107455",
+        "is_oa": true,
+        "landing_page_url": "https://doi.org/10.5281/zenodo.18107455",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S2764870389",
+          "display_name": "Journal of Theoretical and Applied Information Technology",
+          "issn_l": "1817-3195",
+          "issn": [
+            "1817-3195",
+            "1992-8645"
+          ],
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": true,
+          "listed_in": [
+            "cwts-core"
+          ],
+          "host_organization": null,
+          "host_organization_name": null,
+          "host_organization_lineage": [],
+          "host_organization_lineage_names": [],
+          "type": "journal"
+        },
+        "license": "cc-by",
+        "license_id": "https://openalex.org/licenses/cc-by",
+        "version": null,
+        "is_accepted": false,
+        "is_published": null,
+        "raw_source_name": null,
+        "raw_type": "JournalArticle"
+      }
+    ],
+    "best_oa_location": {
+      "id": "doi:10.5281/zenodo.18107455",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.5281/zenodo.18107455",
+      "pdf_url": null,
+      "source": {
+        "id": "https://openalex.org/S2764870389",
+        "display_name": "Journal of Theoretical and Applied Information Technology",
+        "issn_l": "1817-3195",
+        "issn": [
+          "1817-3195",
+          "1992-8645"
+        ],
+        "is_oa": false,
+        "is_in_doaj": false,
+        "is_core": true,
+        "listed_in": [
+          "cwts-core"
+        ],
+        "host_organization": null,
+        "host_organization_name": null,
+        "host_organization_lineage": [],
+        "host_organization_lineage_names": [],
+        "type": "journal"
+      },
+      "license": "cc-by",
+      "license_id": "https://openalex.org/licenses/cc-by",
+      "version": null,
+      "is_accepted": false,
+      "is_published": false,
+      "raw_source_name": null,
+      "raw_type": "JournalArticle"
+    },
+    "sustainable_development_goals": [
+      {
+        "score": 1.0,
+        "id": "https://metadata.un.org/sdg/11",
+        "display_name": "Sustainable cities and communities"
+      }
+    ],
+    "sustainable_development_goals_aurora": [
+      {
+        "score": 0.8291733860969543,
+        "id": "https://metadata.un.org/sdg/11",
+        "display_name": "Sustainable cities and communities"
+      }
+    ],
+    "study_designs": [],
+    "awards": [],
+    "funders": [],
+    "has_content": {
+      "pdf": false,
+      "grobid_xml": false
+    },
+    "content_urls": null,
+    "referenced_works_count": 0,
+    "referenced_works": [],
+    "related_works": [],
+    "abstract_inverted_index": {
+      "Urbanization": [
+        0
+      ],
+      "has": [
+        1
+      ],
+      "transformed": [
+        2
+      ],
+      "urban": [
+        3,
+        90,
+        114
+      ],
+      "communities": [
+        4
+      ],
+      "but": [
+        5
+      ],
+      "also": [
+        6
+      ],
+      "introduced": [
+        7
+      ],
+      "challenges": [
+        8
+      ],
+      "in": [
+        9,
+        52,
+        113
+      ],
+      "managing": [
+        10
+      ],
+      "crime": [
+        11,
+        58,
+        80,
+        110,
+        124
+      ],
+      "and": [
+        12,
+        18,
+        42,
+        57,
+        66,
+        126
+      ],
+      "ensuring": [
+        13
+      ],
+      "public": [
+        14
+      ],
+      "safety.": [
+        15
+      ],
+      "For": [
+        16
+      ],
+      "prevention": [
+        17
+      ],
+      "control": [
+        19
+      ],
+      "to": [
+        20,
+        48,
+        69,
+        78,
+        100,
+        117,
+        128,
+        159,
+        164
+      ],
+      "be": [
+        21
+      ],
+      "effective,": [
+        22
+      ],
+      "a": [
+        23,
+        33,
+        86
+      ],
+      "criminal": [
+        24
+      ],
+      "risk": [
+        25,
+        111,
+        155
+      ],
+      "prediction": [
+        26
+      ],
+      "system": [
+        27
+      ],
+      "is": [
+        28
+      ],
+      "necessary.": [
+        29
+      ],
+      "This": [
+        30
+      ],
+      "paper": [
+        31
+      ],
+      "presents": [
+        32
+      ],
+      "model": [
+        34,
+        63,
+        107,
+        120
+      ],
+      "that": [
+        35,
+        138
+      ],
+      "integrates": [
+        36
+      ],
+      "Long": [
+        37
+      ],
+      "Short-Term": [
+        38
+      ],
+      "Memory": [
+        39
+      ],
+      "Networks": [
+        40,
+        46
+      ],
+      "(LSTM)": [
+        41
+      ],
+      "Spatial-Temporal": [
+        43
+      ],
+      "Graph": [
+        44
+      ],
+      "Convolutional": [
+        45
+      ],
+      "(ST-GCN)": [
+        47
+      ],
+      "identify": [
+        49
+      ],
+      "high-risk": [
+        50
+      ],
+      "areas": [
+        51
+      ],
+      "cities.": [
+        53
+      ],
+      "Using": [
+        54
+      ],
+      "topological": [
+        55
+      ],
+      "maps": [
+        56
+      ],
+      "data": [
+        59
+      ],
+      "from": [
+        60
+      ],
+      "Chicago,": [
+        61
+      ],
+      "the": [
+        62,
+        119
+      ],
+      "extracts": [
+        64
+      ],
+      "spatial-temporal": [
+        65
+      ],
+      "temporal": [
+        67,
+        144
+      ],
+      "features": [
+        68
+      ],
+      "analyze": [
+        70
+      ],
+      "theft": [
+        71,
+        109
+      ],
+      "patterns.": [
+        72
+      ],
+      "Experimental": [
+        73
+      ],
+      "results": [
+        74
+      ],
+      "demonstrate": [
+        75
+      ],
+      "its": [
+        76,
+        130
+      ],
+      "ability": [
+        77
+      ],
+      "predict": [
+        79
+      ],
+      "occurrences": [
+        81
+      ],
+      "within": [
+        82
+      ],
+      "specific": [
+        83
+      ],
+      "timeframes,": [
+        84
+      ],
+      "offering": [
+        85
+      ],
+      "valuable": [
+        87
+      ],
+      "tool": [
+        88
+      ],
+      "for": [
+        89,
+        108,
+        152
+      ],
+      "safety": [
+        91
+      ],
+      "planning.": [
+        92
+      ],
+      "The": [
+        93
+      ],
+      "objectives": [
+        94
+      ],
+      "of": [
+        95
+      ],
+      "this": [
+        96
+      ],
+      "study": [
+        97
+      ],
+      "are": [
+        98
+      ],
+      "(1)": [
+        99
+      ],
+      "develop": [
+        101
+      ],
+      "an": [
+        102
+      ],
+      "integrated": [
+        103
+      ],
+      "LSTM": [
+        104,
+        166
+      ],
+      "+": [
+        105
+      ],
+      "ST-GCN": [
+        106
+      ],
+      "forecasting": [
+        112
+      ],
+      "communities,": [
+        115
+      ],
+      "(2)": [
+        116
+      ],
+      "validate": [
+        118
+      ],
+      "on": [
+        121,
+        141
+      ],
+      "real-world": [
+        122
+      ],
+      "Chicago": [
+        123
+      ],
+      "data,": [
+        125
+      ],
+      "(3)": [
+        127
+      ],
+      "benchmark": [
+        129
+      ],
+      "performance": [
+        131
+      ],
+      "against": [
+        132
+      ],
+      "standard": [
+        133
+      ],
+      "baselines.": [
+        134
+      ],
+      "Unlike": [
+        135
+      ],
+      "existing": [
+        136
+      ],
+      "methods": [
+        137
+      ],
+      "focus": [
+        139
+      ],
+      "solely": [
+        140
+      ],
+      "spatial": [
+        142
+      ],
+      "or": [
+        143
+      ],
+      "patterns,": [
+        145
+      ],
+      "our": [
+        146
+      ],
+      "hybrid": [
+        147
+      ],
+      "approach": [
+        148
+      ],
+      "fuses": [
+        149
+      ],
+      "both": [
+        150
+      ],
+      "dimensions": [
+        151
+      ],
+      "near": [
+        153
+      ],
+      "real-time": [
+        154
+      ],
+      "prediction,": [
+        156
+      ],
+      "demonstrating": [
+        157
+      ],
+      "up": [
+        158
+      ],
+      "15%": [
+        160
+      ],
+      "lower": [
+        161
+      ],
+      "RMSE": [
+        162
+      ],
+      "compared": [
+        163
+      ],
+      "standalone": [
+        165
+      ],
+      "models": [
+        167
+      ]
+    },
+    "counts_by_year": [],
+    "updated_date": "2026-08-18T07:49:30.821534",
+    "created_date": "2026-01-01T00:00:00"
+  },
+  {
+    "id": "https://openalex.org/W3193841941",
+    "doi": "https://doi.org/10.17762/converter.132",
+    "title": "A Hybrid GCN and LSTM Structure Based on Attention Mechanism for Crime Prediction",
+    "display_name": "A Hybrid GCN and LSTM Structure Based on Attention Mechanism for Crime Prediction",
+    "relevance_score": 51.47075,
+    "publication_year": 2021,
+    "publication_date": "2021-07-10",
+    "ids": {
+      "openalex": "https://openalex.org/W3193841941",
+      "doi": "https://doi.org/10.17762/converter.132",
+      "mag": "3193841941"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "doi:10.17762/converter.132",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.17762/converter.132",
+      "pdf_url": "http://converter-magazine.info/index.php/converter/article/download/132/127",
+      "source": {
+        "id": "https://openalex.org/S4210199595",
+        "display_name": "CONVERTER",
+        "issn_l": "0010-8189",
+        "issn": [
+          "0010-8189"
+        ],
+        "is_oa": true,
+        "is_in_doaj": false,
+        "is_core": true,
+        "listed_in": [
+          "cwts-core"
+        ],
+        "host_organization": null,
+        "host_organization_name": null,
+        "host_organization_lineage": [],
+        "host_organization_lineage_names": [],
+        "type": "journal"
+      },
+      "license": null,
+      "license_id": null,
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "CONVERTER",
+      "raw_type": "journal-article"
+    },
+    "type": "article",
+    "indexed_in": [
+      "crossref"
+    ],
+    "open_access": {
+      "is_oa": true,
+      "oa_status": "diamond",
+      "oa_url": "http://converter-magazine.info/index.php/converter/article/download/132/127",
+      "any_repository_has_fulltext": false
+    },
+    "authorships": [
+      {
+        "author_position": "first",
+        "author": {
+          "id": "https://openalex.org/A5110795297",
+          "display_name": "Jinming Hu",
+          "orcid": "https://orcid.org/0009-0000-7482-1993",
+          "observed_orcids": [
+            "https://orcid.org/0009-0000-7482-1993"
+          ]
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I37448385",
+            "display_name": "China People's Public Security University",
+            "ror": "https://ror.org/05twya590",
+            "country_code": "CN",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I37448385"
+            ]
+          }
+        ],
+        "countries": [
+          "CN"
+        ],
+        "is_corresponding": true,
+        "raw_author_name": "Jinming Hu",
+        "raw_affiliation_strings": [
+          "School of Information Network Security , People's Public Security University of China , Beijing 102628 , China",
+          "School of Information Network Security, People's Public Security University of China, Beijing 102628, China"
+        ],
+        "raw_orcid": null,
+        "affiliations": [
+          {
+            "raw_affiliation_string": "School of Information Network Security , People's Public Security University of China , Beijing 102628 , China",
+            "institution_ids": [
+              "https://openalex.org/I37448385"
+            ]
+          },
+          {
+            "raw_affiliation_string": "School of Information Network Security, People's Public Security University of China, Beijing 102628, China",
+            "institution_ids": [
+              "https://openalex.org/I37448385"
+            ]
+          }
+        ]
+      }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 1,
+    "institutions_distinct_count": 1,
+    "corresponding_author_ids": [
+      "https://openalex.org/A5110795297"
+    ],
+    "corresponding_institution_ids": [
+      "https://openalex.org/I37448385"
+    ],
+    "apc_list": null,
+    "apc_paid": null,
+    "fwci": 0.6944,
+    "has_fulltext": true,
+    "cited_by_count": 2,
+    "citation_normalized_percentile": {
+      "value": 0.7944514,
+      "is_in_top_1_percent": false,
+      "is_in_top_10_percent": false
+    },
+    "cited_by_percentile_year": {
+      "min": 89,
+      "max": 94
+    },
+    "biblio": {
+      "volume": null,
+      "issue": null,
+      "first_page": "328",
+      "last_page": "338"
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T10574",
+      "display_name": "Crime Patterns and Interventions",
+      "score": 0.8461999893188477,
+      "subfield": {
+        "id": "https://openalex.org/subfields/3312",
+        "display_name": "Sociology and Political Science"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/33",
+        "display_name": "Social Sciences"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/2",
+        "display_name": "Social Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T10574",
+        "display_name": "Crime Patterns and Interventions",
+        "score": 0.8461999893188477,
+        "subfield": {
+          "id": "https://openalex.org/subfields/3312",
+          "display_name": "Sociology and Political Science"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/33",
+          "display_name": "Social Sciences"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/2",
+          "display_name": "Social Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T11344",
+        "display_name": "Traffic Prediction and Management Techniques",
+        "score": 0.10490000247955322,
+        "subfield": {
+          "id": "https://openalex.org/subfields/2215",
+          "display_name": "Building and Construction"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/22",
+          "display_name": "Engineering"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T11273",
+        "display_name": "Advanced Graph Neural Networks",
+        "score": 0.007300000172108412,
+        "subfield": {
+          "id": "https://openalex.org/subfields/1702",
+          "display_name": "Artificial Intelligence"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/17",
+          "display_name": "Computer Science"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/crime-prediction",
+        "display_name": "crime prediction",
+        "score": 0.996999979019165
+      },
+      {
+        "id": "https://openalex.org/keywords/graph-convolutional-networks",
+        "display_name": "graph convolutional networks",
+        "score": 0.8669999837875366
+      },
+      {
+        "id": "https://openalex.org/keywords/long-short-term-memory-networks",
+        "display_name": "long short-term memory networks",
+        "score": 0.8679999709129333
+      },
+      {
+        "id": "https://openalex.org/keywords/attention-mechanism",
+        "display_name": "attention mechanism",
+        "score": 0.9869999885559082
+      },
+      {
+        "id": "https://openalex.org/keywords/hybrid-deep-learning",
+        "display_name": "hybrid deep learning model",
+        "score": 0.7049999833106995
+      },
+      {
+        "id": "https://openalex.org/keywords/spatio-temporal-features",
+        "display_name": "spatio-temporal features",
+        "score": 0.8899999856948853
+      },
+      {
+        "id": "https://openalex.org/keywords/rolling-forecasts",
+        "display_name": "rolling forecasts",
+        "score": 0.6970000267028809
+      },
+      {
+        "id": "https://openalex.org/keywords/police-resource-allocation",
+        "display_name": "police resource allocation",
+        "score": 0.5770000219345093
+      },
+      {
+        "id": "https://openalex.org/keywords/boston",
+        "display_name": "Boston",
+        "score": 0.902999997138977
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.7158414125442505
+      },
+      {
+        "id": "https://openalex.org/C141441539",
+        "wikidata": "https://www.wikidata.org/wiki/Q1970908",
+        "display_name": "Boom",
+        "level": 2,
+        "score": 0.6948151588439941
+      },
+      {
+        "id": "https://openalex.org/C132525143",
+        "wikidata": "https://www.wikidata.org/wiki/Q141488",
+        "display_name": "Graph",
+        "level": 2,
+        "score": 0.5111852288246155
+      },
+      {
+        "id": "https://openalex.org/C75684735",
+        "wikidata": "https://www.wikidata.org/wiki/Q858810",
+        "display_name": "Big data",
+        "level": 2,
+        "score": 0.5095134377479553
+      },
+      {
+        "id": "https://openalex.org/C89611455",
+        "wikidata": "https://www.wikidata.org/wiki/Q6804646",
+        "display_name": "Mechanism (biology)",
+        "level": 2,
+        "score": 0.4804129898548126
+      },
+      {
+        "id": "https://openalex.org/C9652623",
+        "wikidata": "https://www.wikidata.org/wiki/Q190109",
+        "display_name": "Field (mathematics)",
+        "level": 2,
+        "score": 0.47470229864120483
+      },
+      {
+        "id": "https://openalex.org/C2776401178",
+        "wikidata": "https://www.wikidata.org/wiki/Q12050496",
+        "display_name": "Feature (linguistics)",
+        "level": 2,
+        "score": 0.4573405086994171
+      },
+      {
+        "id": "https://openalex.org/C18762648",
+        "wikidata": "https://www.wikidata.org/wiki/Q42213",
+        "display_name": "Work (physics)",
+        "level": 2,
+        "score": 0.4558194875717163
+      },
+      {
+        "id": "https://openalex.org/C2119116",
+        "wikidata": "https://www.wikidata.org/wiki/Q7181",
+        "display_name": "Globalization",
+        "level": 2,
+        "score": 0.45397213101387024
+      },
+      {
+        "id": "https://openalex.org/C154945302",
+        "wikidata": "https://www.wikidata.org/wiki/Q11660",
+        "display_name": "Artificial intelligence",
+        "level": 1,
+        "score": 0.4241476058959961
+      },
+      {
+        "id": "https://openalex.org/C119857082",
+        "wikidata": "https://www.wikidata.org/wiki/Q2539",
+        "display_name": "Machine learning",
+        "level": 1,
+        "score": 0.3849254846572876
+      },
+      {
+        "id": "https://openalex.org/C124101348",
+        "wikidata": "https://www.wikidata.org/wiki/Q172491",
+        "display_name": "Data mining",
+        "level": 1,
+        "score": 0.28211429715156555
+      },
+      {
+        "id": "https://openalex.org/C17744445",
+        "wikidata": "https://www.wikidata.org/wiki/Q36442",
+        "display_name": "Political science",
+        "level": 0,
+        "score": 0.13367417454719543
+      },
+      {
+        "id": "https://openalex.org/C80444323",
+        "wikidata": "https://www.wikidata.org/wiki/Q2878974",
+        "display_name": "Theoretical computer science",
+        "level": 1,
+        "score": 0.12469601631164551
+      },
+      {
+        "id": "https://openalex.org/C127413603",
+        "wikidata": "https://www.wikidata.org/wiki/Q11023",
+        "display_name": "Engineering",
+        "level": 0,
+        "score": 0.10717234015464783
+      },
+      {
+        "id": "https://openalex.org/C41895202",
+        "wikidata": "https://www.wikidata.org/wiki/Q8162",
+        "display_name": "Linguistics",
+        "level": 1,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C33923547",
+        "wikidata": "https://www.wikidata.org/wiki/Q395",
+        "display_name": "Mathematics",
+        "level": 0,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C202444582",
+        "wikidata": "https://www.wikidata.org/wiki/Q837863",
+        "display_name": "Pure mathematics",
+        "level": 1,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C78519656",
+        "wikidata": "https://www.wikidata.org/wiki/Q101333",
+        "display_name": "Mechanical engineering",
+        "level": 1,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C138885662",
+        "wikidata": "https://www.wikidata.org/wiki/Q5891",
+        "display_name": "Philosophy",
+        "level": 0,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C87717796",
+        "wikidata": "https://www.wikidata.org/wiki/Q146326",
+        "display_name": "Environmental engineering",
+        "level": 1,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C199539241",
+        "wikidata": "https://www.wikidata.org/wiki/Q7748",
+        "display_name": "Law",
+        "level": 1,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C111472728",
+        "wikidata": "https://www.wikidata.org/wiki/Q9471",
+        "display_name": "Epistemology",
+        "level": 1,
+        "score": 0.0
+      }
+    ],
+    "mesh": [],
+    "locations_count": 1,
+    "locations": [
+      {
+        "id": "doi:10.17762/converter.132",
+        "is_oa": true,
+        "landing_page_url": "https://doi.org/10.17762/converter.132",
+        "pdf_url": "http://converter-magazine.info/index.php/converter/article/download/132/127",
+        "source": {
+          "id": "https://openalex.org/S4210199595",
+          "display_name": "CONVERTER",
+          "issn_l": "0010-8189",
+          "issn": [
+            "0010-8189"
+          ],
+          "is_oa": true,
+          "is_in_doaj": false,
+          "is_core": true,
+          "listed_in": [
+            "cwts-core"
+          ],
+          "host_organization": null,
+          "host_organization_name": null,
+          "host_organization_lineage": [],
+          "host_organization_lineage_names": [],
+          "type": "journal"
+        },
+        "license": null,
+        "license_id": null,
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "CONVERTER",
+        "raw_type": "journal-article"
+      }
+    ],
+    "best_oa_location": {
+      "id": "doi:10.17762/converter.132",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.17762/converter.132",
+      "pdf_url": "http://converter-magazine.info/index.php/converter/article/download/132/127",
+      "source": {
+        "id": "https://openalex.org/S4210199595",
+        "display_name": "CONVERTER",
+        "issn_l": "0010-8189",
+        "issn": [
+          "0010-8189"
+        ],
+        "is_oa": true,
+        "is_in_doaj": false,
+        "is_core": true,
+        "listed_in": [
+          "cwts-core"
+        ],
+        "host_organization": null,
+        "host_organization_name": null,
+        "host_organization_lineage": [],
+        "host_organization_lineage_names": [],
+        "type": "journal"
+      },
+      "license": null,
+      "license_id": null,
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "CONVERTER",
+      "raw_type": "journal-article"
+    },
+    "sustainable_development_goals": [
+      {
+        "score": 0.6601999998092651,
+        "id": "https://metadata.un.org/sdg/16",
+        "display_name": "Peace, justice, and strong institutions"
+      }
+    ],
+    "sustainable_development_goals_aurora": [
+      {
+        "score": 0.4699999988079071,
+        "id": "https://metadata.un.org/sdg/16",
+        "display_name": "Peace, justice, and strong institutions"
+      }
+    ],
+    "study_designs": [],
+    "awards": [],
+    "funders": [],
+    "has_content": {
+      "pdf": true,
+      "grobid_xml": true
+    },
+    "content_urls": {
+      "pdf": "https://content.openalex.org/works/W3193841941.pdf",
+      "grobid_xml": "https://content.openalex.org/works/W3193841941.grobid-xml"
+    },
+    "referenced_works_count": 25,
+    "referenced_works": [
+      "https://openalex.org/W1568174276",
+      "https://openalex.org/W1590923314",
+      "https://openalex.org/W1952913709",
+      "https://openalex.org/W1992493307",
+      "https://openalex.org/W2038966872",
+      "https://openalex.org/W2063057067",
+      "https://openalex.org/W2107968098",
+      "https://openalex.org/W2108116468",
+      "https://openalex.org/W2128627202",
+      "https://openalex.org/W2246372546",
+      "https://openalex.org/W2592085801",
+      "https://openalex.org/W2593239008",
+      "https://openalex.org/W2597655663",
+      "https://openalex.org/W2734643746",
+      "https://openalex.org/W2750747353",
+      "https://openalex.org/W2806403540",
+      "https://openalex.org/W2978586630",
+      "https://openalex.org/W2981915020",
+      "https://openalex.org/W3027426350",
+      "https://openalex.org/W3036652698",
+      "https://openalex.org/W3107119534",
+      "https://openalex.org/W3119171599",
+      "https://openalex.org/W6635225541",
+      "https://openalex.org/W6735377749",
+      "https://openalex.org/W6740976846"
+    ],
+    "related_works": [
+      "https://openalex.org/W3161710089",
+      "https://openalex.org/W2353620890",
+      "https://openalex.org/W2353579321",
+      "https://openalex.org/W3130795706",
+      "https://openalex.org/W3049366059",
+      "https://openalex.org/W2088384090",
+      "https://openalex.org/W3087499667",
+      "https://openalex.org/W2537816284",
+      "https://openalex.org/W2383202214",
+      "https://openalex.org/W2369795652"
+    ],
+    "abstract_inverted_index": {
+      "Globalization": [
+        0
+      ],
+      "has": [
+        1,
+        15,
+        40,
+        170
+      ],
+      "been": [
+        2
+      ],
+      "the": [
+        3,
+        11,
+        17,
+        28,
+        109,
+        114,
+        119,
+        126,
+        141,
+        160,
+        163
+      ],
+      "major": [
+        4
+      ],
+      "contributor": [
+        5
+      ],
+      "to": [
+        6,
+        46,
+        79,
+        101,
+        112
+      ],
+      "economy": [
+        7
+      ],
+      "boom.": [
+        8
+      ],
+      "While": [
+        9
+      ],
+      "at": [
+        10
+      ],
+      "same": [
+        12
+      ],
+      "time,": [
+        13
+      ],
+      "it": [
+        14,
+        39,
+        131
+      ],
+      "stimulated": [
+        16
+      ],
+      "development": [
+        18
+      ],
+      "of": [
+        19,
+        36,
+        108,
+        122,
+        128,
+        143,
+        152,
+        162
+      ],
+      "crime": [
+        20,
+        50,
+        103,
+        136,
+        144,
+        153
+      ],
+      "method": [
+        21
+      ],
+      "as": [
+        22
+      ],
+      "frequent": [
+        23
+      ],
+      "cross-border": [
+        24
+      ],
+      "communication": [
+        25
+      ],
+      "allowed.": [
+        26
+      ],
+      "With": [
+        27
+      ],
+      "improvement": [
+        29
+      ],
+      "in": [
+        30,
+        146,
+        159
+      ],
+      "big": [
+        31
+      ],
+      "data": [
+        32,
+        154
+      ],
+      "and": [
+        33,
+        74,
+        96,
+        105,
+        124
+      ],
+      "prediction": [
+        34,
+        51,
+        172
+      ],
+      "system": [
+        35
+      ],
+      "policing": [
+        37
+      ],
+      "work,": [
+        38
+      ],
+      "become": [
+        41
+      ],
+      "a": [
+        42,
+        86
+      ],
+      "new": [
+        43
+      ],
+      "research": [
+        44
+      ],
+      "field": [
+        45
+      ],
+      "establish": [
+        47
+      ],
+      "an": [
+        48
+      ],
+      "efficient": [
+        49
+      ],
+      "model,": [
+        52,
+        88
+      ],
+      "by": [
+        53
+      ],
+      "which": [
+        54,
+        89
+      ],
+      "police": [
+        55,
+        76
+      ],
+      "departments": [
+        56
+      ],
+      "could": [
+        57
+      ],
+      "clamp": [
+        58
+      ],
+      "down": [
+        59
+      ],
+      "on": [
+        60
+      ],
+      "criminal": [
+        61
+      ],
+      "activities": [
+        62
+      ],
+      "more": [
+        63
+      ],
+      "accurately.": [
+        64
+      ],
+      "Besides,": [
+        65
+      ],
+      "this": [
+        66
+      ],
+      "model": [
+        67,
+        169
+      ],
+      "will": [
+        68
+      ],
+      "be": [
+        69
+      ],
+      "quite": [
+        70
+      ],
+      "beneficial": [
+        71
+      ],
+      "for": [
+        72,
+        155
+      ],
+      "commanding": [
+        73
+      ],
+      "dispatching": [
+        75
+      ],
+      "force": [
+        77
+      ],
+      "thus": [
+        78
+      ],
+      "improve": [
+        80,
+        113
+      ],
+      "work": [
+        81
+      ],
+      "efficiency.": [
+        82
+      ],
+      "This": [
+        83
+      ],
+      "paper": [
+        84
+      ],
+      "proposes": [
+        85
+      ],
+      "combination": [
+        87
+      ],
+      "uses": [
+        90
+      ],
+      "Long": [
+        91
+      ],
+      "Short-Term": [
+        92
+      ],
+      "Memory": [
+        93
+      ],
+      "Network": [
+        94,
+        99
+      ],
+      "(LSTM)": [
+        95
+      ],
+      "Graph": [
+        97
+      ],
+      "Convolutional": [
+        98
+      ],
+      "(GCN)": [
+        100
+      ],
+      "predict": [
+        102,
+        135
+      ],
+      "rate": [
+        104
+      ],
+      "takes": [
+        106
+      ],
+      "advantage": [
+        107
+      ],
+      "Attention": [
+        110
+      ],
+      "mechanism": [
+        111
+      ],
+      "experimental": [
+        115
+      ],
+      "result.": [
+        116
+      ],
+      "By": [
+        117
+      ],
+      "extracting": [
+        118
+      ],
+      "spatio-temporal": [
+        120
+      ],
+      "characteristics": [
+        121
+      ],
+      "crimes": [
+        123
+      ],
+      "increasing": [
+        125
+      ],
+      "proportion": [
+        127
+      ],
+      "typical": [
+        129
+      ],
+      "feature,": [
+        130
+      ],
+      "can": [
+        132
+      ],
+      "not": [
+        133
+      ],
+      "only": [
+        134
+      ],
+      "quantity,": [
+        137
+      ],
+      "but": [
+        138
+      ],
+      "also": [
+        139
+      ],
+      "detect": [
+        140
+      ],
+      "degree": [
+        142
+      ],
+      "risk": [
+        145
+      ],
+      "each": [
+        147
+      ],
+      "region.": [
+        148
+      ],
+      "A": [
+        149
+      ],
+      "rolling": [
+        150
+      ],
+      "forecast": [
+        151
+      ],
+      "about": [
+        156
+      ],
+      "three": [
+        157
+      ],
+      "years": [
+        158
+      ],
+      "Boston": [
+        161
+      ],
+      "United": [
+        164
+      ],
+      "States": [
+        165
+      ],
+      "shows": [
+        166
+      ],
+      "that": [
+        167
+      ],
+      "our": [
+        168
+      ],
+      "good": [
+        171
+      ],
+      "performance.": [
+        173
+      ]
+    },
+    "counts_by_year": [
+      {
+        "year": 2024,
+        "cited_by_count": 1
+      },
+      {
+        "year": 2023,
+        "cited_by_count": 1
+      }
+    ],
+    "updated_date": "2026-09-08T07:41:39.490200",
+    "created_date": "2025-10-10T00:00:00"
+  },
+  {
+    "id": "https://openalex.org/W4225256012",
+    "doi": "https://doi.org/10.3390/ijgi11050294",
+    "title": "An Integrated Graph Model for Spatial–Temporal Urban Crime Prediction Based on Attention Mechanism",
+    "display_name": "An Integrated Graph Model for Spatial–Temporal Urban Crime Prediction Based on Attention Mechanism",
+    "relevance_score": 47.526478,
+    "publication_year": 2022,
+    "publication_date": "2022-04-30",
+    "ids": {
+      "openalex": "https://openalex.org/W4225256012",
+      "doi": "https://doi.org/10.3390/ijgi11050294"
+    },
+    "language": "en",
+    "primary_location": {
+      "id": "doi:10.3390/ijgi11050294",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.3390/ijgi11050294",
+      "pdf_url": "https://www.mdpi.com/2220-9964/11/5/294/pdf?version=1651319567",
+      "source": {
+        "id": "https://openalex.org/S2764431341",
+        "display_name": "ISPRS International Journal of Geo-Information",
+        "issn_l": "2220-9964",
+        "issn": [
+          "2220-9964"
+        ],
+        "is_oa": true,
+        "is_in_doaj": true,
+        "is_core": true,
+        "listed_in": [
+          "cwts-core",
+          "doaj",
+          "jufo-1",
+          "ki-jl-1",
+          "norway-1"
+        ],
+        "host_organization": "https://openalex.org/P4310310987",
+        "host_organization_name": "Multidisciplinary Digital Publishing Institute",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310310987"
+        ],
+        "host_organization_lineage_names": [
+          "Multidisciplinary Digital Publishing Institute"
+        ],
+        "type": "journal"
+      },
+      "license": "cc-by",
+      "license_id": "https://openalex.org/licenses/cc-by",
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "ISPRS International Journal of Geo-Information",
+      "raw_type": "journal-article"
+    },
+    "type": "article",
+    "indexed_in": [
+      "crossref",
+      "doaj"
+    ],
+    "open_access": {
+      "is_oa": true,
+      "oa_status": "gold",
+      "oa_url": "https://www.mdpi.com/2220-9964/11/5/294/pdf?version=1651319567",
+      "any_repository_has_fulltext": true
+    },
+    "authorships": [
+      {
+        "author_position": "first",
+        "author": {
+          "id": "https://openalex.org/A5101940062",
+          "display_name": "Miaomiao Hou",
+          "orcid": "https://orcid.org/0000-0002-5154-2884",
+          "observed_orcids": [
+            "https://orcid.org/0000-0002-5154-2884"
+          ]
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I37448385",
+            "display_name": "China People's Public Security University",
+            "ror": "https://ror.org/05twya590",
+            "country_code": "CN",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I37448385"
+            ]
+          }
+        ],
+        "countries": [
+          "CN"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Miaomiao Hou",
+        "raw_affiliation_strings": [
+          "School of Information Technology and Cyber Security, People’s Public Security University of China, Beijing 100038, China",
+          "School of Information Technology and Cyber Security, People's Public Security University of China, Beijing 100038, China"
+        ],
+        "raw_orcid": null,
+        "affiliations": [
+          {
+            "raw_affiliation_string": "School of Information Technology and Cyber Security, People’s Public Security University of China, Beijing 100038, China",
+            "institution_ids": [
+              "https://openalex.org/I37448385"
+            ]
+          },
+          {
+            "raw_affiliation_string": "School of Information Technology and Cyber Security, People's Public Security University of China, Beijing 100038, China",
+            "institution_ids": [
+              "https://openalex.org/I37448385"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5101446304",
+          "display_name": "Xiaofeng Hu",
+          "orcid": "https://orcid.org/0000-0003-3754-9913",
+          "observed_orcids": [
+            "https://orcid.org/0000-0003-3754-9913"
+          ]
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I37448385",
+            "display_name": "China People's Public Security University",
+            "ror": "https://ror.org/05twya590",
+            "country_code": "CN",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I37448385"
+            ]
+          }
+        ],
+        "countries": [
+          "CN"
+        ],
+        "is_corresponding": true,
+        "raw_author_name": "Xiaofeng Hu",
+        "raw_affiliation_strings": [
+          "School of Information Technology and Cyber Security, People’s Public Security University of China, Beijing 100038, China",
+          "School of Information Technology and Cyber Security, People's Public Security University of China, Beijing 100038, China"
+        ],
+        "raw_orcid": null,
+        "affiliations": [
+          {
+            "raw_affiliation_string": "School of Information Technology and Cyber Security, People’s Public Security University of China, Beijing 100038, China",
+            "institution_ids": [
+              "https://openalex.org/I37448385"
+            ]
+          },
+          {
+            "raw_affiliation_string": "School of Information Technology and Cyber Security, People's Public Security University of China, Beijing 100038, China",
+            "institution_ids": [
+              "https://openalex.org/I37448385"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5082353357",
+          "display_name": "Jitao Cai",
+          "orcid": "https://orcid.org/0009-0001-6704-8872",
+          "observed_orcids": [
+            "https://orcid.org/0009-0001-6704-8872"
+          ]
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4399598474",
+            "display_name": "China University of Mining and Technology - Beijing",
+            "ror": "https://ror.org/003ncxf91",
+            "country_code": null,
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I4399598474"
+            ]
+          }
+        ],
+        "countries": [
+          "CN"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Jitao Cai",
+        "raw_affiliation_strings": [
+          "School of Emergency Management and Safety Engineering, China University of Mining and Technology, Beijing 100083, China"
+        ],
+        "raw_orcid": null,
+        "affiliations": [
+          {
+            "raw_affiliation_string": "School of Emergency Management and Safety Engineering, China University of Mining and Technology, Beijing 100083, China",
+            "institution_ids": [
+              "https://openalex.org/I4399598474"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "middle",
+        "author": {
+          "id": "https://openalex.org/A5065975113",
+          "display_name": "Xinge Han",
+          "orcid": "https://orcid.org/0000-0002-3151-6590",
+          "observed_orcids": [
+            "https://orcid.org/0000-0002-3151-6590"
+          ]
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I4399598474",
+            "display_name": "China University of Mining and Technology - Beijing",
+            "ror": "https://ror.org/003ncxf91",
+            "country_code": null,
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I4399598474"
+            ]
+          }
+        ],
+        "countries": [
+          "CN"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Xinge Han",
+        "raw_affiliation_strings": [
+          "School of Emergency Management and Safety Engineering, China University of Mining and Technology, Beijing 100083, China"
+        ],
+        "raw_orcid": null,
+        "affiliations": [
+          {
+            "raw_affiliation_string": "School of Emergency Management and Safety Engineering, China University of Mining and Technology, Beijing 100083, China",
+            "institution_ids": [
+              "https://openalex.org/I4399598474"
+            ]
+          }
+        ]
+      },
+      {
+        "author_position": "last",
+        "author": {
+          "id": "https://openalex.org/A5085782067",
+          "display_name": "Shuaiqi Yuan",
+          "orcid": "https://orcid.org/0000-0003-2758-546X",
+          "observed_orcids": [
+            "https://orcid.org/0000-0003-2758-546X"
+          ]
+        },
+        "institutions": [
+          {
+            "id": "https://openalex.org/I98358874",
+            "display_name": "Delft University of Technology",
+            "ror": "https://ror.org/02e2c7k09",
+            "country_code": "NL",
+            "type": "education",
+            "lineage": [
+              "https://openalex.org/I98358874"
+            ]
+          }
+        ],
+        "countries": [
+          "NL"
+        ],
+        "is_corresponding": false,
+        "raw_author_name": "Shuaiqi Yuan",
+        "raw_affiliation_strings": [
+          "Safety and Security Science Section, Faculty of Technology, Policy and Management, TU Delft, 2628 BX Delft, The Netherlands"
+        ],
+        "raw_orcid": null,
+        "affiliations": [
+          {
+            "raw_affiliation_string": "Safety and Security Science Section, Faculty of Technology, Policy and Management, TU Delft, 2628 BX Delft, The Netherlands",
+            "institution_ids": [
+              "https://openalex.org/I98358874"
+            ]
+          }
+        ]
+      }
+    ],
+    "institutions": [],
+    "countries_distinct_count": 2,
+    "institutions_distinct_count": 3,
+    "corresponding_author_ids": [
+      "https://openalex.org/A5101446304"
+    ],
+    "corresponding_institution_ids": [
+      "https://openalex.org/I37448385"
+    ],
+    "apc_list": {
+      "value": 1400,
+      "currency": "CHF",
+      "value_usd": 1466
+    },
+    "apc_paid": {
+      "value": 1400,
+      "currency": "CHF",
+      "value_usd": 1466
+    },
+    "fwci": 7.9773,
+    "has_fulltext": true,
+    "cited_by_count": 30,
+    "citation_normalized_percentile": {
+      "value": 0.97202514,
+      "is_in_top_1_percent": false,
+      "is_in_top_10_percent": true
+    },
+    "cited_by_percentile_year": {
+      "min": 95,
+      "max": 99
+    },
+    "biblio": {
+      "volume": "11",
+      "issue": "5",
+      "first_page": "294",
+      "last_page": "294"
+    },
+    "is_retracted": false,
+    "is_paratext": false,
+    "is_xpac": false,
+    "primary_topic": {
+      "id": "https://openalex.org/T10574",
+      "display_name": "Crime Patterns and Interventions",
+      "score": 0.9434000253677368,
+      "subfield": {
+        "id": "https://openalex.org/subfields/3312",
+        "display_name": "Sociology and Political Science"
+      },
+      "field": {
+        "id": "https://openalex.org/fields/33",
+        "display_name": "Social Sciences"
+      },
+      "domain": {
+        "id": "https://openalex.org/domains/2",
+        "display_name": "Social Sciences"
+      }
+    },
+    "topics": [
+      {
+        "id": "https://openalex.org/T10574",
+        "display_name": "Crime Patterns and Interventions",
+        "score": 0.9434000253677368,
+        "subfield": {
+          "id": "https://openalex.org/subfields/3312",
+          "display_name": "Sociology and Political Science"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/33",
+          "display_name": "Social Sciences"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/2",
+          "display_name": "Social Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T11344",
+        "display_name": "Traffic Prediction and Management Techniques",
+        "score": 0.038100000470876694,
+        "subfield": {
+          "id": "https://openalex.org/subfields/2215",
+          "display_name": "Building and Construction"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/22",
+          "display_name": "Engineering"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      },
+      {
+        "id": "https://openalex.org/T12325",
+        "display_name": "Urban Design and Spatial Analysis",
+        "score": 0.005100000184029341,
+        "subfield": {
+          "id": "https://openalex.org/subfields/2215",
+          "display_name": "Building and Construction"
+        },
+        "field": {
+          "id": "https://openalex.org/fields/22",
+          "display_name": "Engineering"
+        },
+        "domain": {
+          "id": "https://openalex.org/domains/3",
+          "display_name": "Physical Sciences"
+        }
+      }
+    ],
+    "keywords": [
+      {
+        "id": "https://openalex.org/keywords/crime-hotspots",
+        "display_name": "crime hotspots",
+        "score": 0.7160000205039978
+      },
+      {
+        "id": "https://openalex.org/keywords/attention-mechanism",
+        "display_name": "attention mechanism",
+        "score": 0.9589999914169312
+      },
+      {
+        "id": "https://openalex.org/keywords/graph-convolutional-networks",
+        "display_name": "graph convolutional networks",
+        "score": 0.9049999713897705
+      },
+      {
+        "id": "https://openalex.org/keywords/resnet",
+        "display_name": "ResNet",
+        "score": 0.8539999723434448
+      },
+      {
+        "id": "https://openalex.org/keywords/lstm",
+        "display_name": "LSTM",
+        "score": 0.9020000100135803
+      },
+      {
+        "id": "https://openalex.org/keywords/police-resource-allocation",
+        "display_name": "police resource allocation",
+        "score": 0.8090000152587891
+      },
+      {
+        "id": "https://openalex.org/keywords/police-patrol",
+        "display_name": "police patrol",
+        "score": 0.5
+      }
+    ],
+    "concepts": [
+      {
+        "id": "https://openalex.org/C24338571",
+        "wikidata": "https://www.wikidata.org/wiki/Q2566298",
+        "display_name": "Autoregressive integrated moving average",
+        "level": 3,
+        "score": 0.755168080329895
+      },
+      {
+        "id": "https://openalex.org/C41008148",
+        "wikidata": "https://www.wikidata.org/wiki/Q21198",
+        "display_name": "Computer science",
+        "level": 0,
+        "score": 0.6939464807510376
+      },
+      {
+        "id": "https://openalex.org/C12267149",
+        "wikidata": "https://www.wikidata.org/wiki/Q282453",
+        "display_name": "Support vector machine",
+        "level": 2,
+        "score": 0.5488451719284058
+      },
+      {
+        "id": "https://openalex.org/C132525143",
+        "wikidata": "https://www.wikidata.org/wiki/Q141488",
+        "display_name": "Graph",
+        "level": 2,
+        "score": 0.4978957176208496
+      },
+      {
+        "id": "https://openalex.org/C155512373",
+        "wikidata": "https://www.wikidata.org/wiki/Q287450",
+        "display_name": "Residual",
+        "level": 2,
+        "score": 0.4629645347595215
+      },
+      {
+        "id": "https://openalex.org/C70153297",
+        "wikidata": "https://www.wikidata.org/wiki/Q5591907",
+        "display_name": "Gradient boosting",
+        "level": 3,
+        "score": 0.46025052666664124
+      },
+      {
+        "id": "https://openalex.org/C154945302",
+        "wikidata": "https://www.wikidata.org/wiki/Q11660",
+        "display_name": "Artificial intelligence",
+        "level": 1,
+        "score": 0.458895206451416
+      },
+      {
+        "id": "https://openalex.org/C81363708",
+        "wikidata": "https://www.wikidata.org/wiki/Q17084460",
+        "display_name": "Convolutional neural network",
+        "level": 2,
+        "score": 0.44949576258659363
+      },
+      {
+        "id": "https://openalex.org/C169258074",
+        "wikidata": "https://www.wikidata.org/wiki/Q245748",
+        "display_name": "Random forest",
+        "level": 2,
+        "score": 0.4413604736328125
+      },
+      {
+        "id": "https://openalex.org/C147168706",
+        "wikidata": "https://www.wikidata.org/wiki/Q1457734",
+        "display_name": "Recurrent neural network",
+        "level": 3,
+        "score": 0.4146263897418976
+      },
+      {
+        "id": "https://openalex.org/C119857082",
+        "wikidata": "https://www.wikidata.org/wiki/Q2539",
+        "display_name": "Machine learning",
+        "level": 1,
+        "score": 0.4019346833229065
+      },
+      {
+        "id": "https://openalex.org/C124101348",
+        "wikidata": "https://www.wikidata.org/wiki/Q172491",
+        "display_name": "Data mining",
+        "level": 1,
+        "score": 0.3740180432796478
+      },
+      {
+        "id": "https://openalex.org/C50644808",
+        "wikidata": "https://www.wikidata.org/wiki/Q192776",
+        "display_name": "Artificial neural network",
+        "level": 2,
+        "score": 0.26975351572036743
+      },
+      {
+        "id": "https://openalex.org/C151406439",
+        "wikidata": "https://www.wikidata.org/wiki/Q186588",
+        "display_name": "Time series",
+        "level": 2,
+        "score": 0.1278957724571228
+      },
+      {
+        "id": "https://openalex.org/C80444323",
+        "wikidata": "https://www.wikidata.org/wiki/Q2878974",
+        "display_name": "Theoretical computer science",
+        "level": 1,
+        "score": 0.0
+      },
+      {
+        "id": "https://openalex.org/C11413529",
+        "wikidata": "https://www.wikidata.org/wiki/Q8366",
+        "display_name": "Algorithm",
+        "level": 1,
+        "score": 0.0
+      }
+    ],
+    "mesh": [],
+    "locations_count": 4,
+    "locations": [
+      {
+        "id": "doi:10.3390/ijgi11050294",
+        "is_oa": true,
+        "landing_page_url": "https://doi.org/10.3390/ijgi11050294",
+        "pdf_url": "https://www.mdpi.com/2220-9964/11/5/294/pdf?version=1651319567",
+        "source": {
+          "id": "https://openalex.org/S2764431341",
+          "display_name": "ISPRS International Journal of Geo-Information",
+          "issn_l": "2220-9964",
+          "issn": [
+            "2220-9964"
+          ],
+          "is_oa": true,
+          "is_in_doaj": true,
+          "is_core": true,
+          "listed_in": [
+            "cwts-core",
+            "doaj",
+            "jufo-1",
+            "ki-jl-1",
+            "norway-1"
+          ],
+          "host_organization": "https://openalex.org/P4310310987",
+          "host_organization_name": "Multidisciplinary Digital Publishing Institute",
+          "host_organization_lineage": [
+            "https://openalex.org/P4310310987"
+          ],
+          "host_organization_lineage_names": [
+            "Multidisciplinary Digital Publishing Institute"
+          ],
+          "type": "journal"
+        },
+        "license": "cc-by",
+        "license_id": "https://openalex.org/licenses/cc-by",
+        "version": "publishedVersion",
+        "is_accepted": true,
+        "is_published": true,
+        "raw_source_name": "ISPRS International Journal of Geo-Information",
+        "raw_type": "journal-article"
+      },
+      {
+        "id": "pmh:oai:doaj.org/article:897bf60552d74f6c8866dc7ad4cd5181",
+        "is_oa": false,
+        "landing_page_url": "https://doaj.org/article/897bf60552d74f6c8866dc7ad4cd5181",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S4306401280",
+          "display_name": "DOAJ (DOAJ: Directory of Open Access Journals)",
+          "issn_l": null,
+          "issn": null,
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "listed_in": [],
+          "host_organization": null,
+          "host_organization_name": null,
+          "host_organization_lineage": [],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": null,
+        "license_id": null,
+        "version": "submittedVersion",
+        "is_accepted": false,
+        "is_published": false,
+        "raw_source_name": "ISPRS International Journal of Geo-Information, Vol 11, Iss 5, p 294 (2022)",
+        "raw_type": "article"
+      },
+      {
+        "id": "pmh:oai:tudelft.nl:uuid:380eaaac-b01f-46ea-876c-f481c01744fa",
+        "is_oa": false,
+        "landing_page_url": "http://resolver.tudelft.nl/uuid:380eaaac-b01f-46ea-876c-f481c01744fa",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S4306400906",
+          "display_name": "Research Repository (Delft University of Technology)",
+          "issn_l": null,
+          "issn": null,
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "listed_in": [],
+          "host_organization": "https://openalex.org/I98358874",
+          "host_organization_name": "Delft University of Technology",
+          "host_organization_lineage": [
+            "https://openalex.org/I98358874"
+          ],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": null,
+        "license_id": null,
+        "version": "submittedVersion",
+        "is_accepted": false,
+        "is_published": false,
+        "raw_source_name": "",
+        "raw_type": "journal article"
+      },
+      {
+        "id": "pmh:tud:oai:tudelft.nl:uuid:380eaaac-b01f-46ea-876c-f481c01744fa",
+        "is_oa": true,
+        "landing_page_url": "http://resolver.tudelft.nl/uuid:380eaaac-b01f-46ea-876c-f481c01744fa",
+        "pdf_url": null,
+        "source": {
+          "id": "https://openalex.org/S4306401843",
+          "display_name": "Data Archiving and Networked Services (DANS)",
+          "issn_l": null,
+          "issn": null,
+          "is_oa": false,
+          "is_in_doaj": false,
+          "is_core": false,
+          "listed_in": [],
+          "host_organization": "https://openalex.org/I1322597698",
+          "host_organization_name": "Royal Netherlands Academy of Arts and Sciences",
+          "host_organization_lineage": [
+            "https://openalex.org/I1322597698"
+          ],
+          "host_organization_lineage_names": [],
+          "type": "repository"
+        },
+        "license": "cc-by",
+        "license_id": "https://openalex.org/licenses/cc-by",
+        "version": "submittedVersion",
+        "is_accepted": false,
+        "is_published": false,
+        "raw_source_name": "ISPRS International Journal of Geo-Information, 11(5)",
+        "raw_type": "info:eu-repo/semantics/article"
+      }
+    ],
+    "best_oa_location": {
+      "id": "doi:10.3390/ijgi11050294",
+      "is_oa": true,
+      "landing_page_url": "https://doi.org/10.3390/ijgi11050294",
+      "pdf_url": "https://www.mdpi.com/2220-9964/11/5/294/pdf?version=1651319567",
+      "source": {
+        "id": "https://openalex.org/S2764431341",
+        "display_name": "ISPRS International Journal of Geo-Information",
+        "issn_l": "2220-9964",
+        "issn": [
+          "2220-9964"
+        ],
+        "is_oa": true,
+        "is_in_doaj": true,
+        "is_core": true,
+        "listed_in": [
+          "cwts-core",
+          "doaj",
+          "jufo-1",
+          "ki-jl-1",
+          "norway-1"
+        ],
+        "host_organization": "https://openalex.org/P4310310987",
+        "host_organization_name": "Multidisciplinary Digital Publishing Institute",
+        "host_organization_lineage": [
+          "https://openalex.org/P4310310987"
+        ],
+        "host_organization_lineage_names": [
+          "Multidisciplinary Digital Publishing Institute"
+        ],
+        "type": "journal"
+      },
+      "license": "cc-by",
+      "license_id": "https://openalex.org/licenses/cc-by",
+      "version": "publishedVersion",
+      "is_accepted": true,
+      "is_published": true,
+      "raw_source_name": "ISPRS International Journal of Geo-Information",
+      "raw_type": "journal-article"
+    },
+    "sustainable_development_goals": [
+      {
+        "score": 0.8787999749183655,
+        "id": "https://metadata.un.org/sdg/11",
+        "display_name": "Sustainable cities and communities"
+      },
+      {
+        "score": 0.46149998903274536,
+        "id": "https://metadata.un.org/sdg/16",
+        "display_name": "Peace, justice, and strong institutions"
+      }
+    ],
+    "sustainable_development_goals_aurora": [
+      {
+        "score": 0.6100000143051147,
+        "id": "https://metadata.un.org/sdg/11",
+        "display_name": "Sustainable cities and communities"
+      }
+    ],
+    "study_designs": [],
+    "awards": [
+      {
+        "id": "https://openalex.org/G5359112270",
+        "display_name": null,
+        "funder_award_id": "72174203",
+        "funder_id": "https://openalex.org/F4320321001",
+        "funder_display_name": "National Natural Science Foundation of China"
+      }
+    ],
+    "funders": [
+      {
+        "id": "https://openalex.org/F4320321001",
+        "display_name": "National Natural Science Foundation of China",
+        "ror": "https://ror.org/01h0zpd94"
+      }
+    ],
+    "has_content": {
+      "pdf": true,
+      "grobid_xml": true
+    },
+    "content_urls": {
+      "pdf": "https://content.openalex.org/works/W4225256012.pdf",
+      "grobid_xml": "https://content.openalex.org/works/W4225256012.grobid-xml"
+    },
+    "referenced_works_count": 54,
+    "referenced_works": [
+      "https://openalex.org/W1481912777",
+      "https://openalex.org/W1485009520",
+      "https://openalex.org/W1530964950",
+      "https://openalex.org/W1538131130",
+      "https://openalex.org/W2004353783",
+      "https://openalex.org/W2021204860",
+      "https://openalex.org/W2039240409",
+      "https://openalex.org/W2149095485",
+      "https://openalex.org/W2194775991",
+      "https://openalex.org/W2302255633",
+      "https://openalex.org/W2328470253",
+      "https://openalex.org/W2595220979",
+      "https://openalex.org/W2632538366",
+      "https://openalex.org/W2739524653",
+      "https://openalex.org/W2767949765",
+      "https://openalex.org/W2775402959",
+      "https://openalex.org/W2781420345",
+      "https://openalex.org/W2789306806",
+      "https://openalex.org/W2885741586",
+      "https://openalex.org/W2892891686",
+      "https://openalex.org/W2898970737",
+      "https://openalex.org/W2907002026",
+      "https://openalex.org/W2963311488",
+      "https://openalex.org/W2963440212",
+      "https://openalex.org/W2983165041",
+      "https://openalex.org/W3001909761",
+      "https://openalex.org/W3013107162",
+      "https://openalex.org/W3080752970",
+      "https://openalex.org/W3085454543",
+      "https://openalex.org/W3092935656",
+      "https://openalex.org/W3093869481",
+      "https://openalex.org/W3095728645",
+      "https://openalex.org/W3102963309",
+      "https://openalex.org/W3105153358",
+      "https://openalex.org/W3107119534",
+      "https://openalex.org/W3111002972",
+      "https://openalex.org/W3126332733",
+      "https://openalex.org/W3130393120",
+      "https://openalex.org/W3130616374",
+      "https://openalex.org/W3131016703",
+      "https://openalex.org/W3134820706",
+      "https://openalex.org/W3158378802",
+      "https://openalex.org/W3162782851",
+      "https://openalex.org/W3179429918",
+      "https://openalex.org/W3208605024",
+      "https://openalex.org/W4206124491",
+      "https://openalex.org/W4210439489",
+      "https://openalex.org/W4213113494",
+      "https://openalex.org/W4234698323",
+      "https://openalex.org/W4246587917",
+      "https://openalex.org/W4399647672",
+      "https://openalex.org/W6632100814",
+      "https://openalex.org/W6794610976",
+      "https://openalex.org/W6869608176"
+    ],
+    "related_works": [
+      "https://openalex.org/W3135881084",
+      "https://openalex.org/W2380590035",
+      "https://openalex.org/W2351712633",
+      "https://openalex.org/W4386690025",
+      "https://openalex.org/W4322710485",
+      "https://openalex.org/W2790400419",
+      "https://openalex.org/W4402664569",
+      "https://openalex.org/W4315777889",
+      "https://openalex.org/W4404789265",
+      "https://openalex.org/W3201348321"
+    ],
+    "abstract_inverted_index": {
+      "Crime": [
+        0
+      ],
+      "issues": [
+        1
+      ],
+      "have": [
+        2
+      ],
+      "been": [
+        3
+      ],
+      "attracting": [
+        4
+      ],
+      "widespread": [
+        5
+      ],
+      "attention": [
+        6,
+        136
+      ],
+      "from": [
+        7,
+        178,
+        224
+      ],
+      "citizens": [
+        8
+      ],
+      "and": [
+        9,
+        17,
+        26,
+        101,
+        127,
+        144,
+        151,
+        165,
+        215,
+        272,
+        303
+      ],
+      "managers": [
+        10
+      ],
+      "of": [
+        11,
+        51,
+        71,
+        175,
+        228,
+        266,
+        301
+      ],
+      "cities": [
+        12
+      ],
+      "due": [
+        13
+      ],
+      "to": [
+        14,
+        24,
+        47,
+        81,
+        97,
+        142,
+        182,
+        249
+      ],
+      "their": [
+        15
+      ],
+      "unexpected": [
+        16
+      ],
+      "massive": [
+        18
+      ],
+      "consequences.": [
+        19
+      ],
+      "As": [
+        20
+      ],
+      "an": [
+        21,
+        108,
+        111,
+        135
+      ],
+      "effective": [
+        22,
+        102
+      ],
+      "technique": [
+        23
+      ],
+      "prevent": [
+        25
+      ],
+      "control": [
+        27
+      ],
+      "urban": [
+        28,
+        62,
+        109
+      ],
+      "crimes,": [
+        29
+      ],
+      "the": [
+        30,
+        41,
+        48,
+        65,
+        69,
+        72,
+        78,
+        139,
+        146,
+        155,
+        173,
+        221,
+        232,
+        239,
+        244,
+        250,
+        253,
+        267,
+        279,
+        284,
+        292,
+        296,
+        299
+      ],
+      "data-driven": [
+        31
+      ],
+      "spatial–temporal": [
+        32,
+        74,
+        147,
+        241
+      ],
+      "crime": [
+        33,
+        42,
+        75,
+        104
+      ],
+      "prediction": [
+        34,
+        76,
+        105
+      ],
+      "can": [
+        35
+      ],
+      "provide": [
+        36
+      ],
+      "reasonable": [
+        37
+      ],
+      "estimations": [
+        38
+      ],
+      "associated": [
+        39
+      ],
+      "with": [
+        40,
+        134,
+        220
+      ],
+      "hotspot.": [
+        43
+      ],
+      "It": [
+        44
+      ],
+      "thus": [
+        45
+      ],
+      "contributes": [
+        46
+      ],
+      "decision": [
+        49,
+        293
+      ],
+      "making": [
+        50,
+        294
+      ],
+      "relevant": [
+        52
+      ],
+      "departments": [
+        53
+      ],
+      "under": [
+        54
+      ],
+      "limited": [
+        55
+      ],
+      "resources,": [
+        56
+      ],
+      "as": [
+        57,
+        59,
+        87,
+        305,
+        307
+      ],
+      "well": [
+        58,
+        306
+      ],
+      "promotes": [
+        60
+      ],
+      "civilized": [
+        61
+      ],
+      "development.": [
+        63
+      ],
+      "However,": [
+        64
+      ],
+      "deficient": [
+        66
+      ],
+      "performance": [
+        67
+      ],
+      "in": [
+        68,
+        91,
+        138,
+        172,
+        290,
+        298
+      ],
+      "aspect": [
+        70
+      ],
+      "daily": [
+        73,
+        103,
+        163
+      ],
+      "at": [
+        77,
+        107
+      ],
+      "urban-district-scale": [
+        79
+      ],
+      "needs": [
+        80
+      ],
+      "be": [
+        82
+      ],
+      "further": [
+        83
+      ],
+      "resolved,": [
+        84
+      ],
+      "which": [
+        85
+      ],
+      "serves": [
+        86
+      ],
+      "a": [
+        88,
+        99,
+        225
+      ],
+      "critical": [
+        89
+      ],
+      "role": [
+        90
+      ],
+      "police": [
+        92,
+        170,
+        297
+      ],
+      "resource": [
+        93,
+        308
+      ],
+      "allocation.": [
+        94,
+        309
+      ],
+      "In": [
+        95
+      ],
+      "order": [
+        96
+      ],
+      "establish": [
+        98
+      ],
+      "practical": [
+        100
+      ],
+      "framework": [
+        106
+      ],
+      "police-district-scale,": [
+        110
+      ],
+      "“online”": [
+        112,
+        156
+      ],
+      "integrated": [
+        113,
+        133,
+        157,
+        194,
+        254
+      ],
+      "graph": [
+        114,
+        123,
+        158,
+        255
+      ],
+      "model": [
+        115,
+        141,
+        159,
+        223,
+        246,
+        256,
+        286
+      ],
+      "is": [
+        116,
+        160
+      ],
+      "proposed.": [
+        117
+      ],
+      "A": [
+        118
+      ],
+      "residual": [
+        119
+      ],
+      "neural": [
+        120,
+        212
+      ],
+      "network": [
+        121,
+        125,
+        213
+      ],
+      "(ResNet),": [
+        122
+      ],
+      "convolutional": [
+        124,
+        211
+      ],
+      "(GCN),": [
+        126
+      ],
+      "long": [
+        128
+      ],
+      "short-term": [
+        129
+      ],
+      "memory": [
+        130
+      ],
+      "(LSTM)": [
+        131
+      ],
+      "are": [
+        132,
+        218,
+        247
+      ],
+      "mechanism": [
+        137
+      ],
+      "proposed": [
+        140,
+        222,
+        245,
+        285
+      ],
+      "extract": [
+        143
+      ],
+      "fuse": [
+        145
+      ],
+      "features,": [
+        148
+      ],
+      "topological": [
+        149
+      ],
+      "graphs,": [
+        150
+      ],
+      "external": [
+        152
+      ],
+      "features.": [
+        153
+      ],
+      "Then,": [
+        154
+      ],
+      "validated": [
+        161
+      ],
+      "by": [
+        162,
+        230,
+        243
+      ],
+      "theft": [
+        164
+      ],
+      "assault": [
+        166
+      ],
+      "data": [
+        167
+      ],
+      "within": [
+        168
+      ],
+      "22": [
+        169
+      ],
+      "districts": [
+        171
+      ],
+      "city": [
+        174
+      ],
+      "Chicago,": [
+        176
+      ],
+      "US": [
+        177
+      ],
+      "1": [
+        179
+      ],
+      "January": [
+        180,
+        184
+      ],
+      "2015": [
+        181
+      ],
+      "7": [
+        183
+      ],
+      "2020.": [
+        185
+      ],
+      "Additionally,": [
+        186
+      ],
+      "several": [
+        187
+      ],
+      "widely": [
+        188
+      ],
+      "used": [
+        189
+      ],
+      "baseline": [
+        190
+      ],
+      "models,": [
+        191,
+        217
+      ],
+      "including": [
+        192
+      ],
+      "autoregressive": [
+        193
+      ],
+      "moving": [
+        195
+      ],
+      "average": [
+        196,
+        264
+      ],
+      "(ARIMA),": [
+        197
+      ],
+      "ridge": [
+        198
+      ],
+      "regression,": [
+        199
+      ],
+      "support": [
+        200
+      ],
+      "vector": [
+        201
+      ],
+      "regression": [
+        202
+      ],
+      "(SVR),": [
+        203
+      ],
+      "random": [
+        204
+      ],
+      "forest,": [
+        205
+      ],
+      "extreme": [
+        206
+      ],
+      "gradient": [
+        207
+      ],
+      "boosting": [
+        208
+      ],
+      "(XGBoost),": [
+        209
+      ],
+      "LSTM,": [
+        210
+      ],
+      "(CNN),": [
+        214
+      ],
+      "Conv-LSTM": [
+        216
+      ],
+      "compared": [
+        219
+      ],
+      "quantitative": [
+        226
+      ],
+      "point": [
+        227
+      ],
+      "view": [
+        229
+      ],
+      "using": [
+        231
+      ],
+      "same": [
+        233
+      ],
+      "dataset.": [
+        234
+      ],
+      "The": [
+        235
+      ],
+      "results": [
+        236
+      ],
+      "show": [
+        237
+      ],
+      "that": [
+        238
+      ],
+      "predicted": [
+        240
+      ],
+      "patterns": [
+        242
+      ],
+      "close": [
+        248
+      ],
+      "observations.": [
+        251
+      ],
+      "Moreover,": [
+        252
+      ],
+      "performs": [
+        257
+      ],
+      "more": [
+        258
+      ],
+      "accurately": [
+        259
+      ],
+      "since": [
+        260
+      ],
+      "it": [
+        261
+      ],
+      "has": [
+        262,
+        287
+      ],
+      "lower": [
+        263
+      ],
+      "values": [
+        265
+      ],
+      "mean": [
+        268,
+        274
+      ],
+      "absolute": [
+        269
+      ],
+      "error": [
+        270,
+        276
+      ],
+      "(MAE)": [
+        271
+      ],
+      "root": [
+        273
+      ],
+      "square": [
+        275
+      ],
+      "(RMSE)": [
+        277
+      ],
+      "than": [
+        278
+      ],
+      "other": [
+        280
+      ],
+      "eight": [
+        281
+      ],
+      "models.": [
+        282
+      ],
+      "Therefore,": [
+        283
+      ],
+      "great": [
+        288
+      ],
+      "potential": [
+        289
+      ],
+      "supporting": [
+        291
+      ],
+      "for": [
+        295
+      ],
+      "fields": [
+        300
+      ],
+      "patrolling": [
+        302
+      ],
+      "investigation,": [
+        304
+      ]
+    },
+    "counts_by_year": [
+      {
+        "year": 2026,
+        "cited_by_count": 8
+      },
+      {
+        "year": 2025,
+        "cited_by_count": 7
+      },
+      {
+        "year": 2024,
+        "cited_by_count": 3
+      },
+      {
+        "year": 2023,
+        "cited_by_count": 9
+      },
+      {
+        "year": 2022,
+        "cited_by_count": 3
+      }
+    ],
+    "updated_date": "2026-09-30T09:27:27.532063",
+    "created_date": "2025-10-10T00:00:00"
+  }
+]
