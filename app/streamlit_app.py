@@ -289,7 +289,6 @@ nav_options = [
     "Analysis Overview & Results",
     "Citation Evidence Detail",
     "OpenAlex Retrieval Logs",
-    "Settings & Parameters",
 ]
 
 page = st.sidebar.radio("Navigation", nav_options, key="nav_selection")
@@ -711,18 +710,6 @@ elif page == "Citation Evidence Detail":
                 st.markdown("**Highlighted Evidence Items:**")
                 for ev in record.get("evidence", []):
                     st.markdown(f"- Evidence Tag: `{ev}`")
-                    
-                st.divider()
-                st.subheader("Reviewer Actions")
-                r_col1, r_col2 = st.columns(2)
-                with r_col1:
-                    if st.button("Confirm Valid", width="stretch"):
-                        record["classification"] = "valid"
-                        st.success(f"Citation {selected_cid} marked as Valid.")
-                with r_col2:
-                    if st.button("Flag Suspicious", width="stretch"):
-                        record["classification"] = "suspicious"
-                        st.error(f"Citation {selected_cid} flagged as Suspicious.")
 
 
 # =============================================================================
@@ -742,27 +729,3 @@ elif page == "OpenAlex Retrieval Logs":
             with st.expander(f"Citation {c['citation_id']} - Match Status: {c['match_status'].upper()} ({c['match_method']})"):
                 st.json(c)
 
-
-# =============================================================================
-# SCREEN 5: SETTINGS
-# =============================================================================
-elif page == "Settings & Parameters":
-    st.title("System Settings & Fusion Parameters")
-    
-    st.subheader("1. Fusion Score Weights")
-    st.markdown("Adjust transparent fusion weights alpha (Graph) and beta (Semantic).")
-    
-    alpha = st.slider("Alpha (Graph Suspicion Weight)", 0.0, 1.0, float(st.session_state.alpha), 0.05)
-    beta = st.slider("Beta (Semantic Suspicion Weight)", 0.0, 1.0, float(st.session_state.beta), 0.05)
-    
-    if alpha + beta != 1.0:
-        st.caption(f"Note: Alpha + Beta = {alpha+beta:.2f}. Weights will be normalized automatically during fusion.")
-        
-    st.session_state.alpha = alpha
-    st.session_state.beta = beta
-    
-    st.divider()
-    st.subheader("2. OpenAlex API Contact Settings")
-    email = st.text_input("Contact Email (for OpenAlex Polite Pool)", value=OPENALEX_CONTACT_EMAIL)
-    
-    st.success("Settings saved for session.")
