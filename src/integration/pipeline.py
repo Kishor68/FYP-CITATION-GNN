@@ -1,6 +1,15 @@
+import sys
 import time
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Callable
+
+# Ensure Windows terminal outputs do not crash on non-ASCII characters
+if hasattr(sys.stdout, "reconfigure"):
+    try:
+        sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+    except Exception:
+        pass
+
 from src.retrieval.extract_references import process_pdf_document
 from src.retrieval.matching import ReferenceMatcher
 from src.models.graph_module import analyze_graph_suspicion
@@ -99,7 +108,7 @@ class AnalysisPipeline:
         print("-" * 80)
 
         for c in final_citations:
-            print(f"📌 Citation ID: {c['citation_id']}")
+            print(f"[+] Citation ID: {c['citation_id']}")
             print(f"   Matched Title         : {c['matched_title'] or 'Unmatched'}")
             print(f"   Match Method          : {c['match_method']} (Confidence: {c['match_score']:.2f})")
             print(f"   SPECTER2 Similarity   : {c.get('semantic_similarity', 0.0):.4f}")
@@ -109,7 +118,7 @@ class AnalysisPipeline:
             print(f"   Citation Circle Score : {c.get('citation_circle_score', 0.0):.4f}  (Person 1 GNN - Default 0.0)")
             print(f"   Amplification Score   : {c.get('amplification_score', 0.0):.4f}  (Person 1 GNN - Default 0.0)")
             print(f"   Graph Score           : {c['graph_score']:.4f}  (Person 1 GNN - Default 0.0)")
-            print(f"   👉 Fused Risk Score   : {c['integrity_risk_score']:.4f}")
+            print(f"   -> Fused Risk Score   : {c['integrity_risk_score']:.4f}")
             print("-" * 80)
 
         print(f"SUMMARY METRICS:")
