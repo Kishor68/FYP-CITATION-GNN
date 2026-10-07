@@ -86,9 +86,8 @@ class AnalysisPipeline:
         # Aggregate summary metrics
         total_count = len(final_citations)
         matched_count = sum(1 for c in final_citations if c["match_status"] == "matched")
-        suspicious_count = sum(1 for c in final_citations if c["classification"] == "suspicious")
-        manual_review_count = sum(1 for c in final_citations if c["classification"] == "manual_review")
-        valid_count = sum(1 for c in final_citations if c["classification"] == "valid")
+        avg_risk = round(sum(c["integrity_risk_score"] for c in final_citations) / total_count, 3) if total_count > 0 else 0.0
+        avg_semantic = round(sum(c["semantic_score"] for c in final_citations) / total_count, 3) if total_count > 0 else 0.0
 
         pipeline_result = {
             "run_id": run_id,
@@ -98,9 +97,8 @@ class AnalysisPipeline:
             "summary_metrics": {
                 "total_citations": total_count,
                 "matched_citations": matched_count,
-                "valid_citations": valid_count,
-                "manual_review_citations": manual_review_count,
-                "suspicious_citations": suspicious_count,
+                "avg_risk_score": avg_risk,
+                "avg_semantic_score": avg_semantic,
             },
             "fusion_weights": {"alpha": self.alpha, "beta": self.beta},
             "citations": final_citations,
