@@ -9,8 +9,14 @@ def calculate_fused_risk(
 ) -> float:
     """
     Calculates transparent weighted risk score:
-    final_risk = alpha * graph_suspicion + beta * semantic_suspicion
+    If graph_score is 0.0 (unintegrated module), relies on active semantic_score.
+    When both are present, computes weighted average: alpha * graph + beta * semantic.
     """
+    if graph_score <= 0.0:
+        return round(semantic_score, 3)
+    if semantic_score <= 0.0:
+        return round(graph_score, 3)
+        
     total_w = alpha + beta
     if total_w <= 0:
         a_norm, b_norm = 0.5, 0.5
@@ -28,21 +34,21 @@ def fuse_citation_evidence(
     beta: float = DEFAULT_BETA
 ) -> Dict[str, Any]:
     """
-    Joins retrieval, graph, and semantic records by citation_id and computes final fused record
-    including partitioned sub-scores for graph and semantic models.
+    Joins retrieval, graph, and semantic records by citation_id and computes final fused record.
+    Unintegrated modules (e.g. Graph GNN) default to 0.0.
     """
     cid = retrieval_record["citation_id"]
     
-    # Graph Sub-scores
-    author_group_score = graph_record.get("author_group_score", 0.0)
-    citation_circle_score = graph_record.get("citation_circle_score", 0.0)
-    amplification_score = graph_record.get("amplification_score", 0.0)
-    g_score = graph_record.get("graph_score", round((author_group_score + citation_circle_score + amplification_score) / 3.0, 2))
+    # Graph Sub-scores (Unintegrated Person 1 module defaults to 0.0)
+    author_group_score = float(graph_record.get("author_group_score", 0.0))
+    citation_circle_score = float(graph_record.get("citation_circle_score", 0.0))
+    amplification_score = float(graph_record.get("amplification_score", 0.0))
+    g_score = float(graph_record.get("graph_score", 0.0))
 
-    # Semantic Sub-scores
-    weak_citation_score = semantic_record.get("weak_citation_score", 0.0)
-    semantic_alignment_score = semantic_record.get("semantic_alignment_score", 0.0)
-    s_score = semantic_record.get("semantic_score", round((weak_citation_score + semantic_alignment_score) / 2.0, 2))
+    # Semantic Sub-scores (Person 2 SPECTER2 active backend)
+    weak_citation_score = float(semantic_record.get("weak_citation_score", 0.0))
+    s_score = float(semantic_record.get("semantic_score", weak_citation_score))
+    semantic_alignment_score = float(semantic_record.get("semantic_alignment_score", 0.0))
 
     risk_score = calculate_fused_risk(g_score, s_score, alpha, beta)
     classification = get_classification_label(risk_score)

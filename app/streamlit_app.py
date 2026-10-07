@@ -260,10 +260,13 @@ st.markdown("""
 
 # Helper for Smooth Single-Click Navigation
 def navigate_to(target_page: str):
-    st.session_state["nav_selection"] = target_page
+    st.session_state["pending_nav"] = target_page
     st.rerun()
 
 # Initialize Session State
+if "pending_nav" in st.session_state and st.session_state["pending_nav"]:
+    st.session_state["nav_selection"] = st.session_state.pop("pending_nav")
+
 if "nav_selection" not in st.session_state:
     st.session_state["nav_selection"] = "Upload Paper"
 if "pipeline_result" not in st.session_state:
@@ -360,10 +363,10 @@ if page == "Upload Paper":
             st.success("Analysis Completed Successfully!")
             col_b1, col_b2 = st.columns(2)
             with col_b1:
-                if st.button("View Paper Profile", use_container_width=True):
+                if st.button("View Paper Profile", width="stretch"):
                     navigate_to("Paper Profile")
             with col_b2:
-                if st.button("View Citation Results", use_container_width=True):
+                if st.button("View Citation Results", width="stretch"):
                     navigate_to("Analysis Overview & Results")
                 
         except Exception as e:
@@ -573,20 +576,19 @@ elif page == "Analysis Overview & Results":
                 "Citation ID": c["citation_id"],
                 "Classification": status_badge,
                 "Fused Risk": c["integrity_risk_score"],
-                "Graph Score": c["graph_score"],
-                "Author Group (Graph)": c.get("author_group_score", 0.0),
-                "Citation Circle (Graph)": c.get("citation_circle_score", 0.0),
-                "Amplification (Graph)": c.get("amplification_score", 0.0),
                 "Semantic Score": c["semantic_score"],
-                "Weak Citation (Semantic)": c.get("weak_citation_score", 0.0),
-                "Semantic Alignment (Semantic)": c.get("semantic_alignment_score", 0.0),
+                "Weak Citation Score": c.get("weak_citation_score", 0.0),
+                "Author Group Score": c.get("author_group_score", 0.0),
+                "Citation Circle Score": c.get("citation_circle_score", 0.0),
+                "Amplification Score": c.get("amplification_score", 0.0),
+                "Graph Score": c["graph_score"],
                 "Match Method": c["match_method"],
                 "Match Confidence": c["match_score"],
                 "Matched OpenAlex Work": c["matched_title"] or "Unmatched",
             })
             
         df = pd.DataFrame(table_rows)
-        st.dataframe(df, use_container_width=True, hide_index=True)
+        st.dataframe(df, width="stretch", hide_index=True)
         
         # Select row for detailed inspection
         st.divider()
@@ -650,6 +652,7 @@ elif page == "Citation Evidence Detail":
             sub_col_g, sub_col_s = st.columns(2)
             with sub_col_g:
                 st.markdown("### **Graph Neural Network Sub-Scores**")
+                st.caption("*(Unintegrated GNN Module — Default 0.00)*")
                 ag_val = record.get("author_group_score", 0.0)
                 cc_val = record.get("citation_circle_score", 0.0)
                 amp_val = record.get("amplification_score", 0.0)
@@ -665,16 +668,17 @@ elif page == "Citation Evidence Detail":
 
             with sub_col_s:
                 st.markdown("### **Semantic Alignment Sub-Scores**")
+                st.caption("*(SPECTER2 Active Backend)*")
+                sem_val = record.get("semantic_score", 0.0)
                 wc_val = record.get("weak_citation_score", 0.0)
-                sa_val = record.get("semantic_alignment_score", 0.0)
                 
+                st.markdown(f"**Semantic Score**: `{sem_val:.2f}` (Overall SPECTER2 semantic suspicion)")
+                st.progress(min(1.0, float(sem_val)))
+
                 st.markdown(f"**Weak Citation Score**: `{wc_val:.2f}` (Superficial claim / padding citation suspicion)")
                 st.progress(min(1.0, float(wc_val)))
                 
-                st.markdown(f"**Semantic Alignment Score**: `{sa_val:.2f}` (Topic drift & contextual misalignment suspicion)")
-                st.progress(min(1.0, float(sa_val)))
-                
-                sim_val = record.get("semantic_similarity", 1.0 - sa_val)
+                sim_val = record.get("semantic_similarity", 0.0)
                 st.caption(f"Context Embedding Similarity: {sim_val:.2f}")
             
             st.divider()
@@ -712,11 +716,11 @@ elif page == "Citation Evidence Detail":
                 st.subheader("Reviewer Actions")
                 r_col1, r_col2 = st.columns(2)
                 with r_col1:
-                    if st.button("Confirm Valid", use_container_width=True):
+                    if st.button("Confirm Valid", width="stretch"):
                         record["classification"] = "valid"
                         st.success(f"Citation {selected_cid} marked as Valid.")
                 with r_col2:
-                    if st.button("Flag Suspicious", use_container_width=True):
+                    if st.button("Flag Suspicious", width="stretch"):
                         record["classification"] = "suspicious"
                         st.error(f"Citation {selected_cid} flagged as Suspicious.")
 

@@ -1,0 +1,522 @@
+{
+  "run_id": "RUN_1791360060",
+  "paper_title": "OOD-GNN: Out-of-Distribution Generalized Graph Neural Network",
+  "abstract": "Graph neural networks (GNNs) have achieved impressive performance when testing and training graph data come from identical distribution. However , existing GNNs lack out-of-distribution generalization abilities so that their performance substantially degrades when there exist distribution shifts between testing and training graph data. T o solve this problem, in this work, we propose an out-of-distribution generalized graph neural network ( OOD-GNN) for achieving satisfactory performance on unseen testing graphs that have different distributions with training graphs. Our proposed OOD-GNN employs a novel nonlinear graph representation decorrelation method utilizing random Fourier features, which encourages the model to eliminate the statistical dependence between relevant and irrelevant graph representations through iteratively optimizing the sample graph weights and graph encoder . We further present a global weight estimator to learn weights for training graphs such that variables in graph representations are forced to be independent. The learned weights help the graph encoder to get rid of spurious correlations and, in turn, concentrate more on the true connection between learned discriminative graph representations and their ground-truth labels. We conduct extensive experiments to validate the out-of-distribution generalization abilities on two synthetic and 12 real-world datasets with distribution shifts. The results demonstrate that our proposed OOD-GNN significantly outperforms state-of-the-art baselines.",
+  "paper_profile": {
+    "title": "OOD-GNN: Out-of-Distribution Generalized Graph Neural Network",
+    "abstract": "Graph neural networks (GNNs) have achieved impressive performance when testing and training graph data come from identical distribution. However , existing GNNs lack out-of-distribution generalization abilities so that their performance substantially degrades when there exist distribution shifts between testing and training graph data. T o solve this problem, in this work, we propose an out-of-distribution generalized graph neural network ( OOD-GNN) for achieving satisfactory performance on unseen testing graphs that have different distributions with training graphs. Our proposed OOD-GNN employs a novel nonlinear graph representation decorrelation method utilizing random Fourier features, which encourages the model to eliminate the statistical dependence between relevant and irrelevant graph representations through iteratively optimizing the sample graph weights and graph encoder . We further present a global weight estimator to learn weights for training graphs such that variables in graph representations are forced to be independent. The learned weights help the graph encoder to get rid of spurious correlations and, in turn, concentrate more on the true connection between learned discriminative graph representations and their ground-truth labels. We conduct extensive experiments to validate the out-of-distribution generalization abilities on two synthetic and 12 real-world datasets with distribution shifts. The results demonstrate that our proposed OOD-GNN significantly outperforms state-of-the-art baselines.",
+    "authors": [
+      "Haoyang Li",
+      "Xin Wang",
+      "Ziwei Zhang",
+      "Wenwu Zhu"
+    ],
+    "institutions": [
+      "Department of Computer Science and Technol-"
+    ],
+    "venue": "IEEE Transactions / Proceedings",
+    "publication_year": 2021,
+    "doi": "10.1109/TKDE.2022.3193725",
+    "field_of_work": {
+      "domain": "Computer Science",
+      "field": "Artificial Intelligence & Machine Learning",
+      "subfield": "Graph Neural Networks & GNNs",
+      "topic": "Graph Neural Network",
+      "matched_keywords": [
+        "graph neural network",
+        "gnn"
+      ],
+      "confidence": 0.8500000000000001,
+      "source": "pdf_text_taxonomy"
+    },
+    "openalex_verification": {
+      "is_present": true,
+      "openalex_id": "https://openalex.org/W4200635484",
+      "short_id": "W4200635484",
+      "cited_by_count": 128,
+      "landing_page_url": "https://doi.org/10.1109/tkde.2022.3193725",
+      "publication_date": "2022-07-25",
+      "concepts": [
+        "Computer science",
+        "Spurious relationship",
+        "Graph",
+        "Discriminative model",
+        "Artificial intelligence"
+      ],
+      "match_method": "title_search"
+    },
+    "source": "pdf_extractor"
+  },
+  "total_pages": 13,
+  "total_references_found": 78,
+  "citations": [
+    {
+      "citation_id": "C001",
+      "raw_text": "[1] A.-L. Barabasi and Z. N. Oltvai, “Network biology: Understand- ing the cell’s functional organization,” Nature Rev. Genet. , vol. 5, no. 2, pp. 101–113, 2004.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 1
+    },
+    {
+      "citation_id": "C002",
+      "raw_text": "[2] D. Easley et al. , Networks, Crowds, and Markets , vol. 8. Cambridge, U.K.: Cambridge Univ. Press, 2010.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 2
+    },
+    {
+      "citation_id": "C003",
+      "raw_text": "[3] Z. Wu et al. , “MoleculeNet: A benchmark for molecular machine learning,” Chem. Sci., vol. 9, no. 2, pp. 513–530, 2018.",
+      "citation_context": "graphs [3], knowledge graphs [4], etc.",
+      "index": 3
+    },
+    {
+      "citation_id": "C004",
+      "raw_text": "[4] Q. Wang, Z. Mao, B. Wang, and L. Guo, “Knowledge graph embedding: A survey of approaches and applications,” IEEE Trans. Knowl. Data Eng. , vol. 29, no. 12, pp. 2724–2743, Dec. 2017.",
+      "citation_context": "graphs [3], knowledge graphs [4], etc.",
+      "index": 4
+    },
+    {
+      "citation_id": "C005",
+      "raw_text": "[5] T. N. Kipf and M. Welling, “Semi-supervised classiﬁcation with graph convolutional networks,” in Proc. Int. Conf. Learn. Represen- tations, 2017.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 5
+    },
+    {
+      "citation_id": "C006",
+      "raw_text": "[6] P. Veli /C20ckovi/C19c, G. Cucurull, A. Casanova, A. Romero, P. Lio, and Y. Bengio, “Graph attention networks,” in Proc. Int. Conf. Learn. Representations, 2018.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 6
+    },
+    {
+      "citation_id": "C007",
+      "raw_text": "[7] K. Xu, W. Hu, J. Leskovec, and S. Jegelka, “How powerful are graph neural networks?,” inProc. Int. Conf. Learn. Representations,2 0 1 9 .",
+      "citation_context": "the expressiveness power of GNNs [7], [36].",
+      "index": 7
+    },
+    {
+      "citation_id": "C008",
+      "raw_text": "[8] W. L. Hamilton, “Graph representation learning,” Synth. Lectures Artiﬁcal Intell. Mach. Learn. , vol. 14, no. 3, pp. 1–159, 2020.",
+      "citation_context": "approaches for representation learning of graphs [8].",
+      "index": 8
+    },
+    {
+      "citation_id": "C009",
+      "raw_text": "[9] J. Li, D. Cai, and X. He, “Learning graph-level representation for drug discovery,” 2017, arXiv:1709.03741.",
+      "citation_context": "wide variety of applications [9], [10], [11], [12].",
+      "index": 9
+    },
+    {
+      "citation_id": "C010",
+      "raw_text": "[10] W. Fan et al. , “A graph neural network framework for social rec- ommendations,” IEEE Trans. Knowl. Data Eng. , vol. 34, no. 5, pp. 2033–2047, May 2022.",
+      "citation_context": "wide variety of applications [9], [10], [11], [12].",
+      "index": 10
+    },
+    {
+      "citation_id": "C011",
+      "raw_text": "[11] H. Li, X. Wang, Z. Zhang, J. Ma, P. Cui, and W. Zhu, “Intention- aware sequential recommendation with structured intent transi- tion,” IEEE Trans. Knowl. Data Eng. , early access, Jan. 11, 2021, doi: 10.1109/TKDE.2021.3050571.",
+      "citation_context": "wide variety of applications [9], [10], [11], [12].",
+      "index": 11
+    },
+    {
+      "citation_id": "C012",
+      "raw_text": "[12] M. Zitnik, M. Agrawal, and J. Leskovec, “Modeling polypharmacy side effects with graph convolutional networks,” Bioinformatics, vol. 34, no. 13, pp. i457–i466, 2018.",
+      "citation_context": "wide variety of applications [9], [10], [11], [12].",
+      "index": 12
+    },
+    {
+      "citation_id": "C013",
+      "raw_text": "[13] T. Sterling and J. J. Irwin, “Zinc 15–ligand discovery for every- one,” J. Chem. Inf. Model. , vol. 55, no. 11, pp. 2324–2337, 2015.",
+      "citation_context": "ally large universe of candidate molecules [13], [14].",
+      "index": 13
+    },
+    {
+      "citation_id": "C014",
+      "raw_text": "[14] R. S. Bohacek, C. McMartin, and W. C. Guida, “The art and prac- tice of structure-based drug design: A molecular modeling perspective,” Med. Res. Rev., vol. 16, no. 1, pp. 3–50, 1996.",
+      "citation_context": "ally large universe of candidate molecules [13], [14].",
+      "index": 14
+    },
+    {
+      "citation_id": "C015",
+      "raw_text": "[15] W. Hu et al., “Open graph benchmark: Datasets for machine learn- ing on graphs,” in Proc. Adv. Neural Inf. Process. Syst. , 2020, pp. 22118–22133.",
+      "citation_context": "splits [3], [15].",
+      "index": 15
+    },
+    {
+      "citation_id": "C016",
+      "raw_text": "[16] Y. Li, B. Qian, X. Zhang, and H. Liu, “Graph neural network- based diagnosis prediction,” Big Data , vol. 8, no. 5, pp. 379–390, 2020.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 16
+    },
+    {
+      "citation_id": "C017",
+      "raw_text": "[17] X. Han, X. Hu, H. Wu, B. Shen, and J. Wu, “Risk prediction of theft crimes in urban communities: An integrated model of LSTM and ST-GCN,” IEEE Access, vol. 8, pp. 21 7222–21 7230, 2020.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 17
+    },
+    {
+      "citation_id": "C018",
+      "raw_text": "[18] Y. Yang, Z. Wei, Q. Chen, and L. Wu, “Using external knowledge for ﬁnancial event prediction based on graph neural networks,” in Proc. 28th ACM Int. Conf. Inf. Knowl. Manage. , 2019, pp. 2161–2164.",
+      "citation_context": "sis [18], and molecular prediction [3], etc.",
+      "index": 18
+    },
+    {
+      "citation_id": "C019",
+      "raw_text": "[19] B. Knyazev, G. W. Taylor, and M. R. Amer, “Understanding atten- tion and generalization in graph neural networks,” in Proc. Adv. Neural Inf. Process. Syst. , 2019, pp. 4202–4212.",
+      "citation_context": "graphs [19], [20], [21], [42], [43], [44].",
+      "index": 19
+    },
+    {
+      "citation_id": "C020",
+      "raw_text": "[20] G. Yehudai, E. Fetaya, E. Meirom, G. Chechik, and H. Maron, “From local structures to size generalization in graph neural networks,” in Proc. Int. Conf. Mach. Learn. , 2021, pp. 11 975–11 986.",
+      "citation_context": "graphs [19], [20], [21], [42], [43], [44].",
+      "index": 20
+    },
+    {
+      "citation_id": "C021",
+      "raw_text": "[21] B. Bevilacqua, Y. Zhou, and B. Ribeiro, “Size-invariant graph rep- resentations for graph classiﬁcation extrapolations,” in Proc. Int. Conf. Mach. Learn., 2021, pp. 837–851.",
+      "citation_context": "graphs [19], [20], [21], [42], [43], [44].",
+      "index": 21
+    },
+    {
+      "citation_id": "C022",
+      "raw_text": "[22] K. Xu, M. Zhang, J. Li, S. S. Du, K.-I. Kawarabayashi, and S. Jegelka, “How neural networks extrapolate: From feedforward to graph neu- ral networks,” inProc. Int. Conf. Learn. Representations, 2021.",
+      "citation_context": "explored until recently [22].",
+      "index": 22
+    },
+    {
+      "citation_id": "C023",
+      "raw_text": "[23] M. Arjovsky, L. Bottou, I. Gulrajani, and D. Lopez-Paz, “Invariant risk minimization,” 2019, arXiv:1907.02893.",
+      "citation_context": "relevant representations [23], [24].",
+      "index": 23
+    },
+    {
+      "citation_id": "C024",
+      "raw_text": "[24] L. Tu, G. Lalwani, S. Gella, and H. He, “An empirical study on robustness to spurious correlations using pre-trained language models,” Trans. Assoc. Comput. Linguistics, vol. 8, pp. 621–633, 2020.",
+      "citation_context": "relevant representations [23], [24].",
+      "index": 24
+    },
+    {
+      "citation_id": "C025",
+      "raw_text": "[25] M. Ren, W. Zeng, B. Yang, and R. Urtasun, “Learning to reweight examples for robust deep learning,” in Proc. Int. Conf. Mach. Learn., 2018, pp. 4334–4343.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 25
+    },
+    {
+      "citation_id": "C026",
+      "raw_text": "[26] K. Kuang, P. Cui, S. Athey, R. Xiong, and B. Li, “Stable prediction across unknown environments,” in Proc. 24th ACM SIGKDD Int. Conf. Knowl. Discov. Data Mining , 2018, pp. 1617–1626.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 26
+    },
+    {
+      "citation_id": "C027",
+      "raw_text": "[27] P. W. Koh et al., “WILDS: A benchmark of in-the-wild distribution shifts,” in Proc. Int. Conf. Mach. Learn. , 2021, pp. 5637–5664.",
+      "citation_context": "between training and testing graphs [3], [15], [27], [41].",
+      "index": 27
+    },
+    {
+      "citation_id": "C028",
+      "raw_text": "[28] A. Rahimi, “Random features for large-scale kernel machines,” in Proc. Adv. Neural Inf. Process. Syst. , 2007, Art. no. 5.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 28
+    },
+    {
+      "citation_id": "C029",
+      "raw_text": "[29] X. Zhang, P. Cui, R. Xu, L. Zhou, Y. He, and Z. Shen, “Deep stable learning for out-of-distribution generalization,” in Proc. IEEE/CVF Conf. Comput. Vis. Pattern Recognit. , 2021, pp. 5372–5382.",
+      "citation_context": "dataset [29], [31], [32].",
+      "index": 29
+    },
+    {
+      "citation_id": "C030",
+      "raw_text": "[30] Z. Li, J.-F. Ton, D. Oglic, and D. Sejdinovic, “Towards a uniﬁed analysis of random fourier features,” in Proc. Int. Conf. Mach. Learn., 2019, pp. 3905–3914.",
+      "citation_context": "rately and efﬁciently [29], [30], [61].",
+      "index": 30
+    },
+    {
+      "citation_id": "C031",
+      "raw_text": "[31] Z. Wu, Y. Xiong, S. X. Yu, and D. Lin, “Unsupervised feature learning via non-parametric instance discrimination,” in Proc. IEEE Conf. Comput. Vis. Pattern Recognit. , 2018, pp. 3733–3742.",
+      "citation_context": "dataset [29], [31], [32].",
+      "index": 31
+    },
+    {
+      "citation_id": "C032",
+      "raw_text": "[32] K. He, H. Fan, Y. Wu, S. Xie, and R. Girshick, “Momentum con- trast for unsupervised visual representation learning,” in Proc. IEEE/CVF Conf. Comput. Vis. Pattern Recognit. , 2020, pp. 9729–9738.",
+      "citation_context": "dataset [29], [31], [32].",
+      "index": 32
+    },
+    {
+      "citation_id": "C033",
+      "raw_text": "[33] J. Lee, I. Lee, and J. Kang, “Self-attention graph pooling,” in Proc. Int. Conf. Mach. Learn., 2019, pp. 3734–3743.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 33
+    },
+    {
+      "citation_id": "C034",
+      "raw_text": "[34] Z. Zhang et al. , “Hierarchical multi-view graph pooling with structure learning,” IEEE Trans. Knowl. Data Eng. , early access, Jun. 18, 2021, doi: 10.1109/TKDE.2021.3090664.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 34
+    },
+    {
+      "citation_id": "C035",
+      "raw_text": "[35] W. L. Hamilton, R. Ying, and J. Leskovec, “Inductive representa- tion learning on large graphs,” in Proc. 31st Int. Conf. Neural Inf. Process. Syst., 2017, pp. 1025–1035.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 35
+    },
+    {
+      "citation_id": "C036",
+      "raw_text": "[36] C. Morris et al. , “Weisfeiler and leman go neural: Higher-order graph neural networks,” in Proc. AAAI Conf. Artif. Intell. , 2019, pp. 4602–4609.",
+      "citation_context": "the expressiveness power of GNNs [7], [36].",
+      "index": 36
+    },
+    {
+      "citation_id": "C037",
+      "raw_text": "[37] W. Yu, X. Lin, J. Liu, J. Ge, W. Ou, and Z. Qin, “Self-propagation graph neural network for recommendation,”IEEE Trans. Knowl. Data Eng., early access, Apr. 30, 2021, doi:10.1109/TKDE.2021.3076772.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 37
+    },
+    {
+      "citation_id": "C038",
+      "raw_text": "[38] J. Li et al. , “Higher-order attribute-enhancing heterogeneous graph neural networks,” IEEE Trans. Knowl. Data Eng. , early access, Apr. 23, 2021, doi: 10.1109/TKDE.2021.3074654.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 38
+    },
+    {
+      "citation_id": "C039",
+      "raw_text": "[39] M. Schlichtkrull et al. , “Modeling relational data with graph con- volutional networks,” in Proc. Eur. Semantic Web Conf. , 2018, pp. 593–607.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 39
+    },
+    {
+      "citation_id": "C040",
+      "raw_text": "[40] J. Gao, J. Gao, X. Ying, M. Lu, and J. Wang, “Higher-order interac- tion goes neural: A substructure assembling graph attention net- work for graph classiﬁcation,” IEEE Trans. Knowl. Data Eng. , early access, Aug. 18, 2021, doi: 10.1109/TKDE.2021.3105544.",
+      "citation_context": "[40].",
+      "index": 40
+    },
+    {
+      "citation_id": "C041",
+      "raw_text": "[41] H. Li, X. Wang, Z. Zhang, and W. Zhu, “Out-of-distribution gen- eralization on graphs: A survey,” 2022, arXiv:2202.07987.",
+      "citation_context": "between training and testing graphs [3], [15], [27], [41].",
+      "index": 41
+    },
+    {
+      "citation_id": "C042",
+      "raw_text": "[42] A. Santoro, F. Hill, D. Barrett, A. Morcos, and T. Lillicrap, “Measuring abstract reasoning in neural networks,” in Proc. Int. Conf. Mach. Learn., 2018, pp. 4477–4486.",
+      "citation_context": "graphs [19], [20], [21], [42], [43], [44].",
+      "index": 42
+    },
+    {
+      "citation_id": "C043",
+      "raw_text": "[43] D. Saxton, E. Grefenstette, F. Hill, and P. Kohli, “Analysing mathe- matical reasoning abilities of neural models,” in Proc. Int. Conf. Learn. Representations, 2019.",
+      "citation_context": "graphs [19], [20], [21], [42], [43], [44].",
+      "index": 43
+    },
+    {
+      "citation_id": "C044",
+      "raw_text": "[44] P. Veli /C20ckovi/C19c, R. Ying, M. Padovano, R. Hadsell, and C. Blundell, “Neural execution of graph algorithms,” in Proc. Int. Conf. Learn. Representations, 2020.",
+      "citation_context": "graphs [19], [20], [21], [42], [43], [44].",
+      "index": 44
+    },
+    {
+      "citation_id": "C045",
+      "raw_text": "[45] A. Loukas, “What graph neural networks cannot learn: Depth vs width,” in Proc. Int. Conf. Learn. Representations , 2020.",
+      "citation_context": "achieve smaller error on the training data [45].",
+      "index": 45
+    },
+    {
+      "citation_id": "C046",
+      "raw_text": "[46] V. Garg, S. Jegelka, and T. Jaakkola, “Generalization and represen- tational limits of graph neural networks,” in Proc. Int. Conf. Mach. Learn., 2020, pp. 3419–3430.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 46
+    },
+    {
+      "citation_id": "C047",
+      "raw_text": "[47] S. Verma and Z.-L. Zhang, “Stability and generalization of graph convolutional neural networks,” in Proc. 25th ACM SIGKDD Int. Conf. Knowl. Discov. Data Mining , 2019, pp. 1539–1548.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 47
+    },
+    {
+      "citation_id": "C048",
+      "raw_text": "[48] M. Cogswell, F. Ahmed, R. Girshick, L. Zitnick, and D. Batra, “Reducing overﬁtting in deep networks by decorrelating repre- sentations,” in Proc. Int. Conf. Learn. Representations , 2016.",
+      "citation_context": "tion under distribution shifts [48], [49], [50], [51].",
+      "index": 48
+    },
+    {
+      "citation_id": "C049",
+      "raw_text": "[49] S. Gu, Y. Hou, L. Zhang, and Y. Zhang, “Regularizing deep neural networks with an ensemble-based decorrelation method,” in Proc. Int. Joint Conf. Artif. Intell. , 2018, pp. 2177–2183.",
+      "citation_context": "tion under distribution shifts [48], [49], [50], [51].",
+      "index": 49
+    },
+    {
+      "citation_id": "C050",
+      "raw_text": "[50] D. Arpit, C. Xiong, and R. Socher, “Predicting with high correla- tion features,” 2019, arXiv:1910.00164.",
+      "citation_context": "tion under distribution shifts [48], [49], [50], [51].",
+      "index": 50
+    },
+    {
+      "citation_id": "C051",
+      "raw_text": "[51] C. J. Song, J. C. Vladescu, K. F. Reeve, C. F. Miguel, and S. L. Bree- man, “The inﬂuence of correlations between noncritical features and reinforcement on stimulus generalization,” J. Appl. Behav. Anal., vol. 54, no. 1, pp. 346–366, 2021.",
+      "citation_context": "tion under distribution shifts [48], [49], [50], [51].",
+      "index": 51
+    },
+    {
+      "citation_id": "C052",
+      "raw_text": "[52] M. Hebiri and J. Lederer, “How correlations inﬂuence lasso pre- diction,” IEEE Trans. Inf. Theory , vol. 59, no. 3, pp. 1846–1854, Mar. 2013. LI ET AL.: OOD-GNN: OUT-OF-DISTRIBUTION GENERALIZED GRAPH NEURAL NETWORK 7339 Authorized licensed use limited to: Sri Sivasubramanya Nadar College of Engineering. Downloaded on October 05,2026 at 13:11:57 UTC from IEEE Xplore. Restrictions apply.",
+      "citation_context": "correlation explicitly [48], [52], [53].",
+      "index": 52
+    },
+    {
+      "citation_id": "C053",
+      "raw_text": "[53] P. Rodr /C19ıguez, J. Gonzalez, G. Cucurull, J. M. Gonfaus, and X. Roca, “Regularizing CNNs with locally constrained decorrelations,” 2016, arXiv:1611.01967.",
+      "citation_context": "correlation explicitly [48], [52], [53].",
+      "index": 53
+    },
+    {
+      "citation_id": "C054",
+      "raw_text": "[54] Z. Shen, P. Cui, T. Zhang, and K. Kunag, “Stable learning via sample reweighting,” inProc. AAAI Conf. Artif. Intell., 2020, pp. 5692–5699.",
+      "citation_context": "SRDO [54]) and empirically (e.",
+      "index": 54
+    },
+    {
+      "citation_id": "C055",
+      "raw_text": "[55] K. Kuang, R. Xiong, P. Cui, S. Athey, and B. Li, “Stable prediction with model misspeciﬁcation and agnostic distribution shift,” in Proc. AAAI Conf. Artif. Intell. , 2020, pp. 4485–4492.",
+      "citation_context": ", DWR [55]).",
+      "index": 55
+    },
+    {
+      "citation_id": "C056",
+      "raw_text": "[56] Z. Zhang, Y. Zhang, and Z. Li, “Removing the feature correlation effect of multiplicative noise,” 2018, arXiv:1809.07023.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 56
+    },
+    {
+      "citation_id": "C057",
+      "raw_text": "[57] H. Bahng, S. Chun, S. Yun, J. Choo, and S. J. Oh, “Learning de- biased representations with biased representations,” in Proc. Int. Conf. Mach. Learn., 2020, pp. 528–539.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 57
+    },
+    {
+      "citation_id": "C058",
+      "raw_text": "[58] M. Ilse, J. M. Tomczak, C. Louizos, and M. Welling, “DIVA: Domain invariant variational autoencoders,” in Proc. 3rd Conf. Med. Imag. Deep Learn. , 2020, pp. 322–348.",
+      "citation_context": "[58].",
+      "index": 58
+    },
+    {
+      "citation_id": "C059",
+      "raw_text": "[59] A. Gretton, O. Bousquet, A. Smola, and B. Sch €olkopf, “Measuring statistical dependence with hilbert-schmidt norms,” in Proc. Int. Conf. Algorithmic Learn. Theory, 2005, pp. 63–77.",
+      "citation_context": "performance [59].",
+      "index": 59
+    },
+    {
+      "citation_id": "C060",
+      "raw_text": "[60] K. Fukumizu, A. Gretton, X. Sun, and B. Sch €olkopf, “Kernel meas- ures of conditional dependence,” in Proc. Adv. Neural Inf. Process. Syst., 2007, pp. 489–496.",
+      "citation_context": "determined as follows [60].",
+      "index": 60
+    },
+    {
+      "citation_id": "C061",
+      "raw_text": "[61] E. V. Strobl, K. Zhang, and S. Visweswaran, “Approximate kernel- based conditional independence tests for fast non-parametric causal discovery,” J. Causal Inference , vol. 7, no. 1, p. 20180017, 2019.",
+      "citation_context": "rately and efﬁciently [29], [30], [61].",
+      "index": 61
+    },
+    {
+      "citation_id": "C062",
+      "raw_text": "[62] Y. Yang, Z. Feng, M. Song, and X. Wang, “Factorizable graph con- volutional networks,” in Proc. Adv. Neural Inf. Process. Syst. , 2020, pp. 20 286–20 296.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 62
+    },
+    {
+      "citation_id": "C063",
+      "raw_text": "[63] G. Corso, L. Cavalleri, D. Beaini, P. Li /C18o, and P. Veli /C20ckovi/C19c, “Principal neighbourhood aggregation for graph nets,” in Proc. Adv. Neural Inf. Process. Syst. , 2020, pp. 13 260–13 271.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 63
+    },
+    {
+      "citation_id": "C064",
+      "raw_text": "[64] H. Gao and S. Ji, “Graph U-Nets,” in Proc. Int. Conf. Mach. Learn. , 2019, pp. 2083–2092.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 64
+    },
+    {
+      "citation_id": "C065",
+      "raw_text": "[65] P. Erdo/C19/C19s et al. , “On the evolution of random graphs,” Publ. Math. Inst. Hung. Acad. Sci , vol. 5, no. 1, pp. 17–60, 1960.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 65
+    },
+    {
+      "citation_id": "C066",
+      "raw_text": "[66] Y. LeCun, L. Bottou, Y. Bengio, and P. Haffner, “Gradient-based learning applied to document recognition,” Proc. IEEE , vol. 86, no. 11, pp. 2278–2324, Nov. 1998.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 66
+    },
+    {
+      "citation_id": "C067",
+      "raw_text": "[67] R. Achanta, A. Shaji, K. Smith, A. Lucchi, P. Fua, and S. S €usstrunk, “SLIC superpixels compared to state-of-the-art superpixel meth- ods,” IEEE Trans. Pattern Anal. Mach. Intell. , vol. 34, no. 11, pp. 2274–2282, Nov. 2012.",
+      "citation_context": "pixels [67].",
+      "index": 67
+    },
+    {
+      "citation_id": "C068",
+      "raw_text": "[68] A. Shrivastava and P. Li, “A new space for comparing graphs,” in Proc. IEEE/ACM Int. Conf. Adv. Social Netw. Anal. Mining , 2014, pp. 62–71.",
+      "citation_context": "COLLAB [68], PROTEINS [69], and D&D [70].",
+      "index": 68
+    },
+    {
+      "citation_id": "C069",
+      "raw_text": "[69] K. M. Borgwardt, C. S. Ong, S. Sch €onauer, S. Vishwanathan, A. J. Smola, and H.-P. Kriegel, “Protein function prediction via graph kernels,” Bioinformatics, vol. 21, no. suppl_1, pp. i47–i56, 2005.",
+      "citation_context": "COLLAB [68], PROTEINS [69], and D&D [70].",
+      "index": 69
+    },
+    {
+      "citation_id": "C070",
+      "raw_text": "[70] P. D. Dobson and A. J. Doig, “Distinguishing enzyme structures from non-enzymes without alignments,” J. Mol. Biol. , vol. 330, no. 4, pp. 771–783, 2003.",
+      "citation_context": "COLLAB [68], PROTEINS [69], and D&D [70].",
+      "index": 70
+    },
+    {
+      "citation_id": "C071",
+      "raw_text": "[71] X. Miao et al. , “Lasagne: A multi-layer graph convolutional net- work framework via node-aware deep architecture,” IEEE Trans. Knowl. Data Eng. , early access, Aug. 13, 2021, doi: 10.1109/ TKDE.2021.3103984.",
+      "citation_context": "problem [71].",
+      "index": 71
+    },
+    {
+      "citation_id": "C072",
+      "raw_text": "[72] Z. Shen, P. Cui, K. Kuang, B. Li, and P. Chen, “Causally regular- ized learning with agnostic data selection bias,” in Proc. 26th ACM Int. Conf. Multimedia, 2018, pp. 411–419.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 72
+    },
+    {
+      "citation_id": "C073",
+      "raw_text": "[73] R. Xu, P. Cui, Z. Shen, X. Zhang, and T. Zhang, “Why stable learn- ing works? A theory of covariate shift generalization,” 2021, arXiv:2111.02355.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 73
+    },
+    {
+      "citation_id": "C074",
+      "raw_text": "[74] Y. Bengio, A. Courville, and P. Vincent, “Representation learning: A review and new perspectives,” IEEE Trans. Pattern Anal. Mach. Intell., vol. 35, no. 8, pp. 1798–1828, Aug. 2013.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 74
+    },
+    {
+      "citation_id": "C075",
+      "raw_text": "[75] J.-T. Hsieh, B. Liu, D.-A. Huang, L. F. Fei-Fei, and J. C. Niebles, “Learning to decompose and disentangle representations for video prediction,” in Proc. Adv. Neural Inf. Process. Syst. , 2018, pp. 517–526.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 75
+    },
+    {
+      "citation_id": "C076",
+      "raw_text": "[76] L. Ma, Q. Sun, S. Georgoulis, L. Van Gool, B. Schiele, and M. Fritz, “Disentangled person image generation,” in Proc. IEEE Conf. Com- put. Vis. Pattern Recognit. , 2018, pp. 99–108.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 76
+    },
+    {
+      "citation_id": "C077",
+      "raw_text": "[77] J. Ma, P. Cui, K. Kuang, X. Wang, and W. Zhu, “Disentangled graph convolutional networks,” in Proc. Int. Conf. Mach. Learn. , 2019, pp. 4212–4221.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 77
+    },
+    {
+      "citation_id": "C078",
+      "raw_text": "[78] C. P. Burgess et al. , “Understanding disentangling in b-vae,” in NeurIPS Workshop Learn. Disentangled Representations , 2017. Haoyang Li received the BE degree from the Department of Computer Science and T echnol- ogy , T singhua University , in 2018. He is currently working toward the PhD degree with the Depart- ment of Computer Science and T echnology , T singhua University . His research interests are mainly in machine learning on graphs and out-of- distribution generalization. He has published sev- eral papers in prestigious journals and conferen- ces, e.g., IEEE Transactions on Knowledge and Data Engineering, KDD, NeurIPS, ICLR, etc. Xin Wang (Member , IEEE) received the BE and PhD degrees in computer science and technol- ogy from Zhejiang University , China, and the PhD degree in computing science from Simon Fraser University , Canada. He is currently an assistant professor with the Department of Computer Sci- ence and T echnology , T singhua University . His research interests include cross-modal multime- dia intelligence and inferable recommendation in social media. He has published several high-qual- ity research papers in top conferences including ICML, MM, KDD, WWW , SIGIR etc. He is the recipient of 2017 China Postdoctoral innovative talents supporting program. He receives the ACM China Rising Star Award, in 2020. Ziwei Zhang (Member , IEEE) received the PhD degree from the Department of Computer Sci- ence and T echnology , T singhua University , in 2021. He is currently a postdoc researcher with the Department of Computer Science and T ech- nology , T singhua University . His research inter- ests focus on machine learning on graphs, including graph neural network (GNN), network embedding (a.k.a. network representation learn- ing), and automated graph machine learning. He has published more than 20 papers in prestigious conferences and journals, including KDD, NeurIPS, ICML, AAAI, IJCAI, and IEEE Transactions on Knowledge and Data Engineering . Wenwu Zhu (Fellow , IEEE) received the PhD degree from New Y ork University , in 1996. He is currently a professor with the Department of Computer Science and T echnology , T singhua University , the vice dean of National Research Center for Information Science and T echnology , and the vice director of T singhua Center for Big Data. Prior to his current post, he was a senior researcher and research manager with Microsoft Research Asia. He was the chief scientist and director with Intel Research China from 2004 to 2008. He worked with Bell Labs New Jersey as member of technical staff during 1996-1999. His current research interests are in the area of data- driven multimedia networking and Cross-media Big Data computing. He has published more than 350 referred papers, and is inventor or co- inventor of more than 50 patents. He received eight Best Paper Awards, including ACM Multimedia 2012 and IEEE Transactions on Circuits and Systems for Video Technology , in 2001 and 2019. He served as EiC for IEEE Transactions on Multimedia (2017-2019). He served in the steer- ing committee for IEEE Transactions on Multimedia (2015-2016) and IEEE Transactions on Mobile Computing (2007-2010), respectively . He serves as general co-chair for ACM Multimedia 2018 and ACM CIKM 2019, respectively . He is an AAAS fellow , SPIE fellow , and a member of The Academy of Europe (Academia Europaea). \" For more information on this or any other computing topic, please visit our Digital Library at www .computer .org/csdl. 7340 IEEE TRANSACTIONS ON KNOWLEDGE AND DATA ENGINEERING, VOL. 35, NO. 7, JUL Y 2023 Authorized licensed use limited to: Sri Sivasubramanya Nadar College of Engineering. Downloaded on October 05,2026 at 13:11:57 UTC from IEEE Xplore. Restrictions apply.",
+      "citation_context": "In-text citation context extracted from body.",
+      "index": 78
+    }
+  ]
+}

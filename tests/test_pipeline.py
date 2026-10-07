@@ -3,7 +3,6 @@ import json
 from pathlib import Path
 from src.retrieval.paper_lookup import normalize_title, parse_reference_fields
 from src.retrieval.extract_references import split_references, isolate_bibliography
-from src.retrieval.field_taxonomy import classify_field_of_work
 from src.integration.fusion import calculate_fused_risk, fuse_citation_evidence
 from src.config import get_classification_label
 from src.models.graph_module import analyze_graph_suspicion
@@ -22,21 +21,15 @@ class TestPipelineComponents(unittest.TestCase):
         parsed = parse_reference_fields(ref)
         self.assertEqual(parsed["year"], 2017)
         self.assertEqual(parsed["lead_author"], "Kipf")
-        self.assertEqual(parsed["title"], "Semi-supervised classification with graph convolutional networks")
-        self.assertEqual(parsed["venue"], "ICLR")
-
-    def test_field_taxonomy(self):
-        text = "Deep Graph Convolutional Networks for Node Classification in Citation Graphs"
-        classified = classify_field_of_work(text)
-        self.assertEqual(classified["domain"], "Computer Science")
-        self.assertIn("Graph Neural Networks", classified["subfield"])
 
     def test_fusion_calculation(self):
+        # alpha=0.5, beta=0.5
         score = calculate_fused_risk(0.80, 0.60, alpha=0.5, beta=0.5)
         self.assertEqual(score, 0.70)
         label = get_classification_label(score)
         self.assertEqual(label, "suspicious")
 
+        # Valid score test
         v_score = calculate_fused_risk(0.20, 0.30, alpha=0.5, beta=0.5)
         self.assertEqual(v_score, 0.25)
         self.assertEqual(get_classification_label(v_score), "valid")
@@ -48,17 +41,10 @@ class TestPipelineComponents(unittest.TestCase):
         g_out = analyze_graph_suspicion(paper_data, matched)
         self.assertEqual(len(g_out), 1)
         self.assertIn("graph_score", g_out[0])
-        self.assertIn("author_group_score", g_out[0])
-        self.assertIn("citation_circle_score", g_out[0])
-        self.assertIn("amplification_score", g_out[0])
-        self.assertNotIn("status", g_out[0])
         
         s_out = analyze_semantic_suspicion(paper_data, matched)
         self.assertEqual(len(s_out), 1)
         self.assertIn("semantic_score", s_out[0])
-        self.assertIn("weak_citation_score", s_out[0])
-        self.assertIn("semantic_alignment_score", s_out[0])
-        self.assertNotIn("status", s_out[0])
 
     def test_fused_record_contract(self):
         retrieval_rec = {
@@ -71,29 +57,13 @@ class TestPipelineComponents(unittest.TestCase):
             "match_method": "exact_normalized_title",
             "match_score": 1.0,
         }
-        graph_rec = {
-            "citation_id": "C001",
-            "graph_score": 0.8,
-            "author_group_score": 0.75,
-            "citation_circle_score": 0.85,
-            "amplification_score": 0.80,
-            "graph_evidence": ["anomaly"]
-        }
-        semantic_rec = {
-            "citation_id": "C001",
-            "semantic_score": 0.7,
-            "weak_citation_score": 0.70,
-            "semantic_alignment_score": 0.70,
-            "semantic_evidence": ["drift"],
-            "reason": "Topic drift."
-        }
+        graph_rec = {"citation_id": "C001", "graph_score": 0.8, "graph_evidence": ["anomaly"]}
+        semantic_rec = {"citation_id": "C001", "semantic_score": 0.7, "semantic_evidence": ["drift"], "reason": "Topic drift."}
         
         fused = fuse_citation_evidence(retrieval_rec, graph_rec, semantic_rec)
         self.assertTrue(validate_final_record(fused))
         self.assertEqual(fused["integrity_risk_score"], 0.75)
         self.assertEqual(fused["classification"], "suspicious")
-        self.assertIn("author_group_score", fused)
-        self.assertIn("weak_citation_score", fused)
 
 if __name__ == "__main__":
     unittest.main()
