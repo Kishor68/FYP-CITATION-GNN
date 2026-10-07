@@ -86,9 +86,38 @@ class AnalysisPipeline:
         # Aggregate summary metrics
         total_count = len(final_citations)
         matched_count = sum(1 for c in final_citations if c["match_status"] == "matched")
-        suspicious_count = sum(1 for c in final_citations if c["classification"] == "suspicious")
-        manual_review_count = sum(1 for c in final_citations if c["classification"] == "manual_review")
-        valid_count = sum(1 for c in final_citations if c["classification"] == "valid")
+        avg_risk = round(sum(c["integrity_risk_score"] for c in final_citations) / total_count, 3) if total_count > 0 else 0.0
+        avg_semantic = round(sum(c["semantic_score"] for c in final_citations) / total_count, 3) if total_count > 0 else 0.0
+
+        # Print terminal logging for backend verification
+        print("\n" + "=" * 80)
+        print(" BACKEND PIPELINE INFERENCE OUTPUT & CITATION SCORES ")
+        print("=" * 80)
+        print(f"Paper Title : {paper_data['paper_title']}")
+        print(f"Run ID      : {run_id}")
+        print(f"Total Citations Processed: {total_count}")
+        print("-" * 80)
+
+        for c in final_citations:
+            print(f"📌 Citation ID: {c['citation_id']}")
+            print(f"   Matched Title         : {c['matched_title'] or 'Unmatched'}")
+            print(f"   Match Method          : {c['match_method']} (Confidence: {c['match_score']:.2f})")
+            print(f"   SPECTER2 Similarity   : {c.get('semantic_similarity', 0.0):.4f}")
+            print(f"   Semantic Score        : {c['semantic_score']:.4f}  (Person 2 SPECTER2 Model)")
+            print(f"   Weak Citation Score   : {c.get('weak_citation_score', 0.0):.4f}  (Person 2 SPECTER2 Model)")
+            print(f"   Author Group Score    : {c.get('author_group_score', 0.0):.4f}  (Person 1 GNN - Default 0.0)")
+            print(f"   Citation Circle Score : {c.get('citation_circle_score', 0.0):.4f}  (Person 1 GNN - Default 0.0)")
+            print(f"   Amplification Score   : {c.get('amplification_score', 0.0):.4f}  (Person 1 GNN - Default 0.0)")
+            print(f"   Graph Score           : {c['graph_score']:.4f}  (Person 1 GNN - Default 0.0)")
+            print(f"   👉 Fused Risk Score   : {c['integrity_risk_score']:.4f}")
+            print("-" * 80)
+
+        print(f"SUMMARY METRICS:")
+        print(f"  Total Extracted Citations : {total_count}")
+        print(f"  OpenAlex Matched Count    : {matched_count}")
+        print(f"  Average Semantic Score    : {avg_semantic:.4f}")
+        print(f"  Average Fused Risk Score  : {avg_risk:.4f}")
+        print("=" * 80 + "\n")
 
         pipeline_result = {
             "run_id": run_id,
@@ -98,9 +127,8 @@ class AnalysisPipeline:
             "summary_metrics": {
                 "total_citations": total_count,
                 "matched_citations": matched_count,
-                "valid_citations": valid_count,
-                "manual_review_citations": manual_review_count,
-                "suspicious_citations": suspicious_count,
+                "avg_risk_score": avg_risk,
+                "avg_semantic_score": avg_semantic,
             },
             "fusion_weights": {"alpha": self.alpha, "beta": self.beta},
             "citations": final_citations,

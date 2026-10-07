@@ -519,61 +519,48 @@ elif page == "Analysis Overview & Results":
         c1, c2, c3, c4 = st.columns(4)
         c1.metric("Total Extracted Citations", metrics["total_citations"])
         c2.metric("OpenAlex Matched", metrics["matched_citations"])
-        c3.metric("Flagged Suspicious", metrics["suspicious_citations"])
-        c4.metric("Manual Review", metrics["manual_review_citations"])
+        c3.metric("Average Semantic Score", f"{metrics.get('avg_semantic_score', 0.0):.2f}")
+        c4.metric("Average Risk Score", f"{metrics.get('avg_risk_score', 0.0):.2f}")
         
         st.divider()
         
         # Filters and Sorting
         st.subheader("Citation Evidence Table")
         
-        f_col1, f_col2, f_col3 = st.columns([2, 2, 2])
+        f_col1, f_col2 = st.columns(2)
         with f_col1:
             filter_status = st.selectbox(
-                "Filter by Classification",
-                ["All Citations", "Suspicious Only", "Manual Review Only", "Valid Only", "Unmatched Only"]
+                "Filter Citations",
+                ["All Citations", "Unmatched Only"]
             )
         with f_col2:
             sort_by = st.selectbox(
                 "Sort Citations By",
-                ["Fused Risk Score (High -> Low)", "Graph Score (High -> Low)", "Semantic Score (High -> Low)", "OpenAlex Match Confidence"]
+                ["Fused Risk Score (High -> Low)", "Semantic Score (High -> Low)", "Weak Citation Score (High -> Low)", "OpenAlex Match Confidence"]
             )
             
         citations = res["citations"]
         
         # Apply Filters
         filtered = citations
-        if filter_status == "Suspicious Only":
-            filtered = [c for c in filtered if c["classification"] == "suspicious"]
-        elif filter_status == "Manual Review Only":
-            filtered = [c for c in filtered if c["classification"] == "manual_review"]
-        elif filter_status == "Valid Only":
-            filtered = [c for c in filtered if c["classification"] == "valid"]
-        elif filter_status == "Unmatched Only":
+        if filter_status == "Unmatched Only":
             filtered = [c for c in filtered if c["match_status"] == "unmatched"]
             
         # Apply Sorting
         if sort_by == "Fused Risk Score (High -> Low)":
             filtered = sorted(filtered, key=lambda x: x["integrity_risk_score"], reverse=True)
-        elif sort_by == "Graph Score (High -> Low)":
-            filtered = sorted(filtered, key=lambda x: x["graph_score"], reverse=True)
         elif sort_by == "Semantic Score (High -> Low)":
             filtered = sorted(filtered, key=lambda x: x["semantic_score"], reverse=True)
+        elif sort_by == "Weak Citation Score (High -> Low)":
+            filtered = sorted(filtered, key=lambda x: x.get("weak_citation_score", 0.0), reverse=True)
         elif sort_by == "OpenAlex Match Confidence":
             filtered = sorted(filtered, key=lambda x: x["match_score"], reverse=True)
 
         # Build Interactive Table Dataframe
         table_rows = []
         for c in filtered:
-            status_badge = "Valid"
-            if c["classification"] == "suspicious":
-                status_badge = "Suspicious"
-            elif c["classification"] == "manual_review":
-                status_badge = "Manual Review"
-                
             table_rows.append({
                 "Citation ID": c["citation_id"],
-                "Classification": status_badge,
                 "Fused Risk": c["integrity_risk_score"],
                 "Semantic Score": c["semantic_score"],
                 "Weak Citation Score": c.get("weak_citation_score", 0.0),
@@ -630,12 +617,9 @@ elif page == "Citation Evidence Detail":
         if record:
             st.divider()
             
-            # Top Banner & Risk Badge
+            # Top Banner & Risk Score Display
             risk = record["integrity_risk_score"]
-            label = record["classification"].upper()
-            
-            badge_color = "red" if label == "SUSPICIOUS" else ("orange" if label == "MANUAL_REVIEW" else "green")
-            st.markdown(f"## Citation ID: **{record['citation_id']}**  | Classification: :{badge_color}[**{label}**]")
+            st.markdown(f"## Citation ID: **{record['citation_id']}**  | Fused Risk Score: **`{risk:.2f}`**")
             
             # Composite Score Overview Cards
             m1, m2, m3, m4 = st.columns(4)
@@ -700,7 +684,7 @@ elif page == "Citation Evidence Detail":
                     st.markdown(f"- **Publication Year**: {record['publication_year']}")
                     st.markdown(f"- **Citations Count**: {record['cited_by_count']}")
                 else:
-                    st.error("No OpenAlex work matched (Unmatched / Manual Review required).")
+                    st.error("No OpenAlex work matched (Unmatched).")
 
             with col_b:
                 st.subheader("2. Model Evidence & Reasoning")
