@@ -651,7 +651,7 @@ elif page == "Analysis Overview & Results":
         with f_col2:
             sort_by = st.selectbox(
                 "Sort Citations By",
-                ["Fused Risk Score (High -> Low)", "Semantic Score (High -> Low)", "Weak Citation Score (High -> Low)", "OpenAlex Match Confidence"]
+                ["Fused Risk Score (High -> Low)", "Semantic Score (High -> Low)", "OpenAlex Match Confidence"]
             )
             
         citations = res["citations"]
@@ -666,8 +666,6 @@ elif page == "Analysis Overview & Results":
             filtered = sorted(filtered, key=lambda x: x["integrity_risk_score"], reverse=True)
         elif sort_by == "Semantic Score (High -> Low)":
             filtered = sorted(filtered, key=lambda x: x["semantic_score"], reverse=True)
-        elif sort_by == "Weak Citation Score (High -> Low)":
-            filtered = sorted(filtered, key=lambda x: x.get("weak_citation_score", 0.0), reverse=True)
         elif sort_by == "OpenAlex Match Confidence":
             filtered = sorted(filtered, key=lambda x: x["match_score"], reverse=True)
 
@@ -794,16 +792,12 @@ elif page == "Citation Evidence Detail":
                 st.markdown("### **Semantic Alignment Sub-Scores**")
                 st.caption("*(SPECTER2 Active Backend)*")
                 sem_val = record.get("semantic_score", 0.0)
-                wc_val = record.get("weak_citation_score", 0.0)
+                sim_val = record.get("semantic_similarity", 0.0)
                 
-                st.markdown(f"**Semantic Score**: `{sem_val:.2f}` (Overall SPECTER2 semantic suspicion)")
+                st.markdown(f"**Semantic Score**: `{sem_val:.2f}` (Calibrated SPECTER2 topic suspicion)")
                 st.progress(min(1.0, float(sem_val)))
 
-                st.markdown(f"**Weak Citation Score**: `{wc_val:.2f}` (Superficial claim / padding citation suspicion)")
-                st.progress(min(1.0, float(wc_val)))
-                
-                sim_val = record.get("semantic_similarity", 0.0)
-                st.caption(f"Context Embedding Similarity: {sim_val:.2f}")
+                st.caption(f"**Context Embedding Similarity**: `{sim_val:.2f}` (Raw SPECTER2 cosine topic similarity)")
             
             st.divider()
             
