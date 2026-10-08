@@ -96,7 +96,9 @@ class AnalysisPipeline:
         total_count = len(final_citations)
         matched_count = sum(1 for c in final_citations if c["match_status"] == "matched")
         avg_risk = round(sum(c["integrity_risk_score"] for c in final_citations) / total_count, 3) if total_count > 0 else 0.0
-        avg_semantic = round(sum(c["semantic_score"] for c in final_citations) / total_count, 3) if total_count > 0 else 0.0
+        
+        valid_semantics = [c["semantic_score"] for c in final_citations if isinstance(c.get("semantic_score"), (float, int))]
+        avg_semantic = round(sum(valid_semantics) / len(valid_semantics), 3) if valid_semantics else 0.0
 
         # Print terminal logging for backend verification
         print("\n" + "=" * 80)
@@ -108,12 +110,13 @@ class AnalysisPipeline:
         print("-" * 80)
 
         for c in final_citations:
+            sem_str = f"{c['semantic_score']:.4f}" if isinstance(c.get("semantic_score"), (float, int)) else "N/A"
+            sim_str = f"{c['semantic_similarity']:.4f}" if isinstance(c.get("semantic_similarity"), (float, int)) else "N/A"
             print(f"[+] Citation ID: {c['citation_id']}")
             print(f"   Matched Title         : {c['matched_title'] or 'Unmatched'}")
             print(f"   Match Method          : {c['match_method']} (Confidence: {c['match_score']:.2f})")
-            print(f"   SPECTER2 Similarity   : {c.get('semantic_similarity', 0.0):.4f}")
-            print(f"   Semantic Score        : {c['semantic_score']:.4f}  (Person 2 SPECTER2 Model)")
-            print(f"   Weak Citation Score   : {c.get('weak_citation_score', 0.0):.4f}  (Person 2 SPECTER2 Model)")
+            print(f"   SPECTER2 Similarity   : {sim_str}")
+            print(f"   Semantic Score        : {sem_str}  (Person 2 SPECTER2 Model)")
             print(f"   Author Group Score    : {c.get('author_group_score', 0.0):.4f}  (Person 1 GNN - Default 0.0)")
             print(f"   Citation Circle Score : {c.get('citation_circle_score', 0.0):.4f}  (Person 1 GNN - Default 0.0)")
             print(f"   Amplification Score   : {c.get('amplification_score', 0.0):.4f}  (Person 1 GNN - Default 0.0)")

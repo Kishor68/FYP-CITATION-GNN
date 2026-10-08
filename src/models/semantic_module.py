@@ -55,85 +55,87 @@ def analyze_semantic_suspicion(paper_data: Dict[str, Any], citation_records: Lis
     """
     Person 2's SPECTER2 Semantic Inference:
     Computes real semantic suspicion scores based on title + abstract similarity.
+    For unmatched citations, returns None (N/A) because OpenAlex metadata is unavailable.
     """
-    if not HAS_TORCH_SPECTER:
-        # Fallback for lightweight environment without PyTorch
-        results = []
-        for cite in citation_records:
-            citation_id = cite["citation_id"]
-            raw_text = cite.get("raw_text", "").lower()
-            weak_score = 0.15 if "neural" in raw_text or "graph" in raw_text else 0.45
-            results.append({
-                "citation_id": citation_id,
-                "semantic_score": weak_score,
-                "weak_citation_score": weak_score,
-                "semantic_alignment_score": 0.0,
-                "semantic_similarity": round(1.0 - weak_score, 4),
-                "reason": "Lightweight semantic similarity estimate (SPECTER2 torch omitted).",
-                "semantic_evidence": ["Fallback Similarity Estimate"],
-            })
-        return results
-
-    citing_title = paper_data.get("paper_title", "")
-    citing_abstract = paper_data.get("abstract", "")
-    
-    citing_text = (citing_title.strip() + " [SEP] " + citing_abstract.strip()).strip()
-    
-    tokenizer, model, device = get_specter2_model()
-    
     results = []
     
-    # Collect cited texts
+    # Filter matched citations with valid title/abstract metadata
+    matched_indices = []
     cited_texts = []
-    for cite in citation_records:
-        matched_title = cite.get("matched_title") or cite.get("raw_text") or ""
-        matched_abstract = cite.get("abstract") or cite.get("citation_context") or ""
-        text = (matched_title.strip() + " [SEP] " + matched_abstract.strip()).strip()
-        cited_texts.append(text)
-        
-    if not cited_texts:
-        return results
-        
-    # Generate embeddings
-    all_texts = [citing_text] + cited_texts
-    inputs = tokenizer(all_texts, padding=True, truncation=True, max_length=512, return_tensors="pt")
-    inputs = {k: v.to(device) for k, v in inputs.items()}
-    
-    with torch.no_grad():
-        outputs = model(**inputs)
-        embeddings = outputs.last_hidden_state[:, 0, :].cpu().numpy()
-        
-    citing_emb = embeddings[0:1]
-    cited_embs = embeddings[1:]
-    
-    sims = cosine_similarity(citing_emb, cited_embs)[0]
     
     for idx, cite in enumerate(citation_records):
+        is_matched = (cite.get("match_status") != "unmatched") and bool(cite.get("matched_title"))
+        if is_matched:
+            matched_title = cite.get("matched_title", "")
+            matched_abstract = cite.get("abstract") or cite.get("citation_context") or ""
+            text = (matched_title.strip() + " [SEP] " + matched_abstract.strip()).strip()
+            cited_texts.append(text)
+            matched_indices.append(idx)
+
+    computed_map = {}
+
+    if HAS_TORCH_SPECTER and cited_texts:
+        citing_title = paper_data.get("paper_title", "")
+        citing_abstract = paper_data.get("abstract", "")
+        citing_text = (citing_title.strip() + " [SEP] " + citing_abstract.strip()).strip()
+
+        tokenizer, model, device = get_specter2_model()
+        all_texts = [citing_text] + cited_texts
+
+        inputs = tokenizer(all_texts, padding=True, truncation=True, max_length=512, return_tensors="pt")
+        inputs = {k: v.to(device) for k, v in inputs.items()}
+
+        with torch.no_grad():
+            outputs = model(**inputs)
+            embeddings = outputs.last_hidden_state[:, 0, :].cpu().numpy()
+
+        citing_emb = embeddings[0:1]
+        cited_embs = embeddings[1:]
+
+        sims = cosine_similarity(citing_emb, cited_embs)[0]
+
+        for m_i, orig_idx in enumerate(matched_indices):
+            sim = float(sims[m_i])
+            wcs = compute_weak_citation_score(sim)
+            weak_citation_score = round(max(0.0, min(1.0, wcs)), 4)
+            semantic_score = weak_citation_score
+
+            if sim < 0.80:
+                reason = f"Low SPECTER2 similarity ({sim:.3f}) between citing paper and cited reference. Significant topic disparity detected."
+                evidence = ["SPECTER2 Topic Disparity", "Weak Contextual Alignment", f"Similarity: {sim:.3f}"]
+            elif weak_citation_score >= 0.50:
+                reason = f"Moderate-High SPECTER2 similarity ({sim:.3f}), but slightly below the strict genuine citation baseline ({GENUINE_MEAN:.3f})."
+                evidence = ["Moderate Semantic Alignment", f"Similarity: {sim:.3f}", f"Baseline Std Dev: {GENUINE_STD:.3f}"]
+            else:
+                reason = f"High SPECTER2 similarity ({sim:.3f}) confirming strong topic relevance."
+                evidence = ["High Semantic Alignment", f"Similarity: {sim:.3f}"]
+
+            computed_map[orig_idx] = {
+                "semantic_score": semantic_score,
+                "weak_citation_score": weak_citation_score,
+                "semantic_alignment_score": 0.0,
+                "semantic_similarity": round(sim, 4),
+                "reason": reason,
+                "semantic_evidence": evidence,
+            }
+
+    # Build results in original order
+    for idx, cite in enumerate(citation_records):
         citation_id = cite["citation_id"]
-        sim = float(sims[idx])
-        
-        wcs = compute_weak_citation_score(sim)
-        weak_citation_score = round(max(0.0, min(1.0, wcs)), 4)
-        semantic_score = weak_citation_score
-        
-        if sim < 0.80:
-            reason = f"Low SPECTER2 similarity ({sim:.3f}) between citing paper and cited reference. Significant topic disparity detected."
-            evidence = ["SPECTER2 Topic Disparity", "Weak Contextual Alignment", f"Similarity: {sim:.3f}"]
-        elif weak_citation_score >= 0.50:
-            reason = f"Moderate-High SPECTER2 similarity ({sim:.3f}), but slightly below the strict genuine citation baseline ({GENUINE_MEAN:.3f})."
-            evidence = ["Moderate Semantic Alignment", f"Similarity: {sim:.3f}", f"Baseline Std Dev: {GENUINE_STD:.3f}"]
+        if idx in computed_map:
+            res = computed_map[idx]
+            res["citation_id"] = citation_id
+            results.append(res)
         else:
-            reason = f"High SPECTER2 similarity ({sim:.3f}) confirming strong topic relevance."
-            evidence = ["High Semantic Alignment", f"Similarity: {sim:.3f}"]
-            
-        results.append({
-            "citation_id": citation_id,
-            "semantic_score": semantic_score,
-            "weak_citation_score": weak_citation_score,
-            "semantic_alignment_score": 0.0,
-            "semantic_similarity": round(sim, 4),
-            "reason": reason,
-            "semantic_evidence": evidence,
-        })
-        
+            # Unmatched reference entry -> N/A
+            results.append({
+                "citation_id": citation_id,
+                "semantic_score": None,
+                "weak_citation_score": None,
+                "semantic_alignment_score": 0.0,
+                "semantic_similarity": None,
+                "reason": "Unmatched reference entry: OpenAlex paper metadata unavailable. SPECTER2 Semantic Score: N/A.",
+                "semantic_evidence": ["Unmatched Reference Entry", "OpenAlex Metadata Unavailable"],
+            })
+
     return results

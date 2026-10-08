@@ -672,10 +672,12 @@ elif page == "Analysis Overview & Results":
         # Build Table Dataframe (Weak Citation Score & Graph Score removed per request; Fused Risk hidden as "NC")
         table_rows = []
         for c in filtered:
+            sem_val = c.get("semantic_score")
+            sem_display = f"{sem_val:.6f}" if isinstance(sem_val, (float, int)) else "N/A"
             table_rows.append({
                 "Citation ID": c["citation_id"],
                 "Fused Risk": "NC",
-                "Semantic Score": c["semantic_score"],
+                "Semantic Score": sem_display,
                 "Author Group Score": c.get("author_group_score", 0.0),
                 "Citation Circle Score": c.get("citation_circle_score", 0.0),
                 "Amplification Score": c.get("amplification_score", 0.0),
@@ -791,13 +793,16 @@ elif page == "Citation Evidence Detail":
             with sub_col_s:
                 st.markdown("### **Semantic Alignment Sub-Scores**")
                 st.caption("*(SPECTER2 Active Backend)*")
-                sem_val = record.get("semantic_score", 0.0)
-                sim_val = record.get("semantic_similarity", 0.0)
+                sem_val = record.get("semantic_score")
+                sim_val = record.get("semantic_similarity")
                 
-                st.markdown(f"**Semantic Score**: `{sem_val:.2f}` (Calibrated SPECTER2 topic suspicion)")
-                st.progress(min(1.0, float(sem_val)))
-
-                st.caption(f"**Context Embedding Similarity**: `{sim_val:.2f}` (Raw SPECTER2 cosine topic similarity)")
+                if isinstance(sem_val, (float, int)):
+                    st.markdown(f"**Semantic Score**: `{sem_val:.2f}` (Calibrated SPECTER2 topic suspicion)")
+                    st.progress(min(1.0, float(sem_val)))
+                    if isinstance(sim_val, (float, int)):
+                        st.caption(f"**Context Embedding Similarity**: `{sim_val:.2f}` (Raw SPECTER2 cosine topic similarity)")
+                else:
+                    st.markdown("**Semantic Score**: `N/A` *(OpenAlex metadata unavailable for unmatched citation)*")
             
             st.divider()
             
