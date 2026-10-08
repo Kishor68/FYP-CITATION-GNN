@@ -671,18 +671,16 @@ elif page == "Analysis Overview & Results":
         elif sort_by == "OpenAlex Match Confidence":
             filtered = sorted(filtered, key=lambda x: x["match_score"], reverse=True)
 
-        # Build Table Dataframe (Fused Risk hidden as "NC")
+        # Build Table Dataframe (Weak Citation Score & Graph Score removed per request; Fused Risk hidden as "NC")
         table_rows = []
         for c in filtered:
             table_rows.append({
                 "Citation ID": c["citation_id"],
                 "Fused Risk": "NC",
                 "Semantic Score": c["semantic_score"],
-                "Weak Citation Score": c.get("weak_citation_score", 0.0),
                 "Author Group Score": c.get("author_group_score", 0.0),
                 "Citation Circle Score": c.get("citation_circle_score", 0.0),
                 "Amplification Score": c.get("amplification_score", 0.0),
-                "Graph Score": c["graph_score"],
                 "Match Method": c["match_method"],
                 "Match Confidence": c["match_score"],
                 "Matched OpenAlex Work": c["matched_title"] or "Unmatched",
@@ -690,22 +688,27 @@ elif page == "Analysis Overview & Results":
             
         df = pd.DataFrame(table_rows)
 
-        # Apply Light Unique Column Group Styling
+        # Apply Column Group Color Scheme per User Request
         def apply_light_column_colors(data):
             styles = pd.DataFrame('', index=data.index, columns=data.columns)
-            citation_id_cols = ["Citation ID"]
-            semantic_cols = ["Semantic Score", "Weak Citation Score"]
-            graph_cols = ["Graph Score", "Author Group Score", "Citation Circle Score", "Amplification Score"]
+            
+            graph_cols = ["Author Group Score", "Citation Circle Score", "Amplification Score"]
+            semantic_cols = ["Semantic Score"]
+            openalex_cols = ["Match Method", "Match Confidence", "Matched OpenAlex Work"]
             
             for col in data.columns:
-                if col in citation_id_cols:
+                if col in graph_cols:
+                    # Graph: Bluish Purple
                     styles[col] = 'background-color: #E0E7FF; color: #1E1B4B; font-weight: bold;'
                 elif col in semantic_cols:
+                    # Semantic: Reddish
+                    styles[col] = 'background-color: #FEE2E2; color: #991B1B; font-weight: bold;'
+                elif col in openalex_cols:
+                    # OpenAlex Matching: Greenish
                     styles[col] = 'background-color: #DCFCE7; color: #14532D; font-weight: bold;'
-                elif col in graph_cols:
-                    styles[col] = 'background-color: #FEF3C7; color: #78350F; font-weight: bold;'
                 else:
-                    styles[col] = 'background-color: #F1F5F9; color: #0F172A; font-weight: bold;'
+                    # Rest (Citation ID, Fused Risk): White
+                    styles[col] = 'background-color: #FFFFFF; color: #0F172A; font-weight: bold;'
             return styles
 
         styled_df = df.style.apply(apply_light_column_colors, axis=None)
