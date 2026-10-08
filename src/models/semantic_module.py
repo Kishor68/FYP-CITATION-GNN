@@ -116,9 +116,12 @@ def analyze_semantic_suspicion(paper_data: Dict[str, Any], citation_records: Lis
         weak_citation_score = round(max(0.0, min(1.0, wcs)), 4)
         semantic_score = weak_citation_score
         
-        if weak_citation_score >= 0.50 or sim < 0.80:
-            reason = f"Low SPECTER2 similarity ({sim:.3f}) between citing paper and cited reference. Flagged as weakly related."
+        if sim < 0.80:
+            reason = f"Low SPECTER2 similarity ({sim:.3f}) between citing paper and cited reference. Significant topic disparity detected."
             evidence = ["SPECTER2 Topic Disparity", "Weak Contextual Alignment", f"Similarity: {sim:.3f}"]
+        elif weak_citation_score >= 0.50:
+            reason = f"Moderate-High SPECTER2 similarity ({sim:.3f}), but slightly below the strict genuine citation baseline ({GENUINE_MEAN:.3f})."
+            evidence = ["Moderate Semantic Alignment", f"Similarity: {sim:.3f}", f"Baseline Std Dev: {GENUINE_STD:.3f}"]
         else:
             reason = f"High SPECTER2 similarity ({sim:.3f}) confirming strong topic relevance."
             evidence = ["High Semantic Alignment", f"Similarity: {sim:.3f}"]
