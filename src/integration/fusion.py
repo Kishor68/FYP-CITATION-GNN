@@ -43,11 +43,18 @@ def fuse_citation_evidence(
     """
     cid = retrieval_record["citation_id"]
     
-    # Graph Sub-scores (Unintegrated Person 1 module defaults to 0.0)
-    author_group_score = float(graph_record.get("author_group_score", 0.0))
-    citation_circle_score = float(graph_record.get("citation_circle_score", 0.0))
-    amplification_score = float(graph_record.get("amplification_score", 0.0))
-    g_score = float(graph_record.get("graph_score", 0.0))
+    # Graph Sub-scores (None if unmatched)
+    raw_ag = graph_record.get("author_group_score")
+    author_group_score = float(raw_ag) if isinstance(raw_ag, (float, int)) else None
+
+    raw_cc = graph_record.get("citation_circle_score")
+    citation_circle_score = float(raw_cc) if isinstance(raw_cc, (float, int)) else None
+
+    raw_amp = graph_record.get("amplification_score")
+    amplification_score = float(raw_amp) if isinstance(raw_amp, (float, int)) else None
+
+    raw_g = graph_record.get("graph_score")
+    g_score = float(raw_g) if isinstance(raw_g, (float, int)) else 0.0
 
     # Semantic Sub-scores (Person 2 SPECTER2 active backend)
     s_score = semantic_record.get("semantic_score")  # None if unmatched

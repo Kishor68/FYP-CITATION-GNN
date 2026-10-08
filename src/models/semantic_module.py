@@ -10,6 +10,8 @@ from typing import Dict, Any, List
 
 try:
     import torch
+    if hasattr(torch, "classes"):
+        torch.classes.__path__ = []
     from scipy.special import expit
     from sklearn.metrics.pairwise import cosine_similarity
     from transformers import AutoTokenizer

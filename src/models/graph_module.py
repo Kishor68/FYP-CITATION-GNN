@@ -15,6 +15,7 @@ graph features and trained CitationMLP checkpoint.
 """
 
 import os
+import re
 import math
 from pathlib import Path
 from typing import Dict, Any, List, Optional, Tuple, Set
@@ -23,6 +24,12 @@ import numpy as np
 import pandas as pd
 import torch
 import torch.nn as nn
+
+try:
+    if hasattr(torch, "classes"):
+        torch.classes.__path__ = []
+except Exception:
+    pass
 
 try:
     from torch_geometric.nn import RGCNConv
@@ -97,6 +104,7 @@ class GraphManager:
         self.paper_to_idx: Dict[str, int] = {}
         self.idx_to_paper: Dict[int, str] = {}
         self.author_to_idx: Dict[str, int] = {}
+        self.author_id_to_name: Dict[str, str] = {}
 
         # Mappings
         self.paper_authors: Dict[str, Set[str]] = {}
@@ -158,8 +166,11 @@ class GraphManager:
 
             if authors_path.exists():
                 self.authors_df = pd.read_csv(authors_path)
-                author_ids = self.authors_df["author_id"].dropna().astype(str).tolist()
-                self.author_to_idx = {aid: idx for idx, aid in enumerate(author_ids)}
+                for _, row in self.authors_df.iterrows():
+                    aid = str(row["author_id"])
+                    aname = str(row["author_name"]) if "author_name" in row and pd.notna(row["author_name"]) else aid
+                    self.author_to_idx[aid] = len(self.author_to_idx)
+                    self.author_id_to_name[aid] = aname
 
             if paper_author_path.exists():
                 pa_df = pd.read_csv(paper_author_path)
@@ -266,6 +277,108 @@ class GraphManager:
 # FEATURE GENERATION HELPERS
 # =============================================================================
 
+class ParsedAuthor:
+    def __init__(self, raw: str):
+        self.raw = raw
+        self.clean = re.sub(r'[^a-zA-Z\s]', '', raw).strip().lower()
+        parts = [p for p in self.clean.split() if p not in {'van', 'der', 'den', 'von', 'del', 'and', 'etal'}]
+        if len(parts) >= 2:
+            self.given = parts[0]
+            self.surname = parts[-1]
+        elif len(parts) == 1:
+            self.given = ''
+            self.surname = parts[0]
+        else:
+            self.given = ''
+            self.surname = ''
+
+    def matches(self, other: "ParsedAuthor") -> bool:
+        if not self.surname or not other.surname:
+            return False
+        if self.clean == other.clean:
+            return True
+        if self.surname == other.surname and len(self.surname) >= 3:
+            if not self.given or not other.given:
+                return True
+            if self.given == other.given:
+                return True
+            if self.given[0] == other.given[0]:
+                if len(self.given) == 1 or len(other.given) == 1:
+                    return True
+        return False
+
+
+def extract_author_objects(meta: Dict[str, Any], paper_id: str, mgr: GraphManager) -> List[ParsedAuthor]:
+    """
+    Extracts structured ParsedAuthor objects from metadata or graph tables.
+    """
+    raw_author_strings = []
+
+    # 1. From meta dictionary
+    if "authors" in meta and meta["authors"]:
+        authors_val = meta["authors"]
+        if isinstance(authors_val, list):
+            for item in authors_val:
+                if isinstance(item, str):
+                    raw_author_strings.append(item)
+                elif isinstance(item, dict):
+                    auth_dict = item.get("author", item)
+                    name = auth_dict.get("display_name") or auth_dict.get("name") or auth_dict.get("author_name")
+                    if name:
+                        raw_author_strings.append(str(name))
+        elif isinstance(authors_val, str):
+            raw_author_strings.append(authors_val)
+
+    if "paper_profile" in meta and isinstance(meta["paper_profile"], dict):
+        pp_auth = meta["paper_profile"].get("authors")
+        if isinstance(pp_auth, list):
+            for a in pp_auth:
+                if isinstance(a, str):
+                    raw_author_strings.append(a)
+
+    for key in ["parsed_author", "lead_author", "author"]:
+        val = meta.get(key)
+        if val and isinstance(val, str):
+            raw_author_strings.append(val)
+
+    if "authorships" in meta and isinstance(meta["authorships"], list):
+        for ash in meta["authorships"]:
+            if isinstance(ash, dict):
+                a_name = ash.get("author", {}).get("display_name")
+                if a_name:
+                    raw_author_strings.append(a_name)
+
+    # 2. Fallback: Parse author names from raw reference string if available
+    if "raw_text" in meta and isinstance(meta["raw_text"], str):
+        raw_txt = meta["raw_text"]
+        clean_txt = re.sub(r'^\s*\[?\d+\]?\s*\.?\s*', '', raw_txt)
+        clean_txt = re.split(r'\b(19\d\d|20\d\d)\b', clean_txt)[0]
+        parts = re.split(r',|\band\b|\&|;', clean_txt)
+        for p in parts:
+            p_clean = p.strip()
+            if p_clean and len(p_clean) <= 40 and not re.search(r'\b(arxiv|doi|vol|pp|journal|press|proceedings)\b', p_clean, re.I):
+                raw_author_strings.append(p_clean)
+
+    # 3. From graph manager paper_authors
+    graph_aids = mgr.paper_authors.get(paper_id, set())
+    for aid in graph_aids:
+        raw_author_strings.append(aid)
+        if aid in mgr.author_id_to_name:
+            raw_author_strings.append(mgr.author_id_to_name[aid])
+
+    parsed_list = []
+    seen_cleans = set()
+    for r in raw_author_strings:
+        if not r or not isinstance(r, str):
+            continue
+        p = ParsedAuthor(r)
+        if p.clean and p.clean not in seen_cleans:
+            seen_cleans.add(p.clean)
+            parsed_list.append(p)
+
+    return parsed_list
+
+
 def extract_7_citation_features(
     mgr: GraphManager,
     citing_id: str,
@@ -283,21 +396,23 @@ def extract_7_citation_features(
     6. cited_in_degree
     7. cited_out_degree
     """
-    # 1. Author Overlap
-    citing_authors = mgr.paper_authors.get(citing_id, set())
-    if not citing_authors and citing_meta.get("lead_author"):
-        citing_authors = {citing_meta["lead_author"].lower()}
+    # 1. Author Overlap via Per-Author Struct Matching
+    citing_author_objs = extract_author_objects(citing_meta, citing_id, mgr)
+    cited_author_objs = extract_author_objects(cited_meta, cited_id, mgr)
 
-    cited_authors = mgr.paper_authors.get(cited_id, set())
-    if not cited_authors and cited_meta.get("lead_author"):
-        cited_authors = {cited_meta["lead_author"].lower()}
+    matched_authors = []
+    for c_author in citing_author_objs:
+        for cd_author in cited_author_objs:
+            if c_author.matches(cd_author):
+                matched_authors.append(c_author.raw)
+                break
 
-    author_overlap = len(citing_authors.intersection(cited_authors)) if citing_authors and cited_authors else 0
+    author_overlap = len(matched_authors)
 
     # 2. Same Venue
     citing_venue = mgr.paper_venue_map.get(citing_id) or citing_meta.get("venue")
     cited_venue = mgr.paper_venue_map.get(cited_id) or cited_meta.get("venue")
-    same_venue = 1 if (citing_venue and cited_venue and citing_venue == cited_venue) else 0
+    same_venue = 1 if (citing_venue and cited_venue and str(citing_venue).lower().strip() == str(cited_venue).lower().strip()) else 0
 
     # 3. Same Field
     citing_fields = mgr.paper_fields.get(citing_id, set())
@@ -305,31 +420,33 @@ def extract_7_citation_features(
     same_field = 1 if (citing_fields and cited_fields and bool(citing_fields.intersection(cited_fields))) else 0
 
     # 4-7. Degrees
-    citing_in_deg = mgr.in_degree_map.get(citing_id, citing_meta.get("in_degree", 1))
-    citing_out_deg = mgr.out_degree_map.get(citing_id, citing_meta.get("out_degree", 5))
-    cited_in_deg = mgr.in_degree_map.get(cited_id, cited_meta.get("cited_by_count", 1))
-    cited_out_deg = mgr.out_degree_map.get(cited_id, cited_meta.get("out_degree", 5))
+    citing_in_deg = float(mgr.in_degree_map.get(citing_id, citing_meta.get("in_degree", 1)))
+    citing_out_deg = float(mgr.out_degree_map.get(citing_id, citing_meta.get("out_degree", 5)))
+    cited_in_deg = float(mgr.in_degree_map.get(cited_id, cited_meta.get("cited_by_count", 1)))
+    cited_out_deg = float(mgr.out_degree_map.get(cited_id, cited_meta.get("out_degree", 5)))
 
+    # Log1p normalized feature representation for CitationMLP model input
     feats_7 = [
         float(author_overlap),
         float(same_venue),
         float(same_field),
-        float(citing_in_deg),
-        float(citing_out_deg),
-        float(cited_in_deg),
-        float(cited_out_deg)
+        float(math.log1p(citing_in_deg)),
+        float(math.log1p(citing_out_deg)),
+        float(math.log1p(cited_in_deg)),
+        float(math.log1p(cited_out_deg))
     ]
 
     details = {
         "author_overlap": author_overlap,
+        "matched_authors": matched_authors,
         "same_venue": same_venue,
         "same_field": same_field,
         "citing_in_degree": citing_in_deg,
         "citing_out_degree": citing_out_deg,
         "cited_in_degree": cited_in_deg,
         "cited_out_degree": cited_out_deg,
-        "citing_authors": list(citing_authors),
-        "cited_authors": list(cited_authors)
+        "citing_authors": [a.raw for a in citing_author_objs],
+        "cited_authors": [a.raw for a in cited_author_objs]
     }
 
     return feats_7, details
@@ -347,32 +464,32 @@ def compute_amplification_score(
     """
     Module A: Citation Amplification Analysis
     Identifies suspicious citation volume inflation or concentrated citation patterns.
-    Combines the trained CitationMLP checkpoint prediction with degree ratio analysis.
+    Combines trained CitationMLP prediction with structural out-degree concentration analysis.
     """
     evidence = []
     
-    # Run trained CitationMLP checkpoint
+    # Run trained CitationMLP checkpoint with prior probability calibration (pos_weight = 42.32394)
     with torch.no_grad():
-        mlp_logit = mgr.citation_mlp(pair_71d_tensor)
-        mlp_prob = float(torch.sigmoid(mlp_logit).item())
+        raw_logit = mgr.citation_mlp(pair_71d_tensor)
+        calibrated_logit = raw_logit - math.log(42.32394)
+        mlp_prob = float(torch.sigmoid(calibrated_logit).item())
 
-    cited_in_deg = feat_details["cited_in_degree"]
     citing_out_deg = feat_details["citing_out_degree"]
+    cited_in_deg = feat_details["cited_in_degree"]
 
-    # Degree inflation ratio
     degree_ratio = cited_in_deg / max(1.0, float(citing_out_deg))
     
-    # Calculate score
-    if cited_in_deg > 20 and degree_ratio > 3.0:
-        amp_score = round(min(1.0, 0.40 * mlp_prob + 0.60 * min(1.0, degree_ratio / 10.0)), 4)
-        evidence.append(f"High citation volume concentration: cited in-degree={cited_in_deg}, degree ratio={degree_ratio:.2f}")
+    # Genuine reference inflation anomaly (citing paper has high out-degree > 50 and ratio > 5.0)
+    if citing_out_deg > 50 and degree_ratio > 5.0:
+        amp_score = round(min(1.0, 0.40 * mlp_prob + 0.60 * min(1.0, degree_ratio / 20.0)), 4)
+        evidence.append(f"High citation out-degree concentration: citing out-degree={int(citing_out_deg)}, degree ratio={degree_ratio:.2f}")
     else:
         amp_score = round(mlp_prob, 4)
 
     if amp_score >= 0.50:
-        evidence.append(f"Trained Graph MLP anomaly prediction: {mlp_prob:.4f}")
+        evidence.append(f"Trained Graph MLP anomaly prediction: {amp_score:.4f}")
     else:
-        evidence.append(f"Citation volume within expected structural baseline (MLP score: {mlp_prob:.3f})")
+        evidence.append(f"Citation volume within expected structural baseline (MLP score: {amp_score:.3f})")
 
     return amp_score, evidence
 
@@ -391,17 +508,18 @@ def compute_author_group_score(
     overlap = feat_details["author_overlap"]
     citing_authors = feat_details["citing_authors"]
     cited_authors = feat_details["cited_authors"]
+    matched_authors = feat_details.get("matched_authors", [])
 
     if overlap == 0:
         return 0.0, ["No shared authors or co-authorship overlap observed between paper pair."]
 
     num_citing = max(1, len(citing_authors))
-    overlap_ratio = overlap / num_citing
+    overlap_ratio = min(1.0, overlap / float(num_citing))
 
     if overlap >= 2 or overlap_ratio >= 0.5:
         score = round(min(1.0, 0.60 + 0.20 * overlap + 0.20 * overlap_ratio), 4)
         evidence.append(f"Excessive co-author overlap detected: {overlap} shared author(s) ({overlap_ratio:.0%} of author team).")
-        evidence.append("Self-citation / author-group citation cluster flagged.")
+        evidence.append(f"Self-citation / author-group citation cluster flagged: {matched_authors}.")
     else:
         score = round(min(1.0, 0.25 + 0.15 * overlap), 4)
         evidence.append(f"Minor author overlap observed: {overlap} shared author ({overlap_ratio:.0%} of team).")
@@ -411,6 +529,7 @@ def compute_author_group_score(
         evidence.append("Co-authorship reinforced by identical publication venue.")
 
     return score, evidence
+
 
 
 def compute_citation_circle_score(
@@ -491,16 +610,33 @@ def analyze_graph_suspicion(
     mgr = GraphManager.get_instance()
 
     citing_id = str(paper_data.get("matched_openalex_id") or paper_data.get("paper_id") or "CITING_TEMP")
-    citing_emb = mgr.get_paper_embedding(citing_id)
+    citing_emb = torch.nn.functional.normalize(mgr.get_paper_embedding(citing_id), p=2, dim=-1)
 
     results = []
 
     for cite in citation_records:
         cid = cite["citation_id"]
+        
+        # Handle unmatched citations gracefully by marking scores as None (N/A)
+        if cite.get("match_status") == "unmatched" or not cite.get("matched_openalex_id"):
+            results.append({
+                "citation_id": cid,
+                "graph_score": None,
+                "author_group_score": None,
+                "citation_circle_score": None,
+                "amplification_score": None,
+                "graph_evidence": {
+                    "author_group": ["OpenAlex metadata unavailable for unmatched citation. Author Group Score: N/A."],
+                    "citation_circle": ["OpenAlex metadata unavailable for unmatched citation. Citation Circle Score: N/A."],
+                    "amplification": ["OpenAlex metadata unavailable for unmatched citation. Amplification Score: N/A."]
+                }
+            })
+            continue
+
         cited_id = str(cite.get("matched_openalex_id") or cite.get("cited_paper_id") or f"CITED_{cid}")
         
-        # Retrieve Cited Paper Embedding
-        cited_emb = mgr.get_paper_embedding(cited_id)
+        # Retrieve Cited Paper Embedding (L2 Normalized)
+        cited_emb = torch.nn.functional.normalize(mgr.get_paper_embedding(cited_id), p=2, dim=-1)
 
         # 1. Feature Engineering (7-D)
         feats_7, feat_details = extract_7_citation_features(

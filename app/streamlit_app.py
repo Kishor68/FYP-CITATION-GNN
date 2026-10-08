@@ -6,6 +6,13 @@ from pathlib import Path
 import sys
 import importlib
 
+try:
+    import torch
+    if hasattr(torch, "classes"):
+        torch.classes.__path__ = []
+except Exception:
+    pass
+
 # Ensure project root is in python path
 ROOT_DIR = Path(__file__).resolve().parent.parent
 if str(ROOT_DIR) not in sys.path:
@@ -665,7 +672,7 @@ elif page == "Analysis Overview & Results":
         if sort_by == "Fused Risk Score (High -> Low)":
             filtered = sorted(filtered, key=lambda x: x["integrity_risk_score"], reverse=True)
         elif sort_by == "Semantic Score (High -> Low)":
-            filtered = sorted(filtered, key=lambda x: x["semantic_score"], reverse=True)
+            filtered = sorted(filtered, key=lambda x: (x.get("semantic_score") is not None, x.get("semantic_score") if x.get("semantic_score") is not None else -1.0), reverse=True)
         elif sort_by == "OpenAlex Match Confidence":
             filtered = sorted(filtered, key=lambda x: x["match_score"], reverse=True)
 
@@ -673,14 +680,24 @@ elif page == "Analysis Overview & Results":
         table_rows = []
         for c in filtered:
             sem_val = c.get("semantic_score")
-            sem_display = f"{sem_val:.6f}" if isinstance(sem_val, (float, int)) else "N/A"
+            sem_display = f"{sem_val:.4f}" if isinstance(sem_val, (float, int)) else "N/A"
+
+            ag_val = c.get("author_group_score")
+            ag_display = f"{ag_val:.4f}" if isinstance(ag_val, (float, int)) else "N/A"
+
+            cc_val = c.get("citation_circle_score")
+            cc_display = f"{cc_val:.4f}" if isinstance(cc_val, (float, int)) else "N/A"
+
+            amp_val = c.get("amplification_score")
+            amp_display = f"{amp_val:.4f}" if isinstance(amp_val, (float, int)) else "N/A"
+
             table_rows.append({
                 "Citation ID": c["citation_id"],
                 "Fused Risk": "NC",
                 "Semantic Score": sem_display,
-                "Author Group Score": c.get("author_group_score", 0.0),
-                "Citation Circle Score": c.get("citation_circle_score", 0.0),
-                "Amplification Score": c.get("amplification_score", 0.0),
+                "Author Group Score": ag_display,
+                "Citation Circle Score": cc_display,
+                "Amplification Score": amp_display,
                 "Match Method": c["match_method"],
                 "Match Confidence": c["match_score"],
                 "Matched OpenAlex Work": c["matched_title"] or "Unmatched",
@@ -776,19 +793,28 @@ elif page == "Citation Evidence Detail":
             sub_col_g, sub_col_s = st.columns(2)
             with sub_col_g:
                 st.markdown("### **Graph Neural Network Sub-Scores**")
-                st.caption("*(Unintegrated GNN Module — Default 0.00)*")
-                ag_val = record.get("author_group_score", 0.0)
-                cc_val = record.get("citation_circle_score", 0.0)
-                amp_val = record.get("amplification_score", 0.0)
+                st.caption("*(Active R-GCN & CitationMLP Graph Module)*")
+                ag_val = record.get("author_group_score")
+                cc_val = record.get("citation_circle_score")
+                amp_val = record.get("amplification_score")
                 
-                st.markdown(f"**Author Group Score**: `{ag_val:.2f}` (Co-authorship & institutional cluster suspicion)")
-                st.progress(min(1.0, float(ag_val)))
-                
-                st.markdown(f"**Citation Circle Score**: `{cc_val:.2f}` (Reciprocal citation ring / loop suspicion)")
-                st.progress(min(1.0, float(cc_val)))
-                
-                st.markdown(f"**Amplification Score**: `{amp_val:.2f}` (Disproportionate citation volume inflation)")
-                st.progress(min(1.0, float(amp_val)))
+                if isinstance(ag_val, (float, int)):
+                    st.markdown(f"**Author Group Score**: `{ag_val:.2f}` (Co-authorship & institutional cluster suspicion)")
+                    st.progress(min(1.0, float(ag_val)))
+                else:
+                    st.markdown("**Author Group Score**: `N/A` *(OpenAlex metadata unavailable for unmatched citation)*")
+
+                if isinstance(cc_val, (float, int)):
+                    st.markdown(f"**Citation Circle Score**: `{cc_val:.2f}` (Reciprocal citation ring / loop suspicion)")
+                    st.progress(min(1.0, float(cc_val)))
+                else:
+                    st.markdown("**Citation Circle Score**: `N/A` *(OpenAlex metadata unavailable for unmatched citation)*")
+
+                if isinstance(amp_val, (float, int)):
+                    st.markdown(f"**Amplification Score**: `{amp_val:.2f}` (Disproportionate citation volume inflation)")
+                    st.progress(min(1.0, float(amp_val)))
+                else:
+                    st.markdown("**Amplification Score**: `N/A` *(OpenAlex metadata unavailable for unmatched citation)*")
 
             with sub_col_s:
                 st.markdown("### **Semantic Alignment Sub-Scores**")

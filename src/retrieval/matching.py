@@ -121,6 +121,15 @@ class ReferenceMatcher:
         publication_year = best_match.get("publication_year") if best_match else None
         cited_by_count = best_match.get("cited_by_count", 0) if best_match else 0
         
+        authorships = best_match.get("authorships", []) if best_match else []
+        authors_list = []
+        if best_match and authorships:
+            for ash in authorships:
+                if isinstance(ash, dict):
+                    aname = ash.get("author", {}).get("display_name")
+                    if aname:
+                        authors_list.append(aname)
+
         return {
             "citation_id": citation_id,
             "raw_text": raw_text,
@@ -128,6 +137,8 @@ class ReferenceMatcher:
             "parsed_title": parsed["title"],
             "parsed_year": parsed["year"],
             "parsed_author": parsed["lead_author"],
+            "authorships": authorships,
+            "authors": authors_list,
             "matched_openalex_id": matched_openalex_id,
             "matched_title": matched_work_title,
             "publication_year": publication_year,

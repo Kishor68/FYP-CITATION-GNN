@@ -112,16 +112,23 @@ class AnalysisPipeline:
         for c in final_citations:
             sem_str = f"{c['semantic_score']:.4f}" if isinstance(c.get("semantic_score"), (float, int)) else "N/A"
             sim_str = f"{c['semantic_similarity']:.4f}" if isinstance(c.get("semantic_similarity"), (float, int)) else "N/A"
+            ag_str = f"{c['author_group_score']:.4f}" if isinstance(c.get("author_group_score"), (float, int)) else "N/A"
+            cc_str = f"{c['citation_circle_score']:.4f}" if isinstance(c.get("citation_circle_score"), (float, int)) else "N/A"
+            amp_str = f"{c['amplification_score']:.4f}" if isinstance(c.get("amplification_score"), (float, int)) else "N/A"
+            g_str = f"{c['graph_score']:.4f}" if isinstance(c.get("graph_score"), (float, int)) else "N/A"
+            risk_str = f"{c['integrity_risk_score']:.4f}" if isinstance(c.get("integrity_risk_score"), (float, int)) else "0.0000"
+            match_score_str = f"{c['match_score']:.2f}" if isinstance(c.get("match_score"), (float, int)) else "0.00"
+
             print(f"[+] Citation ID: {c['citation_id']}")
             print(f"   Matched Title         : {c['matched_title'] or 'Unmatched'}")
-            print(f"   Match Method          : {c['match_method']} (Confidence: {c['match_score']:.2f})")
+            print(f"   Match Method          : {c['match_method']} (Confidence: {match_score_str})")
             print(f"   SPECTER2 Similarity   : {sim_str}")
             print(f"   Semantic Score        : {sem_str}  (Person 2 SPECTER2 Model)")
-            print(f"   Author Group Score    : {c.get('author_group_score', 0.0):.4f}  (Person 1 GNN - Default 0.0)")
-            print(f"   Citation Circle Score : {c.get('citation_circle_score', 0.0):.4f}  (Person 1 GNN - Default 0.0)")
-            print(f"   Amplification Score   : {c.get('amplification_score', 0.0):.4f}  (Person 1 GNN - Default 0.0)")
-            print(f"   Graph Score           : {c['graph_score']:.4f}  (Person 1 GNN - Default 0.0)")
-            print(f"   -> Fused Risk Score   : {c['integrity_risk_score']:.4f}")
+            print(f"   Author Group Score    : {ag_str}  (Person 1 GNN)")
+            print(f"   Citation Circle Score : {cc_str}  (Person 1 GNN)")
+            print(f"   Amplification Score   : {amp_str}  (Person 1 GNN)")
+            print(f"   Graph Score           : {g_str}  (Person 1 GNN)")
+            print(f"   -> Fused Risk Score   : {risk_str}")
             print("-" * 80)
 
         print(f"SUMMARY METRICS:")

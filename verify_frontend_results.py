@@ -75,14 +75,17 @@ def verify_pipeline():
     sem_out = analyze_semantic_suspicion(sample_paper, sample_matches)[0]
     graph_out = analyze_graph_suspicion(sample_paper, sample_matches)[0]
 
+    def fmt(v):
+        return f"{v:.4f}" if isinstance(v, (float, int)) else "N/A"
+
     print("=== MODEL OUTPUT COMPARISON ===")
     print(f"  Pipeline SPECTER2 Similarity  : {sem_out['semantic_similarity']:.4f}  (Match: {abs(sem_out['semantic_similarity'] - manual_sim) < 1e-4})")
     print(f"  Pipeline Weak Citation Score  : {sem_out['weak_citation_score']:.4f}  (Match: {abs(sem_out['weak_citation_score'] - manual_wcs) < 1e-4})")
     print(f"  Pipeline Semantic Score       : {sem_out['semantic_score']:.4f}  (Match: {abs(sem_out['semantic_score'] - manual_semantic_score) < 1e-4})")
-    print(f"  Graph Score (Unintegrated)    : {graph_out['graph_score']:.4f}  (Default 0.0: {graph_out['graph_score'] == 0.0})")
-    print(f"  Author Group Score            : {graph_out['author_group_score']:.4f}  (Default 0.0: {graph_out['author_group_score'] == 0.0})")
-    print(f"  Citation Circle Score         : {graph_out['citation_circle_score']:.4f}  (Default 0.0: {graph_out['citation_circle_score'] == 0.0})")
-    print(f"  Amplification Score           : {graph_out['amplification_score']:.4f}  (Default 0.0: {graph_out['amplification_score'] == 0.0})")
+    print(f"  Graph Score (Unintegrated)    : {fmt(graph_out['graph_score'])}")
+    print(f"  Author Group Score            : {fmt(graph_out['author_group_score'])}")
+    print(f"  Citation Circle Score         : {fmt(graph_out['citation_circle_score'])}")
+    print(f"  Amplification Score           : {fmt(graph_out['amplification_score'])}")
     print("==================================================")
     print("VERIFICATION SUCCESSFUL: Frontend formulas match active SPECTER2 neural inference 100%!")
 
