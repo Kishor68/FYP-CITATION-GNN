@@ -58,8 +58,23 @@ def fuse_citation_evidence(
     classification = get_classification_label(risk_score)
     
     # Combine evidence list
-    g_ev = graph_record.get("graph_evidence", [])
+    raw_g_ev = graph_record.get("graph_evidence", [])
+    if isinstance(raw_g_ev, dict):
+        g_ev = []
+        for v in raw_g_ev.values():
+            if isinstance(v, list):
+                g_ev.extend(v)
+            elif isinstance(v, str):
+                g_ev.append(v)
+    elif isinstance(raw_g_ev, list):
+        g_ev = raw_g_ev
+    else:
+        g_ev = []
+
     s_ev = semantic_record.get("semantic_evidence", [])
+    if not isinstance(s_ev, list):
+        s_ev = []
+
     combined_evidence = list(dict.fromkeys(g_ev + s_ev))  # unique preserving order
     
     explanation = semantic_record.get("reason", "Analysis completed.")
