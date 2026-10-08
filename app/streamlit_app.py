@@ -52,6 +52,22 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# Helper for Smooth Single-Click Navigation
+def navigate_to(target_page: str):
+    st.session_state["nav_selection"] = target_page
+
+# Initialize Session State
+if "nav_selection" not in st.session_state:
+    st.session_state["nav_selection"] = "Upload Paper"
+if "pipeline_result" not in st.session_state:
+    st.session_state.pipeline_result = None
+if "selected_citation_id" not in st.session_state:
+    st.session_state.selected_citation_id = None
+if "alpha" not in st.session_state:
+    st.session_state.alpha = DEFAULT_ALPHA
+if "beta" not in st.session_state:
+    st.session_state.beta = DEFAULT_BETA
+
 # Inject High-Contrast & Premium Dark CSS Styling
 st.markdown("""
 <style>
@@ -95,12 +111,59 @@ st.markdown("""
         color: #F9FAFB !important;
     }
 
-    /* 2. Whitish-Blue Score & Metric Colors */
+    /* Navigation Bar: Buttons -> Bands Styling */
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] > label {
+        display: none !important;
+    }
+    
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] {
+        gap: 8px !important;
+    }
+
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > label {
+        background-color: #1E293B !important;
+        border: 1px solid #334155 !important;
+        border-left: 4px solid #475569 !important;
+        border-radius: 8px !important;
+        padding: 12px 16px !important;
+        margin-bottom: 4px !important;
+        width: 100% !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease-in-out !important;
+    }
+
+    /* Hide standard circular radio input dot */
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > label > div:first-child {
+        display: none !important;
+    }
+
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > label:hover {
+        background-color: #334155 !important;
+        border-left-color: #38BDF8 !important;
+        box-shadow: 0 2px 8px rgba(56, 189, 248, 0.2) !important;
+    }
+
+    /* Active Band Selection */
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > label[data-checked="true"],
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > label:has(input:checked) {
+        background: linear-gradient(90deg, #1E293B 0%, #0F172A 100%) !important;
+        border-color: #38BDF8 !important;
+        border-left: 5px solid #38BDF8 !important;
+        box-shadow: 0 0 12px rgba(56, 189, 248, 0.25) !important;
+    }
+
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > label[data-checked="true"] p,
+    section[data-testid="stSidebar"] div[data-testid="stRadio"] div[role="radiogroup"] > label:has(input:checked) p {
+        color: #38BDF8 !important;
+        font-weight: 700 !important;
+    }
+
+    /* Score & Metric Colors */
     div[data-testid="stMetricValue"], 
     .metric-value, 
     [data-testid="stMetricValue"] > div,
     [data-testid="stMetricValue"] * {
-        color: #E0F2FE !important; /* Whitish-Blue */
+        color: #E0F2FE !important;
         font-weight: 700 !important;
         text-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
     }
@@ -112,7 +175,7 @@ st.markdown("""
         font-weight: 600 !important;
     }
 
-    /* 3. Non-White Contrasting Button Styling */
+    /* Button Styling */
     button, 
     button[data-testid="stBaseButton-secondary"], 
     button[data-testid="stBaseButton-primary"], 
@@ -122,7 +185,7 @@ st.markdown("""
     .stButton > button,
     [data-testid="stFormSubmitButton"] > button {
         background-color: #1E293B !important;
-        color: #38BDF8 !important; /* Whitish-blue text */
+        color: #38BDF8 !important;
         border: 1px solid #334155 !important;
         border-radius: 6px !important;
         font-weight: 600 !important;
@@ -176,12 +239,12 @@ st.markdown("""
         color: #64748B !important;
     }
 
-    /* 4. Highlighted Score Badges & Code Blocks (Non-White Background, Whitish-Blue Text) */
+    /* Highlighted Score Badges & Code Blocks */
     code, 
     .stMarkdown code, 
     div[data-testid="stMarkdownContainer"] code {
         background-color: #1E293B !important;
-        color: #38BDF8 !important; /* Whitish-blue score badge text */
+        color: #38BDF8 !important;
         border: 1px solid #334155 !important;
         border-radius: 6px !important;
         padding: 3px 8px !important;
@@ -190,7 +253,7 @@ st.markdown("""
         font-family: monospace !important;
     }
 
-    /* 5. Dividers (Thinner & Dark Slate Lines) */
+    /* Dividers */
     hr, 
     [data-testid="stHr"], 
     div[data-testid="stMarkdownContainer"] hr {
@@ -199,7 +262,7 @@ st.markdown("""
         margin: 1rem 0 !important;
     }
 
-    /* 6. Thinner & Gradient Progress Bars */
+    /* Progress Bars */
     div[data-testid="stProgress"] {
         margin-top: 4px !important;
         margin-bottom: 14px !important;
@@ -255,28 +318,52 @@ st.markdown("""
         border: 1px solid #334155 !important;
         border-radius: 6px !important;
     }
+
+    /* OpenAlex Retrieval Logs Expander - Prevent Whiteout & Highlight Borders */
+    div[data-testid="stExpander"], 
+    details[data-testid="stExpander"] {
+        background-color: #111827 !important;
+        border: 1px solid #374151 !important;
+        border-radius: 8px !important;
+        margin-bottom: 12px !important;
+        overflow: hidden !important;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+    }
+
+    div[data-testid="stExpander"]:hover, 
+    details[data-testid="stExpander"]:hover {
+        border-color: #38BDF8 !important;
+        box-shadow: 0 0 10px rgba(56, 189, 248, 0.25) !important;
+    }
+
+    summary[data-testid="stExpanderSummary"],
+    details[data-testid="stExpander"] > summary,
+    div[data-testid="stExpander"] summary {
+        background-color: #1E293B !important;
+        color: #F3F4F6 !important;
+        border-radius: 6px !important;
+        padding: 12px 16px !important;
+        font-weight: 600 !important;
+    }
+
+    summary[data-testid="stExpanderSummary"]:hover,
+    details[data-testid="stExpander"] > summary:hover,
+    summary[data-testid="stExpanderSummary"]:focus,
+    details[data-testid="stExpander"] > summary:focus,
+    summary[data-testid="stExpanderSummary"]:active,
+    details[data-testid="stExpander"] > summary:active {
+        background-color: #334155 !important;
+        color: #38BDF8 !important;
+    }
+
+    div[data-testid="stExpanderDetails"],
+    details[data-testid="stExpander"] > div {
+        background-color: #0B0F17 !important;
+        color: #F3F4F6 !important;
+        padding: 16px !important;
+    }
 </style>
 """, unsafe_allow_html=True)
-
-# Helper for Smooth Single-Click Navigation
-def navigate_to(target_page: str):
-    st.session_state["pending_nav"] = target_page
-    st.rerun()
-
-# Initialize Session State
-if "pending_nav" in st.session_state and st.session_state["pending_nav"]:
-    st.session_state["nav_selection"] = st.session_state.pop("pending_nav")
-
-if "nav_selection" not in st.session_state:
-    st.session_state["nav_selection"] = "Upload Paper"
-if "pipeline_result" not in st.session_state:
-    st.session_state.pipeline_result = None
-if "selected_citation_id" not in st.session_state:
-    st.session_state.selected_citation_id = None
-if "alpha" not in st.session_state:
-    st.session_state.alpha = DEFAULT_ALPHA
-if "beta" not in st.session_state:
-    st.session_state.beta = DEFAULT_BETA
 
 # Sidebar Navigation
 st.sidebar.title("Citation Integrity Analyzer")
@@ -296,10 +383,25 @@ page = st.sidebar.radio("Navigation", nav_options, key="nav_selection")
 st.sidebar.divider()
 if st.session_state.pipeline_result:
     res = st.session_state.pipeline_result
-    st.sidebar.success(f"Active Paper: {res.get('paper_title', 'Loaded')[:30]}...")
-    st.sidebar.info(f"Run ID: {res.get('run_id')}")
+    st.sidebar.success(f"Active Paper: {res.get('paper_title', 'Loaded')}")
 else:
     st.sidebar.warning("No active analysis loaded.")
+
+# Helper for Page Traversal Bar
+def render_traversal_bar(current_page: str):
+    st.divider()
+    st.markdown("#### **Quick Page Traversal**")
+    cols = st.columns(3)
+    pages = [
+        ("Upload Paper", "Upload Paper"),
+        ("Paper Profile", "Paper Profile"),
+        ("Analysis Overview & Results", "Overview & Results"),
+        ("OpenAlex Retrieval Logs", "Audit Logs")
+    ]
+    other_pages = [(p, lbl) for p, lbl in pages if p != current_page]
+    for i, (pg_name, label) in enumerate(other_pages):
+        with cols[i % 3]:
+            st.button(label, use_container_width=True, on_click=navigate_to, args=(pg_name,), key=f"trav_{current_page}_{i}")
 
 
 # =============================================================================
@@ -358,19 +460,23 @@ if page == "Upload Paper":
             
             st.session_state.pipeline_result = result
             st.session_state.selected_citation_id = result["citations"][0]["citation_id"] if result["citations"] else None
-            
-            st.success("Analysis Completed Successfully!")
-            col_b1, col_b2 = st.columns(2)
-            with col_b1:
-                if st.button("View Paper Profile", width="stretch"):
-                    navigate_to("Paper Profile")
-            with col_b2:
-                if st.button("View Citation Results", width="stretch"):
-                    navigate_to("Analysis Overview & Results")
+            st.rerun()
                 
         except Exception as e:
             st.error(f"Analysis Pipeline Failed: {str(e)}")
             st.info("Provide a valid research paper PDF with references to retry.")
+
+    # Post-Analysis Completion & Instant Navigation
+    if st.session_state.pipeline_result is not None:
+        st.divider()
+        st.success("Analysis Completed Successfully!")
+        col_b1, col_b2, col_b3 = st.columns(3)
+        with col_b1:
+            st.button("View Paper Profile", use_container_width=True, on_click=navigate_to, args=("Paper Profile",))
+        with col_b2:
+            st.button("View Citation Results", use_container_width=True, on_click=navigate_to, args=("Analysis Overview & Results",))
+        with col_b3:
+            st.button("View OpenAlex Audit Logs", use_container_width=True, on_click=navigate_to, args=("OpenAlex Retrieval Logs",))
 
 
 # =============================================================================
@@ -381,14 +487,17 @@ elif page == "Paper Profile":
     
     if not st.session_state.pipeline_result:
         st.warning("No active analysis loaded. Please upload a paper first.")
-        if st.button("Go to Upload Page"):
-            navigate_to("Upload Paper")
+        st.button("Go to Upload Page", on_click=navigate_to, args=("Upload Paper",))
     else:
         res = st.session_state.pipeline_result
         prof = res.get("paper_profile", {})
         
-        st.markdown(f"## **{prof.get('title', res.get('paper_title', 'Untitled Paper'))}**")
-        st.caption(f"Run ID: `{res['run_id']}` | Source: PDF Extractor")
+        col_hdr, col_trav = st.columns([3, 2])
+        with col_hdr:
+            st.markdown(f"## **{prof.get('title', res.get('paper_title', 'Untitled Paper'))}**")
+            st.caption("Source: PDF Extractor & OpenAlex Database")
+        with col_trav:
+            st.button("Proceed to Overview & Results", use_container_width=True, on_click=navigate_to, args=("Analysis Overview & Results",))
         
         st.divider()
         
@@ -496,6 +605,9 @@ elif page == "Paper Profile":
             """,
             unsafe_allow_html=True
         )
+        
+        # Traversal Bar
+        render_traversal_bar("Paper Profile")
 
 
 # =============================================================================
@@ -506,21 +618,24 @@ elif page == "Analysis Overview & Results":
     
     if not st.session_state.pipeline_result:
         st.warning("No analysis results available. Please upload a paper first.")
-        if st.button("Go to Upload Page"):
-            navigate_to("Upload Paper")
+        st.button("Go to Upload Page", on_click=navigate_to, args=("Upload Paper",))
     else:
         res = st.session_state.pipeline_result
         metrics = res["summary_metrics"]
         
-        st.markdown(f"### **Paper**: *{res['paper_title']}*")
-        st.caption(f"Run ID: {res['run_id']} | Fused Weights: alpha={res['fusion_weights']['alpha']}, beta={res['fusion_weights']['beta']}")
+        col_hdr2, col_trav2 = st.columns([3, 2])
+        with col_hdr2:
+            st.markdown(f"### **Paper**: *{res['paper_title']}*")
+            st.caption(f"Fused Weights: alpha={res['fusion_weights']['alpha']}, beta={res['fusion_weights']['beta']}")
+        with col_trav2:
+            st.button("View Paper Profile", use_container_width=True, on_click=navigate_to, args=("Paper Profile",))
         
-        # Metric Cards Row
+        # Metric Cards Row (Fusion risk score displayed as NC)
         c1, c2, c3, c4 = st.columns(4)
         c1.metric("Total Extracted Citations", metrics["total_citations"])
         c2.metric("OpenAlex Matched", metrics["matched_citations"])
         c3.metric("Average Semantic Score", f"{metrics.get('avg_semantic_score', 0.0):.2f}")
-        c4.metric("Average Risk Score", f"{metrics.get('avg_risk_score', 0.0):.2f}")
+        c4.metric("Average Risk Score", "NC")
         
         st.divider()
         
@@ -556,12 +671,12 @@ elif page == "Analysis Overview & Results":
         elif sort_by == "OpenAlex Match Confidence":
             filtered = sorted(filtered, key=lambda x: x["match_score"], reverse=True)
 
-        # Build Interactive Table Dataframe
+        # Build Table Dataframe (Fused Risk hidden as "NC")
         table_rows = []
         for c in filtered:
             table_rows.append({
                 "Citation ID": c["citation_id"],
-                "Fused Risk": c["integrity_risk_score"],
+                "Fused Risk": "NC",
                 "Semantic Score": c["semantic_score"],
                 "Weak Citation Score": c.get("weak_citation_score", 0.0),
                 "Author Group Score": c.get("author_group_score", 0.0),
@@ -574,8 +689,37 @@ elif page == "Analysis Overview & Results":
             })
             
         df = pd.DataFrame(table_rows)
-        st.dataframe(df, width="stretch", hide_index=True)
+
+        # Apply Light Unique Column Group Styling
+        def apply_light_column_colors(data):
+            styles = pd.DataFrame('', index=data.index, columns=data.columns)
+            citation_id_cols = ["Citation ID"]
+            semantic_cols = ["Semantic Score", "Weak Citation Score"]
+            graph_cols = ["Graph Score", "Author Group Score", "Citation Circle Score", "Amplification Score"]
+            
+            for col in data.columns:
+                if col in citation_id_cols:
+                    styles[col] = 'background-color: #E0E7FF; color: #1E1B4B; font-weight: bold;'
+                elif col in semantic_cols:
+                    styles[col] = 'background-color: #DCFCE7; color: #14532D; font-weight: bold;'
+                elif col in graph_cols:
+                    styles[col] = 'background-color: #FEF3C7; color: #78350F; font-weight: bold;'
+                else:
+                    styles[col] = 'background-color: #F1F5F9; color: #0F172A; font-weight: bold;'
+            return styles
+
+        styled_df = df.style.apply(apply_light_column_colors, axis=None)
+        st.dataframe(styled_df, use_container_width=True, hide_index=True)
         
+        # Download Table Feature
+        csv_data = df.to_csv(index=False).encode('utf-8')
+        st.download_button(
+            label="Download Citation Table (CSV)",
+            data=csv_data,
+            file_name="citation_analysis_results.csv",
+            mime="text/csv"
+        )
+
         # Select row for detailed inspection
         st.divider()
         st.subheader("Select Citation for In-Depth Evidence View")
@@ -584,9 +728,11 @@ elif page == "Analysis Overview & Results":
             [c["citation_id"] for c in filtered] if filtered else [c["citation_id"] for c in citations]
         )
         
-        if st.button("Open Detailed Citation Evidence"):
+        if st.button("Open Detailed Citation Evidence", on_click=navigate_to, args=("Citation Evidence Detail",)):
             st.session_state.selected_citation_id = selected_cid
-            navigate_to("Citation Evidence Detail")
+            
+        # Traversal Bar
+        render_traversal_bar("Analysis Overview & Results")
 
 
 # =============================================================================
@@ -597,6 +743,7 @@ elif page == "Citation Evidence Detail":
     
     if not st.session_state.pipeline_result:
         st.warning("No analysis results loaded.")
+        st.button("Go to Upload Page", on_click=navigate_to, args=("Upload Paper",))
     else:
         res = st.session_state.pipeline_result
         citations = res["citations"]
@@ -609,24 +756,15 @@ elif page == "Citation Evidence Detail":
             selected_cid = st.selectbox("Inspect Citation ID:", cids, index=cids.index(current_id) if current_id in cids else 0)
             st.session_state.selected_citation_id = selected_cid
         with col_back:
-            if st.button("Back to Results"):
-                navigate_to("Analysis Overview & Results")
+            st.button("Back to Overview & Results", on_click=navigate_to, args=("Analysis Overview & Results",))
                 
         # Find record
         record = next((c for c in citations if c["citation_id"] == selected_cid), None)
         if record:
             st.divider()
             
-            # Top Banner & Risk Score Display
-            risk = record["integrity_risk_score"]
-            st.markdown(f"## Citation ID: **{record['citation_id']}**  | Fused Risk Score: **`{risk:.2f}`**")
-            
-            # Composite Score Overview Cards
-            m1, m2, m3, m4 = st.columns(4)
-            m1.metric("Fused Risk Score", f"{risk:.2f}")
-            m2.metric("Composite Graph Score", f"{record['graph_score']:.2f}")
-            m3.metric("Composite Semantic Score", f"{record['semantic_score']:.2f}")
-            m4.metric("OpenAlex Match Confidence", f"{record['match_score']:.2f}")
+            # Clean Citation ID Header
+            st.markdown(f"## Citation ID: **{record['citation_id']}**")
             
             # Partitioned Sub-Scores Breakdown
             st.divider()
@@ -694,6 +832,9 @@ elif page == "Citation Evidence Detail":
                 st.markdown("**Highlighted Evidence Items:**")
                 for ev in record.get("evidence", []):
                     st.markdown(f"- Evidence Tag: `{ev}`")
+                    
+        # Traversal Bar
+        render_traversal_bar("Citation Evidence Detail")
 
 
 # =============================================================================
@@ -705,6 +846,7 @@ elif page == "OpenAlex Retrieval Logs":
     
     if not st.session_state.pipeline_result:
         st.warning("No active analysis loaded.")
+        st.button("Go to Upload Page", on_click=navigate_to, args=("Upload Paper",))
     else:
         res = st.session_state.pipeline_result
         citations = res["citations"]
@@ -712,4 +854,7 @@ elif page == "OpenAlex Retrieval Logs":
         for c in citations:
             with st.expander(f"Citation {c['citation_id']} - Match Status: {c['match_status'].upper()} ({c['match_method']})"):
                 st.json(c)
+                
+        # Traversal Bar
+        render_traversal_bar("OpenAlex Retrieval Logs")
 
