@@ -825,8 +825,6 @@ elif page == "Citation Evidence Detail":
                 if isinstance(sem_val, (float, int)):
                     st.markdown(f"**Semantic Score**: `{sem_val:.2f}` (Calibrated SPECTER2 topic suspicion)")
                     st.progress(min(1.0, float(sem_val)))
-                    if isinstance(sim_val, (float, int)):
-                        st.caption(f"**Context Embedding Similarity**: `{sim_val:.2f}` (Raw SPECTER2 cosine topic similarity)")
                 else:
                     st.markdown("**Semantic Score**: `N/A` *(OpenAlex metadata unavailable for unmatched citation)*")
             
