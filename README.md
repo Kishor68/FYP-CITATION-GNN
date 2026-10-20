@@ -1,1 +1,339 @@
-# FYP-CITATION-GNN
+# FYP-CITATION-GNN============================================================
+FINAL YEAR PROJECT - README
+============================================================
+
+PROJECT TITLE:
+Detection of Weakly Related and Amplified Citations in
+Scholarly Citation Graphs Using Graph Neural Networks
+
+INSTITUTION:
+Sri Sivasubramaniya Nadar College of Engineering (SSN)
+
+DEPARTMENT:
+Computer Science and Engineering
+
+TEAM MEMBERS:
+1. Jayavarshini K.S.
+2. Keerthana R.
+3. Kishor Sreenivasan
+
+PROJECT SOURCE CODE:
+https://github.com/Kishor68/FYP-CITATION-GNN
+
+============================================================
+1. DATASET URL / SOURCE
+============================================================
+
+Primary Dataset Source:
+OpenAlex - An open catalogue of scholarly works, authors,
+institutions, publication venues, and research topics.
+
+Website:
+https://openalex.org/
+
+API Documentation:
+https://docs.openalex.org/
+
+The project uses scholarly metadata obtained from OpenAlex,
+including research paper information, author details,
+authorship relationships, and citation relationships.
+
+The collected data is processed to construct citation
+relationships and support graph-based citation analysis.
+
+The project also uses semantic representations of scholarly
+papers for analysing the relevance between citing and cited
+papers.
+
+Note:
+The exact dataset files and any additional datasets or
+pretrained models used by the application should be included
+or documented separately where required.
+
+============================================================
+2. PROJECT OVERVIEW
+============================================================
+
+This project aims to identify potentially weakly related
+and amplified citations in scholarly research papers.
+
+The system integrates PDF reference extraction, scholarly
+metadata matching, semantic analysis, and graph-based
+citation analysis.
+
+The major functional modules are:
+
+1. OpenAlex Data Retrieval
+   Retrieves scholarly metadata and citation information.
+
+2. Paper Metadata and Reference Extraction
+   Extracts references from uploaded research paper PDFs.
+
+3. Semantic Analysis Module
+   Uses SPECTER2-based paper representations to evaluate
+   the semantic relationship between citing and cited papers.
+
+4. Graph-Based Anomaly Analysis Module
+   Analyses relationships between papers, authors,
+   institutions, publication venues, and research fields.
+
+   It produces the following suspicion scores:
+   - Author-group score
+   - Citation-circle score
+   - Amplification score
+
+The scores indicate potentially unusual citation patterns.
+They should not be interpreted as proof of citation
+manipulation.
+
+============================================================
+3. SOFTWARE REQUIREMENTS
+============================================================
+
+The following software and libraries may be required,
+depending on the final application configuration.
+
+Operating System:
+Windows / Linux
+
+Programming Language:
+Python
+
+Libraries and Frameworks:
+- PyTorch
+- PyTorch Geometric, if required by the graph implementation
+- pandas
+- NumPy
+- scikit-learn
+- Transformers
+- Other libraries listed in the project's dependency file
+
+Additional Requirements:
+- Git, for downloading the source code
+- A compatible Python environment
+- Internet access for retrieving online scholarly metadata
+  and downloading model files, where required
+- A compatible browser, if the project uses a web interface
+
+IMPORTANT:
+Install the exact dependency versions specified by the
+project's requirements.txt or environment configuration,
+if provided. Confirm the Python version and required
+libraries before running the application.
+
+============================================================
+4. HARDWARE REQUIREMENTS
+============================================================
+
+Processor:
+A modern multi-core processor.
+
+RAM:
+Sufficient memory to load the application, scholarly
+metadata, graph data, and semantic model.
+
+Storage:
+Sufficient free storage for the source code, datasets,
+model files, and generated outputs.
+
+GPU:
+A compatible GPU may improve semantic model inference.
+Whether a GPU is required depends on the model configuration.
+
+Internet:
+Required for online metadata retrieval and for downloading
+model files if they are not already available locally.
+
+Note:
+The exact minimum CPU, RAM, GPU, and storage requirements
+should be established by testing the application on the
+target computer.
+
+============================================================
+5. SOURCE CODE DOWNLOAD
+============================================================
+
+Option 1: Clone the repository using Git.
+
+Open a terminal and execute:
+
+git clone https://github.com/Kishor68/FYP-CITATION-GNN.git
+
+Change to the project directory:
+
+cd FYP-CITATION-GNN
+
+Option 2: Download the source code as a ZIP file from GitHub,
+extract it, and open a terminal in the extracted directory.
+
+============================================================
+6. INSTALLATION INSTRUCTIONS
+============================================================
+
+Step 1:
+Install a compatible version of Python and Git.
+
+Step 2:
+Open a terminal in the project directory.
+
+Step 3:
+Create a virtual environment:
+
+python -m venv venv
+
+Step 4:
+Activate the environment.
+
+Windows:
+
+venv\Scripts\activate
+
+Linux:
+
+source venv/bin/activate
+
+Step 5:
+If the repository contains requirements.txt, install the
+dependencies using:
+
+pip install -r requirements.txt
+
+If requirements.txt is not available, install the project's
+documented dependencies and compatible versions.
+
+Step 6:
+Ensure that all required data files, trained model files,
+and configuration files are available.
+
+Step 7:
+Configure any required API credentials or environment
+variables according to the project's configuration.
+
+Do not place private credentials directly in public source
+code or commit them to GitHub.
+
+============================================================
+7. HOW TO EXECUTE THE PROJECT
+============================================================
+
+IMPORTANT:
+Confirm the actual application entry point and execution
+command in the repository before following this section.
+
+Step 1:
+Open a terminal in the FYP-CITATION-GNN project directory.
+
+Step 2:
+Activate the Python virtual environment.
+
+Step 3:
+Install the required dependencies.
+
+Step 4:
+Verify that the required scholarly metadata files, graph
+data files, and model checkpoints are available.
+
+Step 5:
+Run the application's actual entry-point command.
+
+For example, if the project uses a Streamlit application,
+the command may be:
+
+streamlit run app.py
+
+Use this command only if app.py is the actual Streamlit
+entry point. Otherwise, use the command documented by
+the project.
+
+Step 6:
+If the application starts a local web server, open the
+local address displayed in the terminal.
+
+Step 7:
+Upload a research paper PDF through the application.
+
+Step 8:
+Allow the system to extract references and match them
+with scholarly records.
+
+Step 9:
+Review the semantic analysis results and graph-based
+citation suspicion scores.
+
+Step 10:
+Inspect the available evidence and output generated by
+the application.
+
+============================================================
+8. DATA PROCESSING AND OUTPUT
+============================================================
+
+The general processing workflow is:
+
+Research Paper PDF
+        |
+        v
+Reference Extraction
+        |
+        v
+OpenAlex Reference Matching
+        |
+        v
+Semantic Analysis
+        |
+        v
+Graph-Based Citation Analysis
+        |
+        v
+Citation Scores and Results
+
+The output may include reference-matching information,
+semantic relevance scores, graph-based suspicion scores,
+and supporting evidence, depending on the application's
+implemented features.
+
+============================================================
+9. TROUBLESHOOTING
+============================================================
+
+Problem: Missing Python libraries
+Solution: Activate the virtual environment and install the
+dependencies specified by the project.
+
+Problem: Missing model files
+Solution: Check that all required model checkpoints are
+available and that their configured paths are correct.
+
+Problem: Reference matching fails
+Solution: Check the internet connection and the availability
+of the scholarly metadata service.
+
+Problem: Application fails to start
+Solution: Check the terminal error message, Python version,
+dependency versions, configuration, and entry-point command.
+
+Problem: Graph analysis produces missing scores
+Solution: Check whether the references were successfully
+matched and whether the required graph data and model files
+are available.
+
+============================================================
+10. IMPORTANT NOTES
+============================================================
+
+1. Use the correct Python environment and dependency versions.
+
+2. Ensure that all required data and model files are present.
+
+3. Some features may require internet connectivity.
+
+4. Suspicion scores are intended to identify potentially
+   unusual citation patterns and do not independently prove
+   citation manipulation.
+
+5. Refer to the source code and configuration files for
+   implementation-specific instructions.
+
+============================================================
+END OF README
+============================================================
