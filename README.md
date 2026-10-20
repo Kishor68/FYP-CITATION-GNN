@@ -1,6 +1,4 @@
-# FYP-CITATION-GNN============================================================
-FINAL YEAR PROJECT - README
-============================================================
+# FYP-CITATION
 
 PROJECT TITLE:
 Detection of Weakly Related and Amplified Citations in
